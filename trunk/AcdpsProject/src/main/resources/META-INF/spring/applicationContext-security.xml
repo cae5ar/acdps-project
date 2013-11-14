@@ -6,5 +6,48 @@
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
           http://www.springframework.org/schema/security
           http://www.springframework.org/schema/security/spring-security-3.0.xsd">
-          
+
+	<security:http entry-point-ref="customAuthenticationEntryPoint"
+		use-expressions="true" access-denied-page="/WEB-INF/jsp/deniedpage.jsp">
+		<security:intercept-url pattern="**" access="permitAll"></security:intercept-url>
+		<!-- возвращает 200 если авторизовались (или 304); 401 если нет -->
+		<security:custom-filter position="FORM_LOGIN_FILTER"
+			ref="customAuthenticationProcessingFilter"></security:custom-filter>
+		<security:logout invalidate-session="true"
+			success-handler-ref="logoutSuccessHandler" logout-url="/logout" />
+	</security:http>
+
+	<bean
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder"
+		id="passwordEncoder">
+		<property name="encodeHashAsBase64">
+			<value>false</value>
+		</property>
+	</bean>
+
+	<bean id="authenticationSuccessHandler"
+		class="com.pstu.acdps.server.security.CustomAuthenticationSuccessHandler"></bean>
+
+	<bean id="customAuthenticationEntryPoint"
+		class="com.pstu.acdps.server.security.CustomAuthenticationEntryPoint"></bean>
+
+	<bean id="customUserDetailsService" class="com.pstu.acdps.server.security.CustomUserDetailsService"></bean>
+
+	<bean id="logoutSuccessHandler"
+		class="com.pstu.acdps.server.security.CustomSuccessLogoutHandler" />
+
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider
+			user-service-ref="customUserDetailsService">
+			<security:password-encoder ref="passwordEncoder">
+			</security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="customAuthenticationProcessingFilter"
+		class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+		<property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
+		<property name="authenticationManager" ref="authenticationManager" />
+	</bean>
+
 </beans>
