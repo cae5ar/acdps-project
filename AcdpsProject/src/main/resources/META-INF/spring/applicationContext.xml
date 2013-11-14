@@ -15,7 +15,8 @@
 	<!-- Подключаем проперти файлы -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:META-INF/spring/database.properties" />
+		<property name="location"
+			value="classpath:META-INF/spring/database.properties" />
 		<property name="ignoreUnresolvablePlaceholders" value="true" />
 	</bean>
 

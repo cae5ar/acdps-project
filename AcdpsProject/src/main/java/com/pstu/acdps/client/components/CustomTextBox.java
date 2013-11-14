@@ -1,7 +1,7 @@
 package com.pstu.acdps.client.components;
 
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.TextBox;
-import com.pstu.acdps.client.components.AbstractSimpleInput;
 
 public class CustomTextBox extends AbstractSimpleInput {
 
@@ -26,6 +26,18 @@ public class CustomTextBox extends AbstractSimpleInput {
     @Override
     public void addInputStyleName(String style) {
         textBox.addStyleName(style);
+    }
+
+    public void setPlaceHolderText(String string) {
+        textBox.getElement().setAttribute("placeholder", string);
+    }
+
+    public void setEnabled(boolean b) {
+        textBox.setEnabled(b);
+    }
+
+    public void addKeyDownHandler(KeyDownHandler keyHandler) {
+        textBox.addKeyDownHandler(keyHandler);
     }
 
 }
