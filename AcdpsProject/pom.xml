@@ -439,6 +439,11 @@
 			<artifactId>sqljdbc</artifactId>
 			<version>2.0</version>
 		</dependency>
+		<dependency>
+			<groupId>prognoz.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>10.2.0.5.0</version>
+		</dependency>
 	</dependencies>
 	<!-- Build -->
 	<build>
