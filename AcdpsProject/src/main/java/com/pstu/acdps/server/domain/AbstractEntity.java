@@ -4,12 +4,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.SequenceGenerator;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id  
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "my_entity_seq_gen")
+    @SequenceGenerator(name = "my_entity_seq_gen", sequenceName = "ssp_seq_std")
     protected Long id;
 
     public AbstractEntity() {

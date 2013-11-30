@@ -21,11 +21,11 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.pstu.acdps.client.components.CustomDialogBox;
 import com.pstu.acdps.client.components.CustomDialogBox.EAlertType;
+import com.pstu.acdps.client.components.DepartmentEditWidget;
 import com.pstu.acdps.client.components.LoginWidget;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.CustomActivityMapper;
@@ -97,7 +97,9 @@ public class Site implements EntryPoint {
         RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
         rootLayoutPanel.add(contentPanel);
         rootLayoutPanel.setWidgetTopBottom(contentPanel, 56, Unit.PX, 0, Unit.PX);
+        rootLayoutPanel.setWidgetLeftRight(contentPanel, 200, Unit.PX, 200, Unit.PX);
         contentPanel.setStyleName("content-container");
+        
         contentPanel.setWidget(new LoginWidget());
     }
 
@@ -135,6 +137,7 @@ public class Site implements EntryPoint {
         historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new SomethingPlace());
         historyHandler.handleCurrentHistory();
         setWaitingBlockVisible(false);
-        contentPanel.setWidget(new HTML("ЗДЕСЬ ТИПА КОНТЕНТ"));
+        DepartmentEditWidget w = new DepartmentEditWidget();
+        contentPanel.setWidget(w);
     }
 }

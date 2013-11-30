@@ -36,12 +36,8 @@ public class CustomDateBox extends AbstractSimpleInput {
         this(false);
     }
 
-    public String getInputValue() {
-        Date value = leftDate.getValue();
-        if (value != null) {
-            return df.format(value) + "Z";
-        }
-        return "";
+    public Date getValue() {
+        return leftDate.getValue();
     }
 
     public void setLeftValue(String strValue) {

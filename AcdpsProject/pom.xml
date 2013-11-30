@@ -742,6 +742,18 @@
 				<hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect>
 			</properties>
 		</profile>
+		<!--Для инстанции на localhost, база ORACLE -->
+		<profile>
+			<id>oracle-10.0.151.58</id>
+			<properties>
+				<jdbc.driver>oracle.jdbc.OracleDriver</jdbc.driver>
+				<jdbc.url>jdbc:oracle:thin:@10.0.151.58:1521:orcl</jdbc.url>
+				<jdbc.username>ssp_main</jdbc.username>
+				<jdbc.password>ssp_main</jdbc.password>
+				<hibernate.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.dialect>
+			</properties>
+		</profile>
+		
 		<profile>
 			<!--Для инстанции на тестовом сервере, база MSSQL -->
 			<id>mssql</id>
