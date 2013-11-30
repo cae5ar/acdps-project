@@ -20,9 +20,9 @@ public class User extends AbstractEntity {
     @Column(nullable = false, length = 4096)
     private String name;
 
-    /** логин/пароль */
+    /** логин пароль */
     @JoinColumn(nullable = true)
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserCredentials credentials = null;
 
     /** Флажок о том что пользователь админ */
