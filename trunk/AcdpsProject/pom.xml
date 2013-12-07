@@ -744,7 +744,7 @@
 		</profile>
 		<!--Для инстанции на localhost, база ORACLE -->
 		<profile>
-			<id>oracle-10.0.151.58</id>
+			<id>oracle-locale</id>
 			<properties>
 				<jdbc.driver>oracle.jdbc.OracleDriver</jdbc.driver>
 				<jdbc.url>jdbc:oracle:thin:@10.0.151.58:1521:orcl</jdbc.url>

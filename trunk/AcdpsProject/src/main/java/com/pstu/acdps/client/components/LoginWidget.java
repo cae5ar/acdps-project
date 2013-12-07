@@ -14,11 +14,13 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.TextBox;
 import com.pstu.acdps.client.Site;
 
 public class LoginWidget extends FlowPanel {
-    CustomTextBox loginInput = new CustomTextBox();
-    CustomPasswordTextBox passwordInput = new CustomPasswordTextBox();
+    TextBox loginInput = new TextBox();
+    PasswordTextBox passwordInput = new PasswordTextBox();
     private Btn submitButton = new Btn(Site.messages.msgEnter());
     private StyledLabel loginMessage = new StyledLabel("", "login-message");
 
@@ -36,7 +38,7 @@ public class LoginWidget extends FlowPanel {
 
     public LoginWidget() {
         super();
-        addStyleName("login-view");
+        addStyleName("login-view text-center");
         FlowPanel inputsPanel = new FlowPanel();
         inputsPanel.addStyleName("inputs-block");
         add(inputsPanel);
@@ -44,11 +46,11 @@ public class LoginWidget extends FlowPanel {
         inputsPanel.add(loginMessage);
 
         loginInput.addStyleName("user-data-input");
-        loginInput.setPlaceHolderText("Логин");
+        // loginInput.setPlaceHolderText("Логин");
         inputsPanel.add(loginInput);
 
         passwordInput.addStyleName("user-data-input");
-        passwordInput.setPlaceHolderText("Пароль");
+        // passwordInput.setPlaceHolderText("Пароль");
         inputsPanel.add(passwordInput);
 
         submitButton.addClickHandler(clickHandler);
@@ -66,7 +68,7 @@ public class LoginWidget extends FlowPanel {
     protected void onLoad() {
         super.onLoad();
         clearInputs();
-        loginInput.setFocus();
+        loginInput.setFocus(true);
         Element el = this.getElement();
         while (el != null) {
             el.setScrollTop(0);
@@ -90,8 +92,8 @@ public class LoginWidget extends FlowPanel {
         loginInput.setEnabled(true);
         passwordInput.setEnabled(true);
         submitButton.setEnabled(true);
-        loginInput.setValue("");
-        passwordInput.setValue("");
+        loginInput.setValue("operator");
+        passwordInput.setValue("123qwe");
         loginMessage.setText("");
         loginMessage.setStyleName("error", false);
     }

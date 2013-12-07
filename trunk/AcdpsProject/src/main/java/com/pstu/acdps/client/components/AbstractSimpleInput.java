@@ -15,7 +15,6 @@ public abstract class AbstractSimpleInput extends Composite {
 
     protected FlowPanel panel = new FlowPanel();
     protected FlowPanel controlGroup = new FlowPanel();
-    protected FlowPanel controls = new FlowPanel();
     protected Element label = DOM.createLabel();
     protected Element inputWrap = DOM.createSpan();
     protected Element helpInline = DOM.createSpan();
@@ -28,9 +27,6 @@ public abstract class AbstractSimpleInput extends Composite {
         label.addClassName("control-label text-left");
         controlGroup.getElement().appendChild(label);
 
-        controls.addStyleName("controls");
-        controlGroup.add(controls);
-
         helpInline.addClassName("help-block");
         panel.add(controlGroup);
     }
@@ -40,16 +36,16 @@ public abstract class AbstractSimpleInput extends Composite {
     }
 
     public void setHelpBlock(String html) {
-        controls.getElement().appendChild(helpInline);
+        controlGroup.getElement().appendChild(helpInline);
         helpInline.setInnerHTML(html);
     }
     public void setHelpBlock(Element el) {
-        controls.getElement().appendChild(helpInline);
+        controlGroup.getElement().appendChild(helpInline);
         helpInline.appendChild(el);
     }
 
     protected void wrapInput(Widget input) {
-        controls.add(input);
+        controlGroup.add(input);
         input.addStyleName("form-control");
     }
 

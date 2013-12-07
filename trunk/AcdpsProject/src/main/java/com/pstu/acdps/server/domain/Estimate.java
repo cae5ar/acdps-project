@@ -37,7 +37,7 @@ public class Estimate extends Document {
 	@JoinColumn(name = "currency_id", nullable = true)
 	private Currency currency = null;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cfo", cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estimate", cascade = CascadeType.ALL)
 	private List<EstimateSection> estimateSection = new ArrayList<EstimateSection>();
 
 	public List<EstimateSection> getSectionCFO() {

@@ -1,4 +1,4 @@
-package com.pstu.acdps.server.service;
+package com.pstu.acdps.shared.type;
 
 import java.util.Date;
 

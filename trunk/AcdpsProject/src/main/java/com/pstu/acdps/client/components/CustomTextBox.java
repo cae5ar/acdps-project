@@ -40,4 +40,8 @@ public class CustomTextBox extends AbstractSimpleInput {
         textBox.addKeyDownHandler(keyHandler);
     }
 
+    public TextBox getTextBox() {
+        return textBox;
+    }
+
 }

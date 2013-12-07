@@ -3,6 +3,7 @@ package com.pstu.acdps.client.components;
 import java.util.Date;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -14,7 +15,7 @@ public class CustomDateBox extends AbstractSimpleInput {
     private DateBox leftDate = new DateBox();
     private DateBox rightDate = new DateBox();
     private FlowPanel valuePanel = new FlowPanel();
-    private DateTimeFormat df = DateTimeFormat.getFormat("HH:mm dd.MM.yyyy");
+    private DateTimeFormat df = DateTimeFormat.getFormat("dd.MM.yyyy");
 
     public CustomDateBox(Boolean isPeriod) {
         inputWrap.removeFromParent();
@@ -26,10 +27,10 @@ public class CustomDateBox extends AbstractSimpleInput {
             valuePanel.getElement().appendChild(span);
             valuePanel.add(rightDate);
         }
-        controls.add(valuePanel);
-        leftDate.setFormat(new DateBox.DefaultFormat(df));
-        rightDate.setFormat(new DateBox.DefaultFormat(df));
-        controls.getElement().appendChild(helpInline);
+        controlGroup.add(valuePanel);
+        leftDate.setFormat(new DateBox.DefaultFormat(getDateFormat()));
+        rightDate.setFormat(new DateBox.DefaultFormat(getDateFormat()));
+        valuePanel.getElement().getStyle().setDisplay(Display.INLINE);
     }
 
     public CustomDateBox() {
@@ -40,10 +41,14 @@ public class CustomDateBox extends AbstractSimpleInput {
         return leftDate.getValue();
     }
 
+    public void setValue(Date d) {
+        setLeftValue(d);
+    }
+
     public void setLeftValue(String strValue) {
         Date date = null;
         if (strValue != null && !strValue.isEmpty()) {
-            date = df.parse(strValue);
+            date = getDateFormat().parse(strValue);
         }
         setLeftValue(date);
     }
@@ -51,20 +56,19 @@ public class CustomDateBox extends AbstractSimpleInput {
     public void setRightValue(String strValue) {
         Date date = null;
         if (strValue != null && !strValue.isEmpty()) {
-            date = df.parse(strValue);
+            date = getDateFormat().parse(strValue);
         }
         setRightValue(date);
     }
 
-    private void setLeftValue(Date date) {
+    public void setLeftValue(Date date) {
         leftDate.setValue(date);
     }
 
-    private void setRightValue(Date date) {
+    public void setRightValue(Date date) {
         rightDate.setValue(date);
     }
 
-    @Override
     public void addInputStyleName(String style) {
         valuePanel.addStyleName(style);
     }
@@ -80,4 +84,12 @@ public class CustomDateBox extends AbstractSimpleInput {
         }
     }
 
+    public DateTimeFormat getDateFormat() {
+        return df;
+    }
+
+    public void setDateFormat(DateTimeFormat df) {
+        this.df = df;
+    }
+    
 }

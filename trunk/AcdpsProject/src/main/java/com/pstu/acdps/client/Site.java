@@ -9,7 +9,6 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
 import com.google.gwt.dom.client.Style.Display;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.RequestBuilder;
@@ -21,11 +20,10 @@ import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.pstu.acdps.client.components.CustomDialogBox;
-import com.pstu.acdps.client.components.CustomDialogBox.EAlertType;
-import com.pstu.acdps.client.components.DepartmentEditWidget;
+import com.pstu.acdps.client.components.AlertDialogBox;
+import com.pstu.acdps.client.components.AlertDialogBox.EAlertType;
 import com.pstu.acdps.client.components.LoginWidget;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.CustomActivityMapper;
@@ -49,7 +47,7 @@ public class Site implements EntryPoint {
     public static void handleError(Throwable caught) {
         System.out.println();
         logger.log(Level.WARNING, caught.getMessage(), caught);
-        CustomDialogBox.showDialogBox(new CustomDialogBox("Ошибка!", caught.getMessage(), EAlertType.ERROR));
+        AlertDialogBox.showDialogBox(new AlertDialogBox("Ошибка!", caught.getMessage(), EAlertType.ERROR));
     }
 
     public void onModuleLoad() {
@@ -65,7 +63,6 @@ public class Site implements EntryPoint {
     }
 
     private void initPlaceHistoryHandler(UserDto user) {
-        RootLayoutPanel.get().clear();
         Site.user = user;
         if (historyHandlerRegistration != null) historyHandlerRegistration.removeHandler();
         if (user == null) {
@@ -94,12 +91,9 @@ public class Site implements EntryPoint {
 
     protected void initLoginPage() {
         setWaitingBlockVisible(false);
-        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
-        rootLayoutPanel.setWidgetTopBottom(contentPanel, 56, Unit.PX, 0, Unit.PX);
-        rootLayoutPanel.setWidgetLeftRight(contentPanel, 200, Unit.PX, 200, Unit.PX);
-        contentPanel.setStyleName("content-container");
-        
+        contentPanel.setStyleName("content-container text-center");
         contentPanel.setWidget(new LoginWidget());
     }
 
@@ -124,9 +118,8 @@ public class Site implements EntryPoint {
     @SuppressWarnings("deprecation")
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
-        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
-        rootLayoutPanel.setWidgetTopBottom(contentPanel, 56, Unit.PX, 0, Unit.PX);
         contentPanel.setStyleName("content-container");
 
         ActivityMapper activityMapper = new CustomActivityMapper(clientFactory);
@@ -137,7 +130,7 @@ public class Site implements EntryPoint {
         historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new SomethingPlace());
         historyHandler.handleCurrentHistory();
         setWaitingBlockVisible(false);
-        DepartmentEditWidget w = new DepartmentEditWidget();
-        contentPanel.setWidget(w);
+        SSPObjectView view = new SSPObjectView("Подразделения");
+        contentPanel.setWidget(view);
     }
 }

@@ -1,76 +1,141 @@
-﻿.unauthorized-contnent.contaner {
-	background-color: #ededed;
+﻿body {
+	padding-top: 0px;
 }
 
-.login-view {
-	text-align: center;
+.content-container {
+	margin: 56px 0px 20px 0px;
 }
 
-.login-view .inputs-block {
-	width: 330px;
-	display: inline-block;
+.modal-dialog {
+	padding-top: 120px;
+}
+
+.modal-footer.text-left {
 	text-align: left;
-	padding: 20px 0px;
 }
 
-.login-view .login-message {
-	color: #Da3f3f;
+.glyphicon.glyphicon-asterisk {
+	color: #FF0000;
 }
 
-.login-view .user-data-input .form-group {
-	margin: 0px;
+.left.block {
+	border-right: 1px solid #AFAFAF;
 }
 
-.login-view .user-data-input .form-control {
-	border-radius: 0px;
-	border-color: #78a8bd;
-	background-color: #f6f6f6;
-	color: #343a42;
-	height: 40px;
+/*чтоб попап не перекрывал*/
+.dateBoxPopup {
+	z-index: 1050;
 }
 
-.login-view .btn.password-restore {
-	padding-left: 0px;
+.gwt-CheckBox {
+	display: block;
+	padding: 5px 0;
 }
 
-.login-view  .user-data-input {
-	margin-bottom: 10px;
+.gwt-CheckBox label {
+	margin-left: 5px;
 }
 
-.login-view .login-button-panel {
-	padding: 0px;
-	border: none;
+.gwt-DateBox {
+	text-align: center;
+	width: 100px;
 }
 
-.login-button-panel.modal-footer .btn+.btn {
-	margin-left: 4px;
+.sspobject-view-scroll {
+	padding-right: 0px;
+	border: solid 5px #F1F1F1;
+	border-radius: 3px;
+	width: 100%;
+	padding-bottom: 49px;
 }
 
-.login-view .btn.login-button {
-	height: 45px;
-	width: 163px;
-	border: 1px solid;
-	border-radius: 0px;
+.sspobject-edit-scroll {
+	max-height: 400px;
+	margin-top: 10px;
+}
+
+.content-panel {
+	padding: 10px;
+	border-top: 1px solid #AAA;
+}
+
+.view-caption {
+	float: left;
+}
+
+.form-horizontal {
+	display: inline;
+}
+
+.control-label {
+	margin-right: 10px;
+}
+
+.control-label.label-left {
+    width: 70px;
+}
+
+.form-horizontal .form-group {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+.header-control {
+	float: right;
+	margin-top: 20px;
+}
+
+.form-horizontal.header-control {
+	margin-left: 10px;
+}
+
+.btn.header-control {
+	margin-right: 5px;
+	margin-left: 5px;
+	padding-bottom: 10px;
+}
+
+.object-selector .object-node {
 	font-size: 16px;
-	color: #FFFFFF;
-	border-color: #FFFFFF;
-	background-color: #3995c5;
-	background-image: -webkit-gradient(linear, left 0%, left 100%, from(#3995c5),
-		to(#0e6e9f) );
-	background-image: -webkit-linear-gradient(top, #3995c5, 0%, #0e6e9f, 100%);
-	background-image: -moz-linear-gradient(top, #3995c5 0%, #0e6e9f 100%);
-	background-image: linear-gradient(to bottom, #3995c5 0%, #0e6e9f 100%);
-	background-repeat: repeat-x;
+	font-weight: normal;
+	width: 100%;
+	margin: 5px;
 }
 
-.login-view .btn.login-button.inverted {
-	border-color: #8cb6cf;
-	background-color: #FFFFFF;
-	background-image: -webkit-gradient(linear, left 0%, left 100%, from(#fafbfc),
-		to(#e8f0f8) );
-	background-image: -webkit-linear-gradient(top, #fafbfc, 0%, #e8f0f8, 100%);
-	background-image: -moz-linear-gradient(top, #fafbfc 0%, #e8f0f8 100%);
-	background-image: linear-gradient(to bottom, #fafbfc 0%, #e8f0f8 100%);
-	background-repeat: repeat-x;
-	color: #1578ac;
+.object-selector .object-node .gwt-TreeItem {
+	padding: 10px 5px;
+}
+
+.object-selector .object-node .gwt-TreeItem.gwt-TreeItem-selected {
+	background-color: #dfedf8;
+}
+
+.object-selector .object-node.has-child {
+	font-size: 14px;
+	font-weight: bolder;
+	margin: 10px 0px;
+}
+
+.object-selector .object-node.has-child img {
+	margin-right: 7px;
+}
+
+.object-selector .object-node.is-layer-node .gwt-TreeItem {
+	padding-left: 7px;
+}
+
+.object-selector .object-node.is-layer-node .gwt-TreeItem:before {
+	content: '';
+	position: absolute;
+	height: 15px;
+	width: 17px;
+	margin-right: -17px;
+	background-image: url('../img/layer-icon.png');
+	margin-left: -29px;
+	margin-top: 2px
+}
+
+.horizontal-input {
+	width: 224px;
+	display: initial;
 }

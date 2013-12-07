@@ -13,10 +13,7 @@ import com.pstu.acdps.shared.dto.UserDto;
  */
 public interface GwtRpcServiceAsync {
     void getCurrentUser(AsyncCallback<UserDto> callback);
-
     void saveEmployee(JobPosDto bean, AsyncCallback<Long> callback);
-
     void getDepartmentChilds(Long parentId, Date currdate, AsyncCallback<List<SSPObjectDto>> callback);
-
     void saveDepartment(SSPObjectDto item, AsyncCallback<Long> simpleAsyncCallback);
 }
