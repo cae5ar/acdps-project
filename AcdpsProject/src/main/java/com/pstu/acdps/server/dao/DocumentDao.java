@@ -1,8 +1,11 @@
 package com.pstu.acdps.server.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.pstu.acdps.server.domain.Document;
 import com.pstu.acdps.shared.dto.DocumentDto;
 
+@Repository
 public class DocumentDao extends JpaDao<Document> {
 
     @Override

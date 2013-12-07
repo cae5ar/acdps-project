@@ -1,9 +1,12 @@
 package com.pstu.acdps.server.domain;
 
+import org.springframework.stereotype.Repository;
+
 import com.pstu.acdps.server.dao.JpaDao;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
+@Repository
 public class JobPosDao extends JpaDao<JobPos> {
 
     @Override

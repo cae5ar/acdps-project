@@ -1,10 +1,14 @@
 package com.pstu.acdps.server.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +21,7 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 public class DepartmentDao extends JpaDao<Department> {
     @Autowired
     SSPObjectHierachyDao sspObjectHierachyDao;
-    
+
     @Override
     public Class<Department> getEntityClass() {
         return Department.class;
@@ -41,16 +45,37 @@ public class DepartmentDao extends JpaDao<Department> {
         return entity.getId();
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     public List<SSPObjectDto> getChilds(Long parentId, Date date) {
-        // "select d.* from deparment d, hier h where currdate between h.start_date and h.end_date and d.id=h.obj_id"
-        Query q = em.createQuery("SELECT op FROM "
-                + SSPObjectHierachy.class
-                + " h JOIN h.sspObject op where :currdate between h.startDate and h.endDate and h.parent.id = :parentId");
-        q.setParameter("currdate", date);
-        q.setParameter("parentId", parentId);
-        List resultList = q.getResultList();
-        return resultList;
-    }
+        List<SSPObjectDto> list = new ArrayList<SSPObjectDto>();
+        Criteria c = getHibernateSession().createCriteria(SSPObjectHierachy.class, "h");
+        c.createAlias("h.sspObject", "sspObj");
+        if (parentId == null)
+            c.add(Restrictions.isNull("parent"));
+        else
+            c.add(Restrictions.eq("parent.id", parentId));
+        c.add(Restrictions.ge("h.endDate", date));
+        c.add(Restrictions.le("h.startDate", date));
+////        @formatter:off
+        c.setProjection(Projections.projectionList()
+        .add(Projections.property("sspObj.id"))
+        .add(Projections.property("h.startDate"))
+        .add(Projections.property("h.endDate")));
 
+        List<Object[]> resultList = c.list();
+        // q.setParameter("currdate", date);
+        // q.setParameter("parentId", parentId);
+        // List resultList = q.getResultList();
+        for (Object[] o : resultList) {
+            Query q = em.createQuery("SELECT COUNT(*) FROM " + SSPObjectHierachy.class.getName() + " h WHERE :currdate >= h.startDate and :currdate < h.endDate and h.parent.id = :parentId");
+////        @formatter:on
+            Long sspObjectId = (Long) o[0];
+            q.setParameter("currdate", date);
+            q.setParameter("parentId", sspObjectId);
+            Department d = findById(sspObjectId);
+            boolean singleResult = ((Long) q.getSingleResult() > 0 ? true : false);
+            list.add(new SSPObjectDto(sspObjectId, d.getName(), parentId, (Date) o[1], (Date) o[2], singleResult));
+        }
+        return list;
+    }
 }

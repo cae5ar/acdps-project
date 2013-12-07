@@ -13,10 +13,8 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 @RemoteServiceRelativePath("service.rpc")
 public interface GwtRpcService extends RemoteService {
     UserDto getCurrentUser() throws AnyServiceException;
+    Long saveEmployee(JobPosDto bean) throws AnyServiceException;
+    List<SSPObjectDto> getDepartmentChilds(Long parentId, Date currdate) throws AnyServiceException;
+    Long saveDepartment(SSPObjectDto item) throws AnyServiceException;
 
-    Long saveEmployee(JobPosDto bean) throws AnyServiceException ;
-
-    List<SSPObjectDto> getDepartmentChilds(Long parentId, Date currdate) throws AnyServiceException ;
-
-    Long saveDepartment(SSPObjectDto item) throws AnyServiceException ;
 }
