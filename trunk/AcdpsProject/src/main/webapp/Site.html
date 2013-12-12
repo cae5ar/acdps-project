@@ -43,26 +43,26 @@
 				</div>
 				<div class="navbar-collapse collapse" style="height: 1px;">
 					<ul class="nav navbar-nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown hide"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Справочники <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Подразделения</a></li>
-								<li><a href="#">Сотрудники</a></li>
-								<li><a href="#">ЦФО</a></li>
+							<ul id="dictionary-dropdown" class="dropdown-menu">
 							</ul>
 						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown hide"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Документы <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Статьи</a></li>
-								<li><a href="#">Сметы</a></li>
+							<ul  id="documents-dropdown"class="dropdown-menu">
 							</ul>
 						</li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
+						<li class="dropdown hide"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown">Платежи <b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Тут я пока не придумал</a></li>
+							<ul "payments-dropdown" class="dropdown-menu">
 							</ul>
+						</li>
+						
+				   </ul>
+				   <ul class="nav navbar-nav navbar-right">
+				   		<li>
+							<a id="logout-link" class="hide">Выход</a>
 						</li>
 				   </ul>
 			    </div><!-- navbar-collapse -->

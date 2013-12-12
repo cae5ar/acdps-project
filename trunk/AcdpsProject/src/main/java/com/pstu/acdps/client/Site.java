@@ -28,7 +28,7 @@ import com.pstu.acdps.client.components.LoginWidget;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.CustomActivityMapper;
 import com.pstu.acdps.client.mvp.CustomPlaceHistoryMapper;
-import com.pstu.acdps.client.mvp.place.SomethingPlace;
+import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
 import com.pstu.acdps.shared.dto.UserDto;
 
 public class Site implements EntryPoint {
@@ -118,6 +118,7 @@ public class Site implements EntryPoint {
     @SuppressWarnings("deprecation")
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
+        clientFactory.getHeader().setVisibleLogoutButton(true);
         RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
         contentPanel.setStyleName("content-container");
@@ -127,10 +128,8 @@ public class Site implements EntryPoint {
         activityManager.setDisplay(contentPanel);
 
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler((PlaceHistoryMapper) GWT.create(CustomPlaceHistoryMapper.class));
-        historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new SomethingPlace());
+        historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new DepartmentsPagePlace());
         historyHandler.handleCurrentHistory();
         setWaitingBlockVisible(false);
-        SSPObjectView view = new SSPObjectView("Подразделения");
-        contentPanel.setWidget(view);
     }
 }
