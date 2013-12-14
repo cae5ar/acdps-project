@@ -3,14 +3,14 @@ package com.pstu.acdps.client.mvp.activity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.pstu.acdps.client.mvp.ClientFactory;
-import com.pstu.acdps.client.mvp.place.EmployeesPagePlace;
+import com.pstu.acdps.client.mvp.place.PaymentsPagePlace;
 
-public class EmployeesPageActivity extends MainAbstractActivity {
+public class PaymentsPageActivity extends MainAbstractActivity {
 
     @SuppressWarnings("unused")
-    private EmployeesPagePlace place;
+    private PaymentsPagePlace place;
 
-    public EmployeesPageActivity(EmployeesPagePlace place, ClientFactory clientFactory) {
+    public PaymentsPageActivity(PaymentsPagePlace place, ClientFactory clientFactory) {
         this.place = place;
         this.clientFactory = clientFactory;
     }

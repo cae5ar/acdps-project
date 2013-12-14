@@ -39,6 +39,7 @@ public class DepartmentDao extends JpaDao<Department> {
         }
         entity.setName(bean.getName());
         persist(entity);
+        List<SSPObjectHierachy> hierrachies = entity.getHierrachies();
         if (isNew) {
             sspObjectHierachyDao.save(entity, bean.getParentId(), bean.getStartDate());
         }
@@ -54,21 +55,19 @@ public class DepartmentDao extends JpaDao<Department> {
             c.add(Restrictions.isNull("parent"));
         else
             c.add(Restrictions.eq("parent.id", parentId));
+//        @formatter:off
         c.add(Restrictions.ge("h.endDate", date));
         c.add(Restrictions.le("h.startDate", date));
-////        @formatter:off
+        
         c.setProjection(Projections.projectionList()
         .add(Projections.property("sspObj.id"))
         .add(Projections.property("h.startDate"))
         .add(Projections.property("h.endDate")));
 
         List<Object[]> resultList = c.list();
-        // q.setParameter("currdate", date);
-        // q.setParameter("parentId", parentId);
-        // List resultList = q.getResultList();
         for (Object[] o : resultList) {
             Query q = em.createQuery("SELECT COUNT(*) FROM " + SSPObjectHierachy.class.getName() + " h WHERE :currdate >= h.startDate and :currdate < h.endDate and h.parent.id = :parentId");
-////        @formatter:on
+//        @formatter:on
             Long sspObjectId = (Long) o[0];
             q.setParameter("currdate", date);
             q.setParameter("parentId", sspObjectId);

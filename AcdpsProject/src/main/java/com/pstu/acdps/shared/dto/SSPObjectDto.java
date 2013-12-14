@@ -22,6 +22,13 @@ public class SSPObjectDto extends EntityDto implements HasChild {
     public Date getStartDate() {
         return startDate;
     }
+    
+    public SSPObjectDto(Long id, String name, Long parentId, Date startDate) {
+        super(id);
+        this.name = name;
+        this.parentId = parentId;
+        this.startDate= startDate;
+    }
 
     public SSPObjectDto(Long id, String name, Long parentId, Date startDate, Date endDate) {
         super(id);
@@ -75,6 +82,9 @@ public class SSPObjectDto extends EntityDto implements HasChild {
     }
 
     public void setEndDate(Date endDate) {
+        if(endDate == null){
+            this.endDate = SystemConstants.endDate;
+        }
         this.endDate = endDate;
     }
 

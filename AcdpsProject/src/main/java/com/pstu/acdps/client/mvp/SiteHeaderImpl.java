@@ -17,13 +17,11 @@ public class SiteHeaderImpl implements SiteHeader {
                 Site.logout();
             }
         });
+
     }
 
     @Override
-    public void setVisibleLogoutButton(boolean visible) {
-        if(visible)
-            logoutLink.removeClass("hide");
-        else
-            logoutLink.addClass("hide");
+    public void setVisibleHeaderAndFooter() {
+        JQuery.select(".hide").removeClass("hide");
     }
 }

@@ -20,6 +20,8 @@ public class TreeWidget<E extends HasChild> extends Composite {
     private HandlerRegistration addOpenHandler;
     private HandlerRegistration addSelectHandler;
     private Tree dynamicTree;
+    private HasTreeItems parentNode;
+    private E fakeParent;
 
     public interface ObjectsOpenHandler<E> {
         public void selected(E object, TreeItem source);
@@ -35,11 +37,23 @@ public class TreeWidget<E extends HasChild> extends Composite {
         dynamicTree.setStyleName("object-groups-tree");
     }
 
-    public TreeWidget(final ObjectsOpenHandler<E> handler) {
+    public TreeWidget(final ObjectsOpenHandler<E> handler, E fakeParent) {
+        this.fakeParent = fakeParent;
         dynamicTree = new Tree();
         initWidget(dynamicTree);
         dynamicTree.setStyleName("object-groups-tree");
         setOpenHandler(handler);
+        if (fakeParent != null) {
+            TreeItem node = dynamicTree.addTextItem(fakeParent.getNodeName());
+            node.setStyleName("object-node");
+            node.addStyleName("has-child");
+            node.addTextItem("ЗАГРУЗКА СПИСКА...");
+            nodes.put(node, fakeParent);
+            parentNode = node;
+        }
+        else {
+            parentNode = dynamicTree;
+        }
     }
 
     public void setOpenHandler(final ObjectsOpenHandler<E> handler) {
@@ -68,7 +82,7 @@ public class TreeWidget<E extends HasChild> extends Composite {
 
     public void addItemList(List<E> list, HasTreeItems parent) {
         if (parent == null) {
-            parent = dynamicTree;
+            parent = parentNode;
         }
         else {
             ((TreeItem) parent).getChild(0).remove();
@@ -80,7 +94,7 @@ public class TreeWidget<E extends HasChild> extends Composite {
 
     public void addItemNode(E e, HasTreeItems parent) {
         if (parent == null) {
-            parent = dynamicTree;
+            parent = parentNode;
         }
         TreeItem child = parent.addTextItem(e.getNodeName());
         child.setStyleName("object-node");
@@ -100,7 +114,8 @@ public class TreeWidget<E extends HasChild> extends Composite {
     }
 
     public void reset() {
-        dynamicTree.removeItems();
+        parentNode.removeItems();
         nodes.clear();
+        nodes.put((TreeItem) parentNode, fakeParent);
     }
 }

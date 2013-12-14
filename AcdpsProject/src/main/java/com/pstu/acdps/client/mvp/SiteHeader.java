@@ -7,6 +7,6 @@ package com.pstu.acdps.client.mvp;
  */
 public interface SiteHeader {
 
-    public void setVisibleLogoutButton(boolean visible);
+    void setVisibleHeaderAndFooter();
 
 }
