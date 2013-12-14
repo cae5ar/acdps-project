@@ -39,10 +39,13 @@ public class DepartmentDao extends JpaDao<Department> {
         }
         entity.setName(bean.getName());
         persist(entity);
-        List<SSPObjectHierachy> hierrachies = entity.getHierrachies();
+        /*
+         * 
         if (isNew) {
             sspObjectHierachyDao.save(entity, bean.getParentId(), bean.getStartDate());
         }
+        */
+        sspObjectHierachyDao.save(entity, bean.getParentId(), bean.getStartDate(), isNew);
         return entity.getId();
     }
 
