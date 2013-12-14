@@ -209,7 +209,6 @@ public class DateUtils {
 
     /**
      * Returns a day <em>exactly</em> 24 hours before the instant passed as
-     * <code>date</code>. // TODO: This logic should address the time zone
      * offset
      * 
      * @param date A point in time from which the moment 24 hours before will be

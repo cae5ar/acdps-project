@@ -17,8 +17,6 @@ public class CfoPageActivity extends MainAbstractActivity {
 
     @Override
     public void start(AcceptsOneWidget container, EventBus eventBus) {
-        // TODO Auto-generated method stub
-
     }
 
 }

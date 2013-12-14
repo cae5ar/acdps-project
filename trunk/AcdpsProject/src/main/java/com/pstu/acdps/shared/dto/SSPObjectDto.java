@@ -67,12 +67,10 @@ public class SSPObjectDto extends EntityDto implements HasChild {
         this.name = name;
     }
 
-    @Override
     public boolean hasChild() {
         return hasChild;
     }
 
-    @Override
     public String getNodeName() {
         return this.name;
     }

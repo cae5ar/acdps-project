@@ -63,9 +63,9 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     }
 
     @Override
-    public long saveSection(SSPObjectDto dto) {
+    public Long saveSection(SSPObjectDto dto) {
         // TODO Написать реаизацию
-        return 0;
+        return 0L;
     }
 
     @Override
