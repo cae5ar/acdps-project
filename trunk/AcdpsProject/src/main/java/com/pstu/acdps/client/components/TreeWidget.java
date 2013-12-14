@@ -42,7 +42,25 @@ public class TreeWidget<E extends HasChild> extends Composite {
         dynamicTree = new Tree();
         initWidget(dynamicTree);
         dynamicTree.setStyleName("object-groups-tree");
+        if (fakeParent != null) {
+            TreeItem node = dynamicTree.addTextItem(fakeParent.getNodeName());
+            node.setStyleName("object-node");
+            node.addStyleName("has-child");
+            node.addTextItem("ЗАГРУЗКА СПИСКА...");
+            nodes.put(node, fakeParent);
+            parentNode = node;
+        }
+        else {
+            parentNode = dynamicTree;
+        }
         setOpenHandler(handler);
+    }
+
+    public TreeWidget(E fakeParent) {
+        this.fakeParent = fakeParent;
+        dynamicTree = new Tree();
+        initWidget(dynamicTree);
+        dynamicTree.setStyleName("object-groups-tree");
         if (fakeParent != null) {
             TreeItem node = dynamicTree.addTextItem(fakeParent.getNodeName());
             node.setStyleName("object-node");
@@ -87,8 +105,10 @@ public class TreeWidget<E extends HasChild> extends Composite {
         else {
             ((TreeItem) parent).getChild(0).remove();
         }
-        for (E e : list) {
-            addItemNode(e, parent);
+        if (list != null) {
+            for (E e : list) {
+                addItemNode(e, parent);
+            }
         }
     }
 

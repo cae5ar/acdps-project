@@ -21,7 +21,7 @@
 	cursor: pointer;
 }
 
-/*---------popup----------*/
+/*---------sspobject edit popup----------*/
 .modal-dialog {
 	padding-top: 120px;
 }
@@ -32,6 +32,12 @@
 
 .left.block {
 	border-right: 1px solid #AFAFAF;
+}
+
+.tree-scroll-wrap {
+    border: 1px solid #DDD;
+    padding: 5px 8px;
+    max-height: 300px;
 }
 
 /*--чтоб bootstrap попап не перекрывал--*/
@@ -49,7 +55,7 @@
 }
 
 .sspobject-edit-scroll {
-	max-height: 400px;
+	max-height: 420px;
 	margin-top: 10px;
 }
 
@@ -59,7 +65,8 @@
 }
 
 .view-caption {
-	float: left;
+    float: left;
+    text-transform: capitalize;
 }
 
 .form-horizontal {
