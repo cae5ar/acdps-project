@@ -5,6 +5,7 @@ public class UserDto extends EntityDto {
 
     private String name = null;
     private String login = null;
+    private Boolean admin = false;
     
     public UserDto() {
         super();
@@ -18,6 +19,12 @@ public class UserDto extends EntityDto {
         super(id);
         this.name = name;
         this.login = login;
+    }
+    public UserDto(Long id, String name, String login , Boolean admin) {
+        super(id);
+        this.name = name;
+        this.login = login;
+        this.admin = admin;
     }
 
     public String getName() {
@@ -34,6 +41,14 @@ public class UserDto extends EntityDto {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 
 }
