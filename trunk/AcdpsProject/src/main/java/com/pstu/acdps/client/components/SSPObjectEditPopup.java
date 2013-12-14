@@ -95,7 +95,7 @@ public class SSPObjectEditPopup extends CustomPopup {
                 commit = false;
                 AlertDialogBox.showDialogBox("Поле 'начало периода' обязательно для заполнения");
             }
-            if (tree.getSelectedNode() == null) {
+            if (dto.getParentId() == null && tree.getSelectedNode() == null) {
                 AlertDialogBox.showDialogBox("Выберите родительский элемент для добавляемого узла");
             }
             if (commit) {
