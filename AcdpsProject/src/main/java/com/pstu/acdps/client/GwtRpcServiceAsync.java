@@ -17,4 +17,7 @@ public interface GwtRpcServiceAsync {
     void getDepartmentChilds(Long parentId, Date currdate, AsyncCallback<List<SSPObjectDto>> callback);
     void saveDepartment(SSPObjectDto item, AsyncCallback<Long> simpleAsyncCallback);
     void removeDepartment(Long id, AsyncCallback<Void> simpleAsyncCallback);
+    void saveSection(SSPObjectDto dto, AsyncCallback<Long> simpleAsyncCallback);
+    void removeSection(Long id, AsyncCallback<Void> simpleAsyncCallback);
+    void getSectionChilds(Long id, Date selectedDate, AsyncCallback<List<SSPObjectDto>> simpleAsyncCallback);
 }

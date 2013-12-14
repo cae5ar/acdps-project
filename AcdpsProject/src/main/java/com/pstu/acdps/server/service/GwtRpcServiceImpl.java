@@ -1,5 +1,6 @@
 package com.pstu.acdps.server.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
         if (bean.getEmployeeDto().getId() == null) {
             bean.getEmployeeDto().setId(epmployeeDao.save(bean.getEmployeeDto()));
         }
-        return  jobPosDao.save(bean);
+        return jobPosDao.save(bean);
     }
 
     @Override
@@ -58,7 +59,31 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
 
     @Override
     public void removeDepartment(Long id) throws AnyServiceException {
-        departmentDao.remove(id);        
+        departmentDao.remove(id);
+    }
+
+    @Override
+    public long saveSection(SSPObjectDto dto) {
+        // TODO Написать реаизацию
+        return 0;
+    }
+
+    @Override
+    public void removeSection(Long id) {
+        // TODO Написать реаизацию
+
+    }
+
+    @Override
+    public List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate) {
+        // TODO Написать реаизацию
+        ArrayList<SSPObjectDto> arrayList = new ArrayList<SSPObjectDto>();
+        arrayList.add(new SSPObjectDto(1L, "Статья раз", null, new Date()));
+        arrayList.add(new SSPObjectDto(2L, "Статья два", null, new Date()));
+        arrayList.add(new SSPObjectDto(3L, "Статья три", null, new Date()));
+        arrayList.add(new SSPObjectDto(4L, "Статья четыре", null, new Date()));
+
+        return arrayList;
     }
 
 }

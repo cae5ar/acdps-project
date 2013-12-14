@@ -1,20 +1,15 @@
 package com.pstu.acdps.client.components;
 
-import java.util.Date;
-import java.util.List;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.google.gwt.user.client.ui.TreeItem;
-import com.pstu.acdps.client.SimpleAsyncCallback;
-import com.pstu.acdps.client.Site;
 import com.pstu.acdps.client.components.Btn.EButtonStyle;
-import com.pstu.acdps.client.components.TreeWidget.ObjectsOpenHandler;
+import com.pstu.acdps.client.mvp.presenter.SSPObjectPresenter;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 
 public class SSPObjectEditPopup extends CustomPopup {
@@ -25,16 +20,7 @@ public class SSPObjectEditPopup extends CustomPopup {
     private FlowPanel panel = new FlowPanel();
     private ScrollPanel scroll = new ScrollPanel(panel);
     private FlowPanel sspobejctEditInputsPanel = new FlowPanel();
-    private TreeWidget<SSPObjectDto> tree = new TreeWidget<SSPObjectDto>(new ObjectsOpenHandler<SSPObjectDto>() {
-        public void selected(SSPObjectDto object, final TreeItem source) {
-            Site.service.getDepartmentChilds(object.getId(), selectedDate, new SimpleAsyncCallback<List<SSPObjectDto>>() {
-                @Override
-                public void onSuccess(List<SSPObjectDto> result) {
-                    tree.addItemList(result, source);
-                }
-            });
-        }
-    }, new SSPObjectDto(null, "Все подразделения", null, new Date()));
+    private TreeWidget<SSPObjectDto> tree;
     private Btn cancel = new Btn("Отменить", EButtonStyle.DEFAULT, new ClickHandler() {
         public void onClick(ClickEvent event) {
             SSPObjectEditPopup.this.hide();
@@ -54,12 +40,11 @@ public class SSPObjectEditPopup extends CustomPopup {
     private SSPObjectDto dto;
     private CustomTextBox name;
     private CustomDateBox date;
-    private Date selectedDate;
 
-    public SSPObjectEditPopup(SSPObjectSaveHandler handler, SSPObjectDto dto, Date selectedDate) {
+    public SSPObjectEditPopup(SSPObjectSaveHandler handler, SSPObjectDto dto, SSPObjectPresenter presenter) {
         super();
+        tree = presenter.getSSPObjectTree();
         this.dto = dto;
-        this.selectedDate = selectedDate;
         addStyleName("sspobejct-edit-popup");
         setHandler(handler);
         setHeader("Редатирование подразделения");
@@ -91,9 +76,11 @@ public class SSPObjectEditPopup extends CustomPopup {
         date.setLeftValue(dto.getStartDate());
         date.setRightValue(dto.getEndDate());
         itemPanel.add(date);
-        if (selectedDate != null) {
-            itemPanel.add(tree);
-        }
+        Label parentTextLabel = new Label("Родительский объект:");
+        itemPanel.add(parentTextLabel);
+        ScrollPanel sp = new ScrollPanel(tree);
+        sp.addStyleName("tree-scroll-wrap object-selector");
+        itemPanel.add(sp);
         sspobejctEditInputsPanel.add(itemPanel);
     }
 
@@ -108,10 +95,14 @@ public class SSPObjectEditPopup extends CustomPopup {
                 commit = false;
                 AlertDialogBox.showDialogBox("Поле 'начало периода' обязательно для заполнения");
             }
+            if (tree.getSelectedNode() == null) {
+                AlertDialogBox.showDialogBox("Выберите родительский элемент для добавляемого узла");
+            }
             if (commit) {
                 dto.setName(name.getValue());
                 dto.setStartDate(date.getLeftValue());
                 dto.setEndDate(date.getRightValue());
+                dto.setParentId(tree.getSelectedNode().getId());
                 handler.save(dto, SSPObjectEditPopup.this);
             }
         }

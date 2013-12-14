@@ -22,4 +22,10 @@ public interface GwtRpcService extends RemoteService {
 
     void removeDepartment(Long id) throws AnyServiceException;
 
+    long saveSection(SSPObjectDto dto);
+
+    void removeSection(Long id);
+
+    List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
+
 }
