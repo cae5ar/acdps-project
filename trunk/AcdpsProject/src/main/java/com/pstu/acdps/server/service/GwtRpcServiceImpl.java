@@ -56,4 +56,9 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
         return departmentDao.save(item);
     }
 
+    @Override
+    public void removeDepartment(Long id) throws AnyServiceException {
+        departmentDao.remove(id);        
+    }
+
 }

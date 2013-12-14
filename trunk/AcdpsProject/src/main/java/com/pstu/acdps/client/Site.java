@@ -30,6 +30,7 @@ import com.pstu.acdps.client.mvp.CustomActivityMapper;
 import com.pstu.acdps.client.mvp.CustomPlaceHistoryMapper;
 import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
 import com.pstu.acdps.shared.dto.UserDto;
+import com.xedge.jquery.client.JQuery;
 
 public class Site implements EntryPoint {
 
@@ -47,7 +48,7 @@ public class Site implements EntryPoint {
     public static void handleError(Throwable caught) {
         System.out.println();
         logger.log(Level.WARNING, caught.getMessage(), caught);
-        AlertDialogBox.showDialogBox(new AlertDialogBox("Ошибка!", caught.getMessage(), EAlertType.ERROR));
+        AlertDialogBox.showDialogBox(new AlertDialogBox("Ошибка!", caught.getMessage(), EAlertType.DANGER));
     }
 
     public void onModuleLoad() {
@@ -64,6 +65,7 @@ public class Site implements EntryPoint {
 
     private void initPlaceHistoryHandler(UserDto user) {
         Site.user = user;
+        JQuery.select("body").removeClass("app-loading");
         if (historyHandlerRegistration != null) historyHandlerRegistration.removeHandler();
         if (user == null) {
             GWT.runAsync(new RunAsyncCallback() {
@@ -118,7 +120,7 @@ public class Site implements EntryPoint {
     @SuppressWarnings("deprecation")
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
-        clientFactory.getHeader().setVisibleLogoutButton(true);
+        clientFactory.getHeader().setVisibleHeaderAndFooter();
         RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
         contentPanel.setStyleName("content-container");

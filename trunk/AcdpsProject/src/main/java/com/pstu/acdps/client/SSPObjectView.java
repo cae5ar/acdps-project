@@ -54,7 +54,7 @@ public class SSPObjectView extends Composite {
                     }
                 });
             }
-        });
+        }, new SSPObjectDto(null, "Все подразделения", null, new Date()));
         contentPanel.add(tree);
         dateBox.setValue(new Date());
         reset();
@@ -68,21 +68,52 @@ public class SSPObjectView extends Composite {
         dateBox.setCaption("Выберите дату:");
         refreshBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                refreshTree(null, dateBox.getValue());
+                refreshTree(dateBox.getValue());
             }
         });
         addBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                SSPObjectEditPopup popup = new SSPObjectEditPopup(new SSPObjectSaveHandler() {
-                    public void save(SSPObjectDto dto, SSPObjectEditPopup sender) {}
-                }, null);
-                popup.show();
+                    SSPObjectDto dto = new SSPObjectDto();
+                    SSPObjectEditPopup popup = new SSPObjectEditPopup(new SSPObjectSaveHandler() {
+                        public void save(SSPObjectDto dto, SSPObjectEditPopup sender) {
+                            saveSSPObject(dto);
+                            sender.hide();
+                        }
+                    }, dto, selectedDate);
+                    popup.show();
+                }
             }
-        });
+        );
         refreshBtn.addStyleName("header-control");
         addBtn.addStyleName("header-control");
         editBtn.addStyleName("header-control");
+        editBtn.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                if (tree.getSelectedNode() != null) {
+                    SSPObjectEditPopup popup = new SSPObjectEditPopup(new SSPObjectSaveHandler() {
+                        public void save(SSPObjectDto dto, SSPObjectEditPopup sender) {
+                            saveSSPObject(dto);
+                            sender.hide();
+                        }
+                    }, tree.getSelectedNode(),selectedDate);
+                    popup.show();
+                }
+                else {
+                    AlertDialogBox.showDialogBox("Выберите объект для изменения");
+                }
+            }
+        });
         removeBtn.addStyleName("header-control");
+        removeBtn.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                if (tree.getSelectedNode() != null) {
+                    deleteSSPObject(tree.getSelectedNode());
+                }
+                else {
+                    AlertDialogBox.showDialogBox("Выберите объект для удаления");
+                }
+            }
+        });
         headerPanel.getElement().appendChild(header);
         headerPanel.add(refreshBtn);
         headerPanel.add(dateBox);
@@ -91,7 +122,25 @@ public class SSPObjectView extends Composite {
         headerPanel.add(addBtn);
     }
 
-    private void refreshTree(Long parentId, Date date) {
+    protected void deleteSSPObject(SSPObjectDto dto) {
+        Site.service.removeDepartment(dto.getId(), new SimpleAsyncCallback<Void>() {
+            public void onSuccess(Void result) {
+                AlertDialogBox.showDialogBox("Отлично", "Изменения успешно сохранены", EAlertType.SUCCESS);
+                refreshTree(selectedDate);
+            }
+        });
+    }
+
+    private void saveSSPObject(SSPObjectDto dto) {
+        Site.service.saveDepartment(dto, new SimpleAsyncCallback<Long>() {
+            public void onSuccess(Long result) {
+                AlertDialogBox.showDialogBox("Отлично", "Изменения успешно сохранены", EAlertType.SUCCESS);
+                refreshTree(selectedDate);
+            }
+        });
+    }
+
+    private void refreshTree(Date date) {
         if (date == null) {
             AlertDialogBox.showDialogBox("Дата не указана", "", EAlertType.WARNING);
             return;
@@ -99,6 +148,7 @@ public class SSPObjectView extends Composite {
         tree.reset();
         selectedDate = date;
         Site.service.getDepartmentChilds(null, selectedDate, new SimpleAsyncCallback<List<SSPObjectDto>>() {
+
             @Override
             public void onSuccess(List<SSPObjectDto> result) {
                 tree.addItemList(result, null);
@@ -107,7 +157,7 @@ public class SSPObjectView extends Composite {
     }
 
     public void reset() {
-        refreshTree(null, new Date());
+        refreshTree(new Date());
     }
 
     public SSPObjectView(String caption) {

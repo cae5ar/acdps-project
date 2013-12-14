@@ -1,7 +1,27 @@
-﻿.content-container {
-	margin: 56px 0px 20px 0px;
+﻿/*********static-block***********/
+#loadingMessage {
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #444444;
+	vertical-align: middle;
+	text-align: left;
 }
 
+.app-loading {
+	background-color: #DDD;
+}
+
+.content-container {
+	margin-bottom: 10px;
+}
+
+/*---------logout-link----------*/
+#logout-link {
+	cursor: pointer;
+}
+
+/*---------popup----------*/
 .modal-dialog {
 	padding-top: 120px;
 }
@@ -10,33 +30,16 @@
 	text-align: left;
 }
 
-.glyphicon.glyphicon-asterisk {
-	color: #FF0000;
-}
-
 .left.block {
 	border-right: 1px solid #AFAFAF;
 }
 
-/*чтоб попап не перекрывал*/
+/*--чтоб bootstrap попап не перекрывал--*/
 .dateBoxPopup {
 	z-index: 1050;
 }
 
-.gwt-CheckBox {
-	display: block;
-	padding: 5px 0;
-}
-
-.gwt-CheckBox label {
-	margin-left: 5px;
-}
-
-.gwt-DateBox {
-	text-align: center;
-	width: 100px;
-}
-
+/*----------spp-object-view--------*/
 .sspobject-view-scroll {
 	padding-right: 0px;
 	border: solid 5px #F1F1F1;
@@ -68,7 +71,7 @@
 }
 
 .control-label.label-left {
-    width: 70px;
+	width: 70px;
 }
 
 .form-horizontal .form-group {
@@ -94,7 +97,6 @@
 .object-selector .object-node {
 	font-size: 16px;
 	font-weight: normal;
-	width: 100%;
 	margin: 5px;
 }
 
@@ -133,5 +135,28 @@
 
 .horizontal-input {
 	width: 224px;
-	display: initial;
+	display: inline;
+}
+
+/*----------gwt-widget---------*/
+.gwt-CheckBox {
+	display: block;
+	padding: 5px 0;
+}
+
+.gwt-CheckBox label {
+	margin-left: 5px;
+}
+
+.gwt-DateBox {
+	text-align: center;
+	width: 100px;
+}
+
+/*********alerts-correction********/
+.alert {
+	max-width: 500px;
+	max-height: 125px;
+	text-overflow: ellipsis;
+	overflow: hidden;
 }

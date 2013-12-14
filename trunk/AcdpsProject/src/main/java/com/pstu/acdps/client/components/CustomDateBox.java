@@ -40,6 +40,14 @@ public class CustomDateBox extends AbstractSimpleInput {
     public Date getValue() {
         return leftDate.getValue();
     }
+    
+    public Date getLeftValue() {
+        return leftDate.getValue();
+    }
+    
+    public Date getRightValue() {
+        return leftDate.getValue();
+    }
 
     public void setValue(Date d) {
         setLeftValue(d);

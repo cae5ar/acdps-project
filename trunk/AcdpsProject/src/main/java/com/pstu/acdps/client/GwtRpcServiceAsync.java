@@ -16,4 +16,5 @@ public interface GwtRpcServiceAsync {
     void saveEmployee(JobPosDto bean, AsyncCallback<Long> callback);
     void getDepartmentChilds(Long parentId, Date currdate, AsyncCallback<List<SSPObjectDto>> callback);
     void saveDepartment(SSPObjectDto item, AsyncCallback<Long> simpleAsyncCallback);
+    void removeDepartment(Long id, AsyncCallback<Void> simpleAsyncCallback);
 }

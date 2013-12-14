@@ -10,8 +10,8 @@ public class SystemConstants {
         startDate.setYear(2013);
         startDate.setMonth(1);
         startDate.setDate(1);
-        endDate.setYear(2033);
-        endDate.setMonth(1);
+        endDate.setYear(endDate.getYear() + 10);
+        endDate.setMonth(0);
         endDate.setDate(1);
     }
 }

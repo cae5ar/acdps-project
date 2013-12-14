@@ -13,8 +13,8 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
- * Bootstrap alert messages. Use @link {@link #showDialogBox(AlertDialogBox)}
- * to create and show alert messages
+ * Bootstrap alert messages. Use @link {@link #showDialogBox(AlertDialogBox)} to
+ * create and show alert messages
  * 
  * @author Kasimov A.D.
  */
@@ -26,8 +26,8 @@ public class AlertDialogBox extends Composite {
 
     public enum EAlertType {
         INFO("alert-info"),
-        SUCCES("alert-success"),
-        ERROR("alert-error"),
+        SUCCESS("alert-success"),
+        DANGER("alert-danger"),
         WARNING("alert-warning");
 
         String style;
@@ -51,6 +51,7 @@ public class AlertDialogBox extends Composite {
         initWidget(mainPanel);
         mainPanel.addStyleName("alert fade");
         closeButton.addStyleName("close");
+        closeButton.getElement().setAttribute("style", "margin-left: 5px;");
         closeButton.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 hide();
@@ -119,11 +120,11 @@ public class AlertDialogBox extends Composite {
     }
 
     public static void showDialogBox(String strong) {
-        showDialogBox(new AlertDialogBox(strong));
+        showDialogBox(new AlertDialogBox(strong, "", EAlertType.WARNING));
     }
 
     public static void showDialogBox(String strong, String text) {
-        showDialogBox(new AlertDialogBox(strong, text));
+        showDialogBox(new AlertDialogBox(strong, text, EAlertType.WARNING));
     }
 
     public static void showDialogBox(String strong, String text, EAlertType type) {
