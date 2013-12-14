@@ -35,9 +35,9 @@
 }
 
 .tree-scroll-wrap {
-    border: 1px solid #DDD;
-    padding: 5px 8px;
-    max-height: 300px;
+	border: 1px solid #DDD;
+	padding: 5px 8px;
+	max-height: 300px;
 }
 
 /*--чтоб bootstrap попап не перекрывал--*/
@@ -45,6 +45,10 @@
 	z-index: 1050;
 }
 
+.gwt-Label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
 /*----------spp-object-view--------*/
 .sspobject-view-scroll {
 	padding-right: 0px;
@@ -65,8 +69,8 @@
 }
 
 .view-caption {
-    float: left;
-    text-transform: capitalize;
+	float: left;
+	text-transform: capitalize;
 }
 
 .form-horizontal {
@@ -95,9 +99,8 @@
 	margin-left: 10px;
 }
 
-.btn.header-control {
-	margin-right: 5px;
-	margin-left: 5px;
+.header-control.icon {
+	margin-left: 10px;
 	padding-bottom: 10px;
 }
 

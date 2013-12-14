@@ -75,9 +75,6 @@ public class SSPObjectView extends Composite {
                 popup.show();
             }
         });
-        refreshBtn.addStyleName("header-control");
-        addBtn.addStyleName("header-control");
-        editBtn.addStyleName("header-control");
         editBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (tree.getSelectedNode() != null) {
@@ -94,7 +91,6 @@ public class SSPObjectView extends Composite {
                 }
             }
         });
-        removeBtn.addStyleName("header-control");
         removeBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (tree.getSelectedNode() != null) {
@@ -105,6 +101,11 @@ public class SSPObjectView extends Composite {
                 }
             }
         });
+        removeBtn.addStyleName("header-control icon");
+        refreshBtn.addStyleName("header-control icon");
+        addBtn.addStyleName("header-control icon");
+        editBtn.addStyleName("header-control icon");
+        
         headerPanel.getElement().appendChild(header);
         headerPanel.add(refreshBtn);
         headerPanel.add(dateBox);
