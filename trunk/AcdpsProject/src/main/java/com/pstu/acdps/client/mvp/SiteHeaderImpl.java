@@ -20,8 +20,13 @@ public class SiteHeaderImpl implements SiteHeader {
 
     }
 
-    @Override
     public void setVisibleHeaderAndFooter() {
         JQuery.select(".hide").removeClass("hide");
+    }
+
+    public void setVisibleAdminButtons(Boolean isAdmin) {
+        if(isAdmin){
+            JQuery.select("#admin-button").removeClass("hide");
+        }
     }
 }

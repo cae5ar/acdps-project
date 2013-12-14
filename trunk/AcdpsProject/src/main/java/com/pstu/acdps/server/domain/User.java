@@ -54,7 +54,7 @@ public class User extends AbstractEntity {
     }
 
     public UserDto toDto() {
-        UserDto dto = new UserDto(id, name, credentials.getLogin());
+        UserDto dto = new UserDto(id, name, credentials.getLogin(), admin);
         return dto;
     }
 

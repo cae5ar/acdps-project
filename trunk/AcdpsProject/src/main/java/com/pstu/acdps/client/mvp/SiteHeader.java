@@ -9,4 +9,6 @@ public interface SiteHeader {
 
     void setVisibleHeaderAndFooter();
 
+    void setVisibleAdminButtons(Boolean admin);
+
 }

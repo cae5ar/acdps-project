@@ -28,6 +28,7 @@ import com.pstu.acdps.client.components.LoginWidget;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.CustomActivityMapper;
 import com.pstu.acdps.client.mvp.CustomPlaceHistoryMapper;
+import com.pstu.acdps.client.mvp.SiteHeader;
 import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.xedge.jquery.client.JQuery;
@@ -120,7 +121,9 @@ public class Site implements EntryPoint {
     @SuppressWarnings("deprecation")
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
-        clientFactory.getHeader().setVisibleHeaderAndFooter();
+        SiteHeader header = clientFactory.getHeader();
+        header.setVisibleHeaderAndFooter();
+        header.setVisibleAdminButtons(user.getAdmin());
         RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
         contentPanel.setStyleName("content-container");

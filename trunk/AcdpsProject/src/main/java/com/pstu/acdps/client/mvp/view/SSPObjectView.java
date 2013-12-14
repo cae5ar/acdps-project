@@ -1,7 +1,6 @@
 package com.pstu.acdps.client.mvp.view;
 
 import java.util.Date;
-import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -10,8 +9,6 @@ import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
-import com.pstu.acdps.client.SimpleAsyncCallback;
-import com.pstu.acdps.client.Site;
 import com.pstu.acdps.client.components.AlertDialogBox;
 import com.pstu.acdps.client.components.AlertDialogBox.EAlertType;
 import com.pstu.acdps.client.components.Btn;
