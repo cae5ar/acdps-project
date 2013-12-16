@@ -7,6 +7,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
@@ -24,7 +25,7 @@ public interface GwtRpcService extends RemoteService {
 
     Long saveSection(SSPObjectDto dto) throws AnyServiceException;
 
-    void removeSection(Long id);
+    void removeSection(Long id) throws AnyServiceException;
 
     List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
 

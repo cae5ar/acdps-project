@@ -19,6 +19,9 @@ public class SSPObjectHierachyDao extends JpaDao<SSPObjectHierachy> {
     }
 
     public void save(SSPObject entity, Long parentId, Date startDate, boolean isNew) throws AnyServiceException {
+        SSPObjectHierachy newHier = null; //new SSPObjectHierachy();
+        
+    	//этим методом нельзя изменить startDate и endDate
     	if (!isNew) {
     		SSPObjectHierachy actualHier = null;
     		for (SSPObjectHierachy hier : entity.getHierrachies()) {
@@ -33,18 +36,22 @@ public class SSPObjectHierachyDao extends JpaDao<SSPObjectHierachy> {
     			} else if (actualHier.getParent().getId() == parentId) {
     				//попытка создать новую версию иерархии с тем же самым парентом, то есть по сути ничего не изменяя
     				throw new AcdpsException("Попытка создать новую версию иерархии не изменяя родителя");
+    			} else if (actualHier.getStartDate().getTime() == startDate.getTime()){
+    				newHier = actualHier;
     			} else {
     				actualHier.setEndDate(new Date(startDate.getTime() - 1000));
     				persist(actualHier);
+    				newHier = new SSPObjectHierachy();
     			}
     		}
+    	} else {
+    		newHier = new SSPObjectHierachy();
     	}
     	
-        SSPObjectHierachy hier = new SSPObjectHierachy();
-        hier.setSspObject(entity);
-        hier.setEndDate(SystemConstants.endDate);
-        hier.setStartDate(startDate);
-        hier.setParent(find(SSPObject.class, parentId));
-        persist(hier);
+        newHier.setSspObject(entity);
+        newHier.setEndDate(SystemConstants.endDate);
+        newHier.setStartDate(startDate);
+        newHier.setParent(find(SSPObject.class, parentId));
+        persist(newHier);
     }
 }

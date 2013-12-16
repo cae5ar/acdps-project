@@ -12,9 +12,12 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pstu.acdps.client.GwtRpcService;
 import com.pstu.acdps.server.dao.DepartmentDao;
 import com.pstu.acdps.server.dao.EmployeeDao;
+import com.pstu.acdps.server.dao.SectionDao;
 import com.pstu.acdps.server.domain.JobPosDao;
+import com.pstu.acdps.shared.dto.DepartmentDto;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
@@ -34,6 +37,9 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
 
     @Autowired
     DepartmentDao departmentDao;
+    
+    @Autowired
+    SectionDao sectionDao;
 
     public UserDto getCurrentUser() throws AnyServiceException {
         return securityDetailsService.getCurrentUser();
@@ -63,27 +69,18 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     }
 
     @Override
-    public Long saveSection(SSPObjectDto dto) {
-        // TODO Написать реаизацию
-        return 0L;
+    public Long saveSection(SSPObjectDto dto) throws AnyServiceException {
+        return sectionDao.save(dto);
     }
 
     @Override
-    public void removeSection(Long id) {
-        // TODO Написать реаизацию
-
+    public void removeSection(Long id) throws AnyServiceException {
+    	sectionDao.remove(id);
     }
 
     @Override
     public List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate) {
-        // TODO Написать реаизацию
-        ArrayList<SSPObjectDto> arrayList = new ArrayList<SSPObjectDto>();
-        arrayList.add(new SSPObjectDto(1L, "Статья раз", null, new Date()));
-        arrayList.add(new SSPObjectDto(2L, "Статья два", null, new Date()));
-        arrayList.add(new SSPObjectDto(3L, "Статья три", null, new Date()));
-        arrayList.add(new SSPObjectDto(4L, "Статья четыре", null, new Date()));
-
-        return arrayList;
+        return sectionDao.getChilds(id, selectedDate);
     }
 
 }

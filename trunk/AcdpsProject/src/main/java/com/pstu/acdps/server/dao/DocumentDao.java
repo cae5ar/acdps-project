@@ -14,8 +14,7 @@ public class DocumentDao extends JpaDao<Document> {
     }
     
     public Long save(DocumentDto bean){
-        //TODO: продолжить
-        return null;
+    	return null;
     }
 
 }
