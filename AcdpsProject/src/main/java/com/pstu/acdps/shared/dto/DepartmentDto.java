@@ -1,6 +1,5 @@
-package com.pstu.acdps.server.dao;
+package com.pstu.acdps.shared.dto;
 
-import com.pstu.acdps.shared.dto.EntityDto;
 
 @SuppressWarnings("serial")
 public class DepartmentDto extends EntityDto {

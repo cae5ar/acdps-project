@@ -3,6 +3,7 @@ package com.pstu.acdps.server.dao;
 import org.springframework.stereotype.Repository;
 
 import com.pstu.acdps.server.domain.Role;
+import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
 @Repository

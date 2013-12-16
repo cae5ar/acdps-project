@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 
 /**

@@ -9,7 +9,7 @@ import org.hibernate.envers.Audited;
 @Audited
 @Entity
 @Table(name = "SSP_CURRENCY")
-public abstract class Currency extends AbstractEntity {
+public class Currency extends AbstractEntity {
 
 	@Column(nullable = false, name = "name")
 	private String name;
