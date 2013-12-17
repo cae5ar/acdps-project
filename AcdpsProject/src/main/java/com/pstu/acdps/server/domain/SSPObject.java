@@ -21,6 +21,9 @@ public abstract class SSPObject extends AbstractEntity {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "sspObject", cascade = CascadeType.ALL)
 	private List<SSPObjectHierachy> hierrachies = new ArrayList<SSPObjectHierachy>();
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, mappedBy = "parent")
+	private List<SSPObjectHierachy> children = new ArrayList<SSPObjectHierachy> ();
 
 	public List<SSPObjectHierachy> getHierrachies() {
 		return hierrachies;
@@ -28,6 +31,15 @@ public abstract class SSPObject extends AbstractEntity {
 
 	public void setHierrachies(List<SSPObjectHierachy> hierrachies) {
 		this.hierrachies = hierrachies;
+	}
+
+	
+	public List<SSPObjectHierachy> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<SSPObjectHierachy> children) {
+		this.children = children;
 	}
 
 }

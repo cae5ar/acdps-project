@@ -52,7 +52,10 @@ public class SectionDao extends JpaDao<Section> {
 
     @SuppressWarnings("unchecked")
     public List<SSPObjectDto> getChilds(Long parentId, Date date) {
+    	
         List<SSPObjectDto> list = new ArrayList<SSPObjectDto>();
+        
+        /*
         Criteria c = getHibernateSession().createCriteria(SSPObjectHierachy.class, "h");
         c.createAlias("h.sspObject", "sspObj");
         if (parentId == null)
@@ -69,6 +72,7 @@ public class SectionDao extends JpaDao<Section> {
         .add(Projections.property("h.endDate")));
 
         List<Object[]> resultList = c.list();
+        
         for (Object[] o : resultList) {
             Query q = em.createQuery("SELECT COUNT(*) FROM " + SSPObjectHierachy.class.getName() + " h WHERE :currdate >= h.startDate and :currdate < h.endDate and h.parent.id = :parentId");
 //        @formatter:on
@@ -79,6 +83,45 @@ public class SectionDao extends JpaDao<Section> {
             boolean singleResult = ((Long) q.getSingleResult() > 0 ? true : false);
             list.add(new SSPObjectDto(sspObjectId, s.getName(), parentId, (Date) o[1], (Date) o[2], singleResult));
         }
+        */
+        
+        Query sectionQuery = null;
+        
+        if (parentId == null) {
+        	sectionQuery = em.createQuery(
+            		"select section, hier,  " +
+            		"	(select count(child) from section.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+            		"from Section section join section.hierrachies hier " +
+            		"where hier.parent is null and " +
+            		"hier.startDate <= :currdate and " +
+            		"hier.endDate > :currdate "
+        		);
+        	sectionQuery.setParameter("currdate", date);
+        } else {
+        	sectionQuery = em.createQuery(
+            		"select section, hier,  " +
+            		"	(select count(child) from section.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+            		"from Section section join section.hierrachies hier " +
+            		"where hier.parent.id = :parentId and " +
+            		"hier.startDate <= :currdate and " +
+            		"hier.endDate > :currdate "
+    			);
+        	sectionQuery.setParameter("currdate", date);
+        	sectionQuery.setParameter("parentId", parentId);
+        }
+        
+        List<Object[]> resultList = sectionQuery.getResultList();
+        
+        for (Object[] fields : resultList) {
+        	Section section = (Section) fields[0];
+        	SSPObjectHierachy hier = (SSPObjectHierachy) fields[1];
+        	Long count = (Long) fields[2];
+        	Long sectionParentId = hier.getParent() == null ? null : hier.getParent().getId();
+        	
+        	SSPObjectDto objectDto = new SSPObjectDto(section.getId(), section.getName(), sectionParentId, hier.getStartDate(), hier.getEndDate(), count != 0);
+        	list.add(objectDto);
+        }
+        
         return list;
     }
 }
