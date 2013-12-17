@@ -52,6 +52,8 @@ public class DepartmentDao extends JpaDao<Department> {
     @SuppressWarnings("unchecked")
     public List<SSPObjectDto> getChilds(Long parentId, Date date) {
         List<SSPObjectDto> list = new ArrayList<SSPObjectDto>();
+        
+        /*
         Criteria c = getHibernateSession().createCriteria(SSPObjectHierachy.class, "h");
         c.createAlias("h.sspObject", "sspObj");
         if (parentId == null)
@@ -78,6 +80,45 @@ public class DepartmentDao extends JpaDao<Department> {
             boolean singleResult = ((Long) q.getSingleResult() > 0 ? true : false);
             list.add(new SSPObjectDto(sspObjectId, d.getName(), parentId, (Date) o[1], (Date) o[2], singleResult));
         }
+        */
+        
+        Query departmentQuery;
+        
+        if (parentId == null) {
+        	departmentQuery = em.createQuery(
+            		"select department, hier,  " +
+            		"	(select count(child) from department.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+            		"from Department department join department.hierrachies hier " +
+            		"where hier.parent is null and " +
+            		"hier.startDate <= :currdate and " +
+            		"hier.endDate > :currdate "
+        		);
+        	departmentQuery.setParameter("currdate", date);
+        } else {
+        	departmentQuery = em.createQuery(
+            		"select department, hier,  " +
+            		"	(select count(child) from department.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+            		"from Department department join department.hierrachies hier " +
+            		"where hier.parent.id = :parentId and " +
+            		"hier.startDate <= :currdate and " +
+            		"hier.endDate > :currdate "
+    			);
+        	departmentQuery.setParameter("currdate", date);
+        	departmentQuery.setParameter("parentId", parentId);
+        }
+        
+        List<Object[]> resultList = departmentQuery.getResultList();
+        
+        for (Object[] fields : resultList) {
+        	Department department = (Department) fields[0];
+        	SSPObjectHierachy hier = (SSPObjectHierachy) fields[1];
+        	Long count = (Long) fields[2];
+        	Long sectionParentId = hier.getParent() == null ? null : hier.getParent().getId();
+        	
+        	SSPObjectDto objectDto = new SSPObjectDto(department.getId(), department.getName(), sectionParentId, hier.getStartDate(), hier.getEndDate(), count != 0);
+        	list.add(objectDto);
+        }
+        
         return list;
     }
 }

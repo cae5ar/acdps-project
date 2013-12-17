@@ -3,6 +3,8 @@ package com.pstu.acdps.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import com.pstu.acdps.server.dao.EmployeeDao;
 import com.pstu.acdps.server.dao.PaymentDao;
 import com.pstu.acdps.server.dao.RoleDao;
 import com.pstu.acdps.server.dao.SectionDao;
+import com.pstu.acdps.server.domain.SSPObject;
+import com.pstu.acdps.server.domain.Section;
 import com.pstu.acdps.shared.dto.CfoDto;
 import com.pstu.acdps.shared.dto.CurrencyDto;
 import com.pstu.acdps.shared.dto.EmployeeDto;
@@ -108,8 +112,66 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	section.setName("Статья 144");
     	
     	Long id = sectionDao.save(section);
+
+        Query sectionQuery = em.createQuery("select section from Section section join section.hierrachies hier where hier.parent is null and hier.startDate <= :currdate and hier.endDate > :currdate");
+        sectionQuery.setParameter("currdate", new Date());
+        //sectionQuery.setParameter("parentId", null);
+        List<Section> resultList = sectionQuery.getResultList();
+        
+        for (Section s : resultList) {
+        	
+        	System.out.println(s.getName());
+        }
+        
+        List<SSPObject> resultObjectList = sectionQuery.getResultList();
+        
+        for (SSPObject o : resultObjectList) {
+        	System.out.println(o.getId());
+        }
     	
     	sectionDao.remove(id);
+    }
+    
+    @Test
+    public void selectSection() {
+    	
+    	Query sectionQuery = em.createQuery(
+        		"select section, hier,  " +
+        		"	(select count(child) from section.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+        		"from Section section join section.hierrachies hier " +
+        		"where hier.parent is null and " +
+        		"hier.startDate <= :currdate and " +
+        		"hier.endDate > :currdate "
+    			);
+    	
+    	sectionQuery.setParameter("currdate", new Date());
+    	
+    	List<Object[]> resultList = sectionQuery.getResultList();
+    	
+    	for (Object[] fields : resultList) {
+    		for (Object o : fields) {
+    			System.out.println(o);
+    		}
+    	}
+    	
+    	Query sectionQuery2 = em.createQuery(
+            		"select section, hier,  " +
+            		"	(select count(child) from section.children child where child.startDate <= :currdate and child.endDate > :currdate) " +
+            		"from Section section join section.hierrachies hier " +
+            		"where hier.parent.id = :parentId and " +
+            		"hier.startDate <= :currdate and " +
+            		"hier.endDate > :currdate "
+            		);
+    	sectionQuery2.setParameter("currdate", new Date());
+    	sectionQuery2.setParameter("parentId", 0L);
+    	
+    	List<Object[]> resultList2 = sectionQuery2.getResultList();
+    	
+    	for (Object[] fields : resultList2) {
+    		for (Object o : fields) {
+    			System.out.println(o);
+    		}
+    	}
     }
     
     @Test
