@@ -1,6 +1,5 @@
 package com.pstu.acdps.server.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,10 +13,8 @@ import com.pstu.acdps.server.dao.DepartmentDao;
 import com.pstu.acdps.server.dao.EmployeeDao;
 import com.pstu.acdps.server.dao.SectionDao;
 import com.pstu.acdps.server.domain.JobPosDao;
-import com.pstu.acdps.shared.dto.DepartmentDto;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
-import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
@@ -81,6 +78,12 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     @Override
     public List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate) {
         return sectionDao.getChilds(id, selectedDate);
+    }
+
+    @Override
+    public List<JobPosDto> getAllEmployees() {
+        //дописать; чтоб все поля были заполнены
+        return null;
     }
 
 }

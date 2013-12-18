@@ -22,7 +22,7 @@ public class JobPosDao extends JpaDao<JobPos> {
         else {
             entity = new JobPos();
         }
-        Job job = find(Job.class, bean.getJobId());
+        Job job = find(Job.class, bean.getJob());
         Department department = find(Department.class, bean.getDepartmentId());
         Employee employee = find(Employee.class, bean.getEmployeeDto().getId());
         entity.setDepartment(department);

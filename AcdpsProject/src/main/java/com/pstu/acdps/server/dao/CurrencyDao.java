@@ -4,9 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pstu.acdps.server.AcdpsException;
 import com.pstu.acdps.server.domain.Currency;
-import com.pstu.acdps.server.domain.Role;
 import com.pstu.acdps.shared.dto.CurrencyDto;
-import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
 @Repository

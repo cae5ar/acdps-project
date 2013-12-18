@@ -78,6 +78,10 @@ public class SSPObjectView extends Composite {
         editBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (tree.getSelectedNode() != null) {
+                    if(tree.getSelectedNode().getId() == null){
+                        AlertDialogBox.showDialogBox("Этот объект не подлежит изменению");
+                        return;
+                    }
                     SSPObjectEditPopup popup = new SSPObjectEditPopup(new SSPObjectSaveHandler() {
                         public void save(SSPObjectDto dto, SSPObjectEditPopup sender) {
                             presenter.saveSSPObject(dto);
@@ -94,6 +98,10 @@ public class SSPObjectView extends Composite {
         removeBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 if (tree.getSelectedNode() != null) {
+                    if(tree.getSelectedNode().getId() == null){
+                        AlertDialogBox.showDialogBox("Этот объект не подлежит удалению");
+                        return;
+                    }
                     presenter.deleteSSPObject(tree.getSelectedNode());
                 }
                 else {
