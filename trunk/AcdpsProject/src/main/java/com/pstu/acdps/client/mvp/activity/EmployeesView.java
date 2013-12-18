@@ -62,5 +62,6 @@ public class EmployeesView extends Composite {
     
     public void reset(){
         table.reset();
+        presenter.loadAllEmployyes();
     }
 }

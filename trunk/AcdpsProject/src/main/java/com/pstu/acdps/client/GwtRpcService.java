@@ -2,6 +2,7 @@ package com.pstu.acdps.client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -29,6 +30,8 @@ public interface GwtRpcService extends RemoteService {
     List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
 
     List<JobPosDto> getAllEmployees();
+
+    Map<Long, String> getAllJob();
     
 
 }

@@ -83,7 +83,7 @@
 }
 
 .control-label.label-left {
-	width: 90px;
+	width: 113px;
 }
 
 .form-horizontal .form-group {
@@ -145,8 +145,9 @@
 }
 
 .horizontal-input {
-	width: 224px;
+	width: 270px;
 	display: inline;
+	padding: 6px;
 }
 
 /*----------gwt-widget---------*/
