@@ -1,5 +1,8 @@
 package com.pstu.acdps.client.components;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -14,6 +17,7 @@ import com.pstu.acdps.client.components.Btn.EButtonStyle;
 import com.pstu.acdps.client.components.TreeWidget.ObjectsSelectHandler;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.utils.StringUtils;
 
 public class EmployeeEditPopup extends CustomPopup {
     public interface EmployeeSaveHandler {
@@ -41,16 +45,19 @@ public class EmployeeEditPopup extends CustomPopup {
     };
     private JobPosDto dto;
     private CustomTextBox name;
-    private CustomDateBox date;
+    private CustomDateBox birthDay;
     private CustomTextBox surname;
     private CustomTextBox patronymic;
     private Element selectedDepartment;
     private TreeWidget<SSPObjectDto> tree;
-    private CustomTextBox position;
+    private CustomListBox position;
+    private Map<Long, String> jobMap;
 
-    public EmployeeEditPopup(EmployeeSaveHandler handler, JobPosDto dto, TreeWidget<SSPObjectDto> tree) {
+    public EmployeeEditPopup(EmployeeSaveHandler handler, JobPosDto dto, TreeWidget<SSPObjectDto> tree,
+            Map<Long, String> jobMap) {
         super();
         this.dto = dto;
+        this.jobMap = jobMap;
         this.tree = tree;
         tree.setSelectHandler(new ObjectsSelectHandler<SSPObjectDto>() {
             @Override
@@ -96,12 +103,19 @@ public class EmployeeEditPopup extends CustomPopup {
         patronymic.setCaption("Отчество:");
         patronymic.getTextBox().addKeyDownHandler(enterPressHandler);
         itemPanel.add(patronymic);
-        position = new CustomTextBox();
+        birthDay = new CustomDateBox();
+        birthDay.addLabelStyleName("label-left");
+        birthDay.addInputStyleName("horizontal-input");
+        birthDay.setCaption("Дата рождения:");
+        birthDay.setLeftValue(dto.getStartDate());
+        itemPanel.add(birthDay);
+        position = new CustomListBox();
         position.addLabelStyleName("label-left");
         position.addInputStyleName("horizontal-input");
-        position.setValue(dto.getEmployeeDto().getMiddleName());
         position.setCaption("Должность:");
-        position.getTextBox().addKeyDownHandler(enterPressHandler);
+        for (Entry<Long, String> entry : jobMap.entrySet()) {
+            position.addValue(entry.getValue(), entry.getKey().toString());
+        }
         itemPanel.add(position);
         Label parentTextLabel = new Label("Подразделение: ");
         selectedDepartment = DOM.createSpan();
@@ -116,18 +130,42 @@ public class EmployeeEditPopup extends CustomPopup {
     protected void saveAllChanges() {
         if (handler != null) {
             boolean commit = true;
-            if (name.getValue() == null || name.getValue().isEmpty()) {
+            if (StringUtils.isEmpty(name.getValue())) {
                 commit = false;
-                AlertDialogBox.showDialogBox("Поле имени не может быть пустым");
+                AlertDialogBox.showDialogBox("Поле 'Фамилия' не может быть пустым");
             }
-            if (date.getValue() == null) {
+            if (StringUtils.isEmpty(surname.getValue())) {
                 commit = false;
-                AlertDialogBox.showDialogBox("Поле 'начало периода' обязательно для заполнения");
+                AlertDialogBox.showDialogBox("Поле 'Имя' не может быть пустым");
+            }
+            if (StringUtils.isEmpty(patronymic.getValue())) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Поле 'Отчество' не может быть пустым");
+            }
+            if (birthDay.getValue() == null) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Поле 'Дата рождения' обязательно для заполнения");
+            }
+            if (StringUtils.isEmpty(position.getSelectedValue())) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Поле 'Должность' не может быть пустым");
+            }
+            if (tree.getSelectedNode() == null) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Поле 'Подразделение' не может быть пустым");
+            }
+            if (tree.getSelectedNode().getId() == null) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Выбранное подразделение не применимо к этому полю");
             }
             if (commit) {
-//                dto.setName(name.getValue());
-                dto.setStartDate(date.getLeftValue());
-                dto.setEndDate(date.getRightValue());
+                dto.getEmployeeDto().setFirstName(name.getValue());
+                dto.getEmployeeDto().setSecondName(surname.getValue());
+                dto.getEmployeeDto().setMiddleName(patronymic.getValue());
+                dto.getEmployeeDto().setBirthday(birthDay.getValue());
+                dto.setJob(Long.parseLong(position.getSelectedValue()));
+                dto.setDepartmentId(tree.getSelectedNode().getId());
+                dto.setDepartmentName(tree.getSelectedNode().getName());
                 handler.save(dto, EmployeeEditPopup.this);
             }
         }

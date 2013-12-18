@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.pstu.acdps.server.dao.JpaDao;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
+import com.pstu.acdps.shared.type.SystemConstants;
 
 @Repository
 public class JobPosDao extends JpaDao<JobPos> {
@@ -28,8 +29,8 @@ public class JobPosDao extends JpaDao<JobPos> {
         entity.setDepartment(department);
         entity.setJob(job);
         entity.setEmployee(employee);
-        entity.setStartDate(bean.getStartDate());
-        entity.setEndDate(bean.getEndDate());
+        entity.setStartDate(SystemConstants.startDate);
+        entity.setEndDate(SystemConstants.endDate);
         persist(entity);
         return entity.getId();
     }

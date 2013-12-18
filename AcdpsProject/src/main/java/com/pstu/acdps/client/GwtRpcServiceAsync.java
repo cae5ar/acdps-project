@@ -2,6 +2,7 @@ package com.pstu.acdps.client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.pstu.acdps.shared.dto.JobPosDto;
@@ -21,4 +22,5 @@ public interface GwtRpcServiceAsync {
     void removeSection(Long id, AsyncCallback<Void> simpleAsyncCallback);
     void getSectionChilds(Long id, Date selectedDate, AsyncCallback<List<SSPObjectDto>> simpleAsyncCallback);
     void getAllEmployees(AsyncCallback<List<JobPosDto>> asyncCallback);
+    void getAllJob(AsyncCallback<Map<Long, String>> asyncCallback);
 }

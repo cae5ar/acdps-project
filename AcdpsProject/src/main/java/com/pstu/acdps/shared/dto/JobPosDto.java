@@ -7,11 +7,14 @@ public class JobPosDto extends EntityDto{
 
     private Long job = null;
     private Long departmentId = null;
-    private String departmentName = null;
     private EmployeeDto employeeDto = null;
     private Date startDate;
     private Date endDate;
-    
+    /**
+     * поле необязательное, нужно чтоб не обращатся отдельно за подразделением если нужно только имя
+     */
+    private String departmentName = null;
+
     public JobPosDto() {
         super();
         employeeDto = new EmployeeDto();
@@ -54,10 +57,16 @@ public class JobPosDto extends EntityDto{
         this.endDate = endDate;
     }
     
+    /**
+     * поле необязательное, нужно чтоб не обращатся отдельно за подразделением если нужно только имя
+     */
     public String getDepartmentName() {
         return departmentName;
     }
-
+    
+    /**
+     * поле необязательное, нужно чтоб не обращатся отдельно за подразделением если нужно только имя
+     */
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }

@@ -1,7 +1,9 @@
 package com.pstu.acdps.server.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,8 +84,20 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
 
     @Override
     public List<JobPosDto> getAllEmployees() {
-        //дописать; чтоб все поля были заполнены
+        //TODO:дописать; чтоб все поля были заполнены
         return null;
+    }
+
+    @Override
+    public Map<Long, String> getAllJob() {
+        //TODO: надо пригнать все имеющиеся должности <идДолжности, Название>
+        HashMap<Long, String> hashMap = new HashMap<Long, String>();
+        hashMap.put(1L, "Задрот 2ой категории");
+        hashMap.put(2L, "Задрот 1ой категории");
+        hashMap.put(3L, "Главный задрот 1ой категории");
+        hashMap.put(4L, "Ведущий задрот 1ой категории");
+        hashMap.put(5L, "Pr0");
+        return hashMap;
     }
 
 }
