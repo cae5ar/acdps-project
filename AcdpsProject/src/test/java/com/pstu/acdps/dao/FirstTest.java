@@ -17,6 +17,7 @@ import com.pstu.acdps.server.dao.EmployeeDao;
 import com.pstu.acdps.server.dao.PaymentDao;
 import com.pstu.acdps.server.dao.RoleDao;
 import com.pstu.acdps.server.dao.SectionDao;
+import com.pstu.acdps.server.dao.UserDao;
 import com.pstu.acdps.server.domain.SSPObject;
 import com.pstu.acdps.server.domain.Section;
 import com.pstu.acdps.shared.dto.CfoDto;
@@ -25,6 +26,7 @@ import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 import com.pstu.acdps.shared.dto.SectionDto;
+import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
 public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringContextTests {
@@ -49,6 +51,9 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     
     @Autowired
     PaymentDao paymentDao = null;
+    
+    @Autowired
+    UserDao userDao = null;
 
     @Before
     public void setUp() throws Exception {
@@ -176,6 +181,8 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	}
     }
     
+    Long empPupkinId = null;
+    
     @Test
     public void createEmployee() throws AnyServiceException {
     	EmployeeDto employee = new EmployeeDto();
@@ -188,5 +195,33 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	Long id = employeeDao.save(employee);
     	
     	employeeDao.remove(id);
+    	
+    	empPupkinId = employeeDao.save(employee);
+    }
+    
+    @Test
+    public void createUser() throws AnyServiceException {
+    	
+    	UserDto dto = new UserDto();
+    	
+    	dto.setAdmin(false);
+    	dto.setLogin("notAdmin");
+    	dto.setName("Не админ");
+    	
+    	RoleDto roleDto = roleDao.getRoleByIdent("ROLE_DIRECTORY");
+    	
+    	dto.getRoles().add(roleDto);
+    	
+    	RoleDto missingRole = roleDao.getRoleByIdent("ROLE_MISSING");
+    	
+    	if (missingRole != null)
+    		dto.getRoles().add(missingRole);
+    	
+    	if (empPupkinId != null) {
+    		EmployeeDto employee = employeeDao.getEmployeeById(empPupkinId);
+    		dto.setEmployee(employee);
+    	}
+    	
+    	userDao.save(dto, "password");
     }
 }

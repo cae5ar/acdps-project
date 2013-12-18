@@ -2,13 +2,21 @@ package com.pstu.acdps.server.dao;
 
 import javax.persistence.Query;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.pstu.acdps.server.domain.Employee;
 import com.pstu.acdps.server.domain.User;
+import com.pstu.acdps.server.domain.UserCredentials;
+import com.pstu.acdps.shared.dto.UserDto;
+import com.pstu.acdps.shared.exception.AnyServiceException;
 
 @Repository
 public class UserDao extends JpaDao<User> {
 
+	@Autowired
+	EmployeeDao employeeDao = null;
+	
     @Override
     public Class<User> getEntityClass() {
         return User.class;
@@ -28,4 +36,29 @@ public class UserDao extends JpaDao<User> {
         }
     }
 
+    public void save(UserDto userDto, String password) throws AnyServiceException {
+    	
+    	User user = null;
+    	
+    	if (userDto.getId() == null) {
+    		user = new User();
+    		user.setCredentials(new UserCredentials());
+    	} else {
+    		user = findById(userDto.getId());
+    	}
+    	
+    	Employee employee = null;
+    	
+    	if (userDto.getEmployee() != null) {
+    		employee = employeeDao.findById(userDto.getEmployee().getId());
+    	}
+    	
+    	user.setAdmin(userDto.getAdmin());
+		user.setName(userDto.getName());
+		user.setEmployee(employee);
+		user.getCredentials().setLogin(userDto.getLogin());
+		user.getCredentials().setPassword(password);
+		
+		persist(user);
+    }
 }

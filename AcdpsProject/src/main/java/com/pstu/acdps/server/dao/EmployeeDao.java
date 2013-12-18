@@ -29,4 +29,16 @@ public class EmployeeDao extends JpaDao<Employee> {
         persist(entity);
         return entity.getId();
     }
+    
+    public EmployeeDto getEmployeeById(Long id) {
+    	EmployeeDto result = null;
+    	
+    	Employee employee = findById(id);
+    	
+    	if (employee != null) {
+    		result = new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getSecondName(), employee.getMiddleName(), employee.getBirthday());
+    	}
+    	
+    	return result;
+    }
 }

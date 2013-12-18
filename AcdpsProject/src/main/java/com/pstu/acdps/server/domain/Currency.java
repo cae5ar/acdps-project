@@ -11,10 +11,10 @@ import org.hibernate.envers.Audited;
 @Table(name = "SSP_CURRENCY")
 public class Currency extends AbstractEntity {
 
-	@Column(nullable = false, name = "name")
+	@Column(nullable = false, name = "name", unique = true)
 	private String name;
 
-	@Column(name = "code")
+	@Column(name = "code", nullable = false, unique = true)
 	private String code;
 
 	public String getName() {
