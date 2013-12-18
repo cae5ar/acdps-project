@@ -15,7 +15,7 @@ import org.hibernate.envers.Audited;
 public class UserRole extends AbstractEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "user_name", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user = null;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)

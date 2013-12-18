@@ -1,5 +1,9 @@
 package com.pstu.acdps.server.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.pstu.acdps.server.domain.Role;
@@ -26,5 +30,37 @@ public class RoleDao extends JpaDao<Role> {
 		entity.setName(bean.getName());
 		persist(entity);
 		entity.getId();
+	}
+	
+	public List<RoleDto> getAllRoles() {
+		
+		List<RoleDto> result = new ArrayList<RoleDto>();
+		Query roleQuery = em.createQuery("select role from Role role");
+		
+		List<Role> resultList = roleQuery.getResultList();
+		
+		for (Role r : resultList) {
+			RoleDto dto = new RoleDto(r.getId(), r.getName(), r.getIdent());
+			result.add(dto);
+		}
+		
+		return result;
+	}
+	
+	public RoleDto getRoleByIdent(String ident) {
+		
+		RoleDto result = null;
+		
+		Query roleQuery = em.createQuery("select role from Role role where role.ident = :ident");
+		roleQuery.setParameter("ident", ident);
+		
+		List<Role> roles = roleQuery.getResultList();
+		
+		if (roles.size() > 0) {
+			Role r = roles.get(0);
+			result = new RoleDto(r.getId(), r.getName(), r.getIdent());
+		}
+		
+		return result;
 	}
 }

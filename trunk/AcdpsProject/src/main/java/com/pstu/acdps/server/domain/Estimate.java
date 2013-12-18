@@ -40,11 +40,11 @@ public class Estimate extends Document {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estimate", cascade = CascadeType.ALL)
 	private List<EstimateSection> estimateSection = new ArrayList<EstimateSection>();
 
-	public List<EstimateSection> getSectionCFO() {
+	public List<EstimateSection> getEstimateSection() {
 		return estimateSection;
 	}
 
-	public void setSectionCFO(List<EstimateSection> estimateSection) {
+	public void setEstimateSection(List<EstimateSection> estimateSection) {
 		this.estimateSection = estimateSection;
 	}
 
