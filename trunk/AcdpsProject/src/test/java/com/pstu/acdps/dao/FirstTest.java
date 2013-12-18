@@ -105,6 +105,7 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	cfoDao.remove(id);
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void createSection() throws AnyServiceException {
     	SectionDto section = new SectionDto();
@@ -132,6 +133,7 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	sectionDao.remove(id);
     }
     
+    @SuppressWarnings("unchecked")
     @Test
     public void selectSection() {
     	

@@ -5,14 +5,16 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class JobPosDto extends EntityDto{
 
+    private Long job = null;
     private Long departmentId = null;
-    private Long jobId = null;
+    private String departmentName = null;
     private EmployeeDto employeeDto = null;
     private Date startDate;
     private Date endDate;
     
     public JobPosDto() {
         super();
+        employeeDto = new EmployeeDto();
     }
     
     public EmployeeDto getEmployeeDto() {
@@ -24,19 +26,21 @@ public class JobPosDto extends EntityDto{
         this.employeeDto = employeeDto;
     }
 
-
     public Long getDepartmentId() {
         return departmentId;
     }
     public void setDepartmentId(Long departmentId) {
         this.departmentId = departmentId;
     }
-    public Long getJobId() {
-        return jobId;
+
+    public Long getJob() {
+        return job;
     }
-    public void setJobId(Long jobId) {
-        this.jobId = jobId;
+
+    public void setJob(Long job) {
+        this.job = job;
     }
+
     public Date getStartDate() {
         return startDate;
     }
@@ -50,5 +54,11 @@ public class JobPosDto extends EntityDto{
         this.endDate = endDate;
     }
     
-    
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
 }

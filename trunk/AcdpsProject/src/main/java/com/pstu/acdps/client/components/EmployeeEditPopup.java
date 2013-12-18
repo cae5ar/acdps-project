@@ -12,24 +12,23 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.pstu.acdps.client.components.Btn.EButtonStyle;
 import com.pstu.acdps.client.components.TreeWidget.ObjectsSelectHandler;
-import com.pstu.acdps.client.mvp.presenter.SSPObjectPresenter;
+import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 
-public class SSPObjectEditPopup extends CustomPopup {
-    public interface SSPObjectSaveHandler {
-        public void save(SSPObjectDto dto, SSPObjectEditPopup sender);
+public class EmployeeEditPopup extends CustomPopup {
+    public interface EmployeeSaveHandler {
+        public void save(JobPosDto dto, CustomPopup sender);
     }
 
     private FlowPanel panel = new FlowPanel();
     private ScrollPanel scroll = new ScrollPanel(panel);
     private FlowPanel sspobejctEditInputsPanel = new FlowPanel();
-    private TreeWidget<SSPObjectDto> tree;
     private Btn cancel = new Btn("Отменить", EButtonStyle.DEFAULT, new ClickHandler() {
         public void onClick(ClickEvent event) {
-            SSPObjectEditPopup.this.hide();
+            EmployeeEditPopup.this.hide();
         }
     });
-    private SSPObjectSaveHandler handler = null;
+    private EmployeeSaveHandler handler = null;
     private Btn saveBtn = new Btn("Сохранить изменения", EButtonStyle.SUCCESS, new ClickHandler() {
         public void onClick(ClickEvent event) {
             saveAllChanges();
@@ -40,25 +39,25 @@ public class SSPObjectEditPopup extends CustomPopup {
             if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) saveAllChanges();
         }
     };
-    private SSPObjectDto dto;
+    private JobPosDto dto;
     private CustomTextBox name;
     private CustomDateBox date;
-    Element selectedDepartment;
+    private CustomTextBox surname;
+    private CustomTextBox patronymic;
+    private Element selectedDepartment;
+    private TreeWidget<SSPObjectDto> tree;
+    private CustomTextBox position;
 
-    public SSPObjectEditPopup(SSPObjectSaveHandler handler, SSPObjectDto dto, SSPObjectPresenter presenter) {
+    public EmployeeEditPopup(EmployeeSaveHandler handler, JobPosDto dto, TreeWidget<SSPObjectDto> tree) {
         super();
-        tree = presenter.getSSPObjectTree();
+        this.dto = dto;
+        this.tree = tree;
         tree.setSelectHandler(new ObjectsSelectHandler<SSPObjectDto>() {
             @Override
             public void selected(SSPObjectDto object) {
-                if(object.getId()!=null){
-                    selectedDepartment.setInnerText(object.getNodeName());
-                }else{
-                    selectedDepartment.setInnerText("");
-                }
+                selectedDepartment.setInnerText(object.getNodeName());
             }
         });
-        this.dto = dto;
         addStyleName("sspobejct-edit-popup");
         setHandler(handler);
         setHeader("Редатирование подразделения");
@@ -72,25 +71,39 @@ public class SSPObjectEditPopup extends CustomPopup {
         createItem(dto);
     }
 
-    private void createItem(SSPObjectDto dto) {
+    private void createItem(JobPosDto dto) {
         final FlowPanel itemPanel = new FlowPanel();
         itemPanel.addStyleName("sspobejct-edit-block");
         name = new CustomTextBox();
         name.addLabelStyleName("label-left");
         name.addInputStyleName("horizontal-input");
-        name.setValue(dto.getName());
-        name.setCaption("Название:");
-        itemPanel.add(name);
+        name.setValue(dto.getEmployeeDto().getFirstName());
+        name.setCaption("Фамилия:");
         name.getTextBox().addKeyDownHandler(enterPressHandler);
+        itemPanel.add(name);
         name.setFocus();
-        date = new CustomDateBox(true);
-        date.addLabelStyleName("label-left");
-        date.addInputStyleName("horizontal-input");
-        date.setCaption("Период:");
-        date.setLeftValue(dto.getStartDate());
-        date.setRightValue(dto.getEndDate());
-        itemPanel.add(date);
-        Label parentTextLabel = new Label("Родительский объект: ");
+        surname = new CustomTextBox();
+        surname.addLabelStyleName("label-left");
+        surname.addInputStyleName("horizontal-input");
+        surname.setValue(dto.getEmployeeDto().getSecondName());
+        surname.setCaption("Имя:");
+        surname.getTextBox().addKeyDownHandler(enterPressHandler);
+        itemPanel.add(surname);
+        patronymic = new CustomTextBox();
+        patronymic.addLabelStyleName("label-left");
+        patronymic.addInputStyleName("horizontal-input");
+        patronymic.setValue(dto.getEmployeeDto().getMiddleName());
+        patronymic.setCaption("Отчество:");
+        patronymic.getTextBox().addKeyDownHandler(enterPressHandler);
+        itemPanel.add(patronymic);
+        position = new CustomTextBox();
+        position.addLabelStyleName("label-left");
+        position.addInputStyleName("horizontal-input");
+        position.setValue(dto.getEmployeeDto().getMiddleName());
+        position.setCaption("Должность:");
+        position.getTextBox().addKeyDownHandler(enterPressHandler);
+        itemPanel.add(position);
+        Label parentTextLabel = new Label("Подразделение: ");
         selectedDepartment = DOM.createSpan();
         parentTextLabel.getElement().appendChild(selectedDepartment);
         itemPanel.add(parentTextLabel);
@@ -111,22 +124,17 @@ public class SSPObjectEditPopup extends CustomPopup {
                 commit = false;
                 AlertDialogBox.showDialogBox("Поле 'начало периода' обязательно для заполнения");
             }
-            if (dto.getParentId() == null && tree.getSelectedNode() == null) {
-                AlertDialogBox.showDialogBox("Выберите родительский элемент для добавляемого узла");
-            }
             if (commit) {
-                dto.setName(name.getValue());
+//                dto.setName(name.getValue());
                 dto.setStartDate(date.getLeftValue());
                 dto.setEndDate(date.getRightValue());
-                dto.setParentId(tree.getSelectedNode().getId());
-                handler.save(dto, SSPObjectEditPopup.this);
+                handler.save(dto, EmployeeEditPopup.this);
             }
         }
 
     }
 
-    public void setHandler(SSPObjectSaveHandler handler) {
+    public void setHandler(EmployeeSaveHandler handler) {
         this.handler = handler;
     }
-
 }
