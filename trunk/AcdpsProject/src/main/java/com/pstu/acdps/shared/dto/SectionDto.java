@@ -12,6 +12,11 @@ public class SectionDto extends SSPObjectDto {
         super();
     }
 
+    public SectionDto(Long id, String name, String code) {
+        super(id, name);
+        this.code = code;
+    }
+
     public SectionDto(Long id, String name, String code, Long parentId, Date startDate) {
         super(id, name, parentId, startDate);
         this.code = code;

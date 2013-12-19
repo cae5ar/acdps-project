@@ -31,12 +31,23 @@ public class CFO extends SSPObject {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cfo", cascade = CascadeType.ALL)
 	private List<CFODepartment> cfoDepartment = new ArrayList<CFODepartment>();
 
-	public List<CFODepartment> getSectionCFO() {
+	public List<CFODepartment> getCfoDepartment() {
 		return cfoDepartment;
 	}
 
-	public void setSectionCFO(List<CFODepartment> cfoDepartment) {
+	public void setCFODepartment(List<CFODepartment> cfoDepartment) {
 		this.cfoDepartment = cfoDepartment;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cfo", cascade = CascadeType.ALL)
+	private List<SectionCFO> sectionCfo = new ArrayList<SectionCFO>();
+
+	public List<SectionCFO> getSectionCfo() {
+		return sectionCfo;
+	}
+
+	public void setSectionCfo(List<SectionCFO> sectionCfo) {
+		this.sectionCfo = sectionCfo;
 	}
 
 }

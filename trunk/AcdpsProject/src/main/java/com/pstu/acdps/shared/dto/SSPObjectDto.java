@@ -23,6 +23,11 @@ public class SSPObjectDto extends EntityDto implements HasChild {
         return startDate;
     }
     
+    public SSPObjectDto(Long id, String name) {
+        super(id);
+        this.name = name;
+    }
+    
     public SSPObjectDto(Long id, String name, Long parentId, Date startDate) {
         super(id);
         this.name = name;
