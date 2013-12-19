@@ -1,5 +1,6 @@
 package com.pstu.acdps.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,9 +26,11 @@ import com.pstu.acdps.shared.dto.CurrencyDto;
 import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionCFODto;
 import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
+import com.pstu.acdps.shared.type.SystemConstants;
 
 public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringContextTests {
     
@@ -223,5 +226,59 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	}
     	
     	userDao.save(dto, "password");
+    }
+    
+    @Test
+    public void createCfoWithSections() throws AnyServiceException {
+    	
+    	CfoDto cfo = new CfoDto();
+    	cfo.setName("ЦФО 1");
+    	
+    	List<SSPObjectDto> sections = sectionDao.getChilds(null, new Date());
+    	
+    	SSPObjectDto sec1 = sections.get(0);
+    	
+    	List<SectionCFODto> sectionCfo = new ArrayList<SectionCFODto>(); 
+    	
+    	for (SSPObjectDto section : sections) {
+    		System.out.println(section.getName());
+    		
+    		SectionCFODto dto = new SectionCFODto();
+    		
+    		dto.setSection(section);
+    		dto.setCfo(cfo);
+    		dto.setStartDate(new Date());
+    		dto.setEndDate(SystemConstants.endDate);
+    		
+    		sectionCfo.add(dto);
+    	}
+    	
+    	cfo.setSectionCfo(sectionCfo);
+    	
+    	Long id = cfoDao.save(cfo);
+    	
+    	cfo = cfoDao.getById(id);
+    	
+    	for (SectionCFODto section : cfo.getSectionCfo()) {
+    		System.out.println(section.getSection().getName());
+    	}
+    	
+    	cfo.getSectionCfo().clear();
+    	
+    	SectionCFODto secCfo = new SectionCFODto();
+    	secCfo.setSection(sec1);
+    	secCfo.setCfo(cfo);
+    	secCfo.setStartDate(SystemConstants.startDate);
+    	secCfo.setEndDate(SystemConstants.endDate);
+    	
+    	cfo.getSectionCfo().add(secCfo);
+    	
+    	id = cfoDao.save(cfo);
+    	
+    	cfo = cfoDao.getById(id);
+
+    	for (SectionCFODto section : cfo.getSectionCfo()) {
+    		System.out.println(section.getSection().getName());
+    	}
     }
 }
