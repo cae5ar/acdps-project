@@ -229,6 +229,15 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     }
     
     @Test
+    public void testAdmin() {
+    	UserDto user = userDao.findByLogin("operator").toDto();
+    	if (user != null) {
+    		System.out.println(user.getName() + user.getAdmin().toString());
+    	}
+    		
+    }
+    
+    @Test
     public void createCfoWithSections() throws AnyServiceException {
     	
     	CfoDto cfo = new CfoDto();
