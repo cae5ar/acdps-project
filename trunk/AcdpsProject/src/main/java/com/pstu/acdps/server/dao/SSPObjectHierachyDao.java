@@ -30,12 +30,13 @@ public class SSPObjectHierachyDao extends JpaDao<SSPObjectHierachy> {
     			}
     		}
     		if (actualHier != null) {
-    			if (actualHier.getParent() == null && parentId == 0) {
+    			Long actualParentId = actualHier.getParent() == null ? null : actualHier.getParent().getId();
+    			
+    			if (actualParentId == parentId) {
     				//попытка создать новую версию иерархии с тем же самым парентом, то есть по сути ничего не изменяя
-    				throw new AcdpsException("Попытка создать новую версию иерархии не изменяя родителя");
-    			} else if (actualHier.getParent().getId() == parentId) {
-    				//попытка создать новую версию иерархии с тем же самым парентом, то есть по сути ничего не изменяя
-    				throw new AcdpsException("Попытка создать новую версию иерархии не изменяя родителя");
+    				//throw new AcdpsException("Попытка создать новую версию иерархии не изменяя родителя");
+    				//в общем то ничего не меняется - будем игнорировать
+    				return;
     			} else if (actualHier.getStartDate().getTime() == startDate.getTime()){
     				newHier = actualHier;
     			} else {
