@@ -37,7 +37,7 @@ public class User extends AbstractEntity {
     
     //роли пользователя
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<UserRole> userRoles = null;
+    private List<UserRole> userRoles = new ArrayList<UserRole>();
     
     @JoinColumn(name = "employee_id")
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
@@ -56,12 +56,12 @@ public class User extends AbstractEntity {
     }
 
     public void setName(String name) {
-        this.name = name;
+		this.name = name;
     }
 
     public UserCredentials getCredentials() {
-        return credentials;
-    }
+		return credentials;
+	}
 
     public void setCredentials(UserCredentials credentials) {
         this.credentials = credentials;

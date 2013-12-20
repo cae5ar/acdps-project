@@ -19,7 +19,7 @@ public class UserRole extends AbstractEntity {
 	private User user = null;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(nullable = false)
+	@JoinColumn(name = "role_id", nullable = false)
 	private Role role = null;
 
 	public User getUser() {

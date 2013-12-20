@@ -220,6 +220,8 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	if (missingRole != null)
     		dto.getRoles().add(missingRole);
     	
+    	createEmployee();
+    	
     	if (empPupkinId != null) {
     		EmployeeDto employee = employeeDao.getEmployeeById(empPupkinId);
     		dto.setEmployee(employee);
@@ -288,6 +290,27 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
 
     	for (SectionCFODto section : cfo.getSectionCfo()) {
     		System.out.println(section.getSection().getName());
+    	}
+    }
+    
+    @Test
+    public void addingRoles() throws AnyServiceException {
+    	UserDto user = userDao.findByLogin("operator").toDto();
+    	
+    	for (RoleDto role : user.getRoles()) {
+    		System.out.println(role.getName() + " " + role.getIdent());
+    	}
+    	
+    	RoleDto newRole = roleDao.getRoleByIdent("ROLE_DIRECTORY");
+    	
+    	user.getRoles().add(newRole);
+    	
+    	userDao.save(user, "123456789");
+    	
+    	user = userDao.findByLogin("operator").toDto();
+    	
+    	for (RoleDto role : user.getRoles()) {
+    		System.out.println(role.getName() + " " + role.getIdent());
     	}
     }
 }
