@@ -63,5 +63,29 @@ public class EmployeeDto extends EntityDto {
         sb.append(middleName);
         return sb.toString();
     }
+    
+    //короткое имя типа Касимов А.Д.
+    public String getShortName() {
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(secondName);
+    	
+		StringBuilder initSb = new StringBuilder();
+		if (!firstName.equals("")) {
+    		initSb.append(firstName.substring(0, 1));
+    		initSb.append(".");
+    	}
+    	if (!middleName.equals("")) {
+    		initSb.append(middleName.substring(0, 1));
+    		initSb.append(".");
+    	}
+    	String init = initSb.toString();
+    	
+    	if (!init.equals("")) {
+    		sb.append(" ");
+    		sb.append(init);
+    	}
+    	
+    	return sb.toString();
+    }
 
 }
