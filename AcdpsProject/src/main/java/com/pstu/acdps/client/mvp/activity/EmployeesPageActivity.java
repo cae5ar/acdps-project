@@ -18,6 +18,8 @@ import com.pstu.acdps.client.components.TreeWidget.ObjectsOpenHandler;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.place.EmployeesPagePlace;
 import com.pstu.acdps.client.mvp.presenter.EmployeesPresenter;
+import com.pstu.acdps.client.mvp.view.EmployeesView;
+import com.pstu.acdps.client.type.ActionType;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 
@@ -44,6 +46,7 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
                     editEmployee(dto);
                     break;
                 case REMOVE:
+                    removeEmployee(dto.getId());
                     break;
             }
         }
@@ -52,6 +55,17 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
     public EmployeesPageActivity(EmployeesPagePlace place, ClientFactory clientFactory) {
         this.place = place;
         this.clientFactory = clientFactory;
+    }
+
+
+    public void start(final AcceptsOneWidget container, EventBus eventBus) {
+        Site.service.getAllJob(new SimpleAsyncCallback<Map<Long, String>>() {
+            public void onSuccess(Map<Long, String> result) {
+                jobMap = result;
+                view = new EmployeesView(EmployeesPageActivity.this);
+                container.setWidget(view);
+            }
+        });
     }
 
     protected void editEmployee(JobPosDto dto) {
@@ -72,22 +86,22 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
         popup.show();
     }
 
-    public void start(final AcceptsOneWidget container, EventBus eventBus) {
-        Site.service.getAllJob(new SimpleAsyncCallback<Map<Long, String>>() {
-            public void onSuccess(Map<Long, String> result) {
-                jobMap = result;
-                view = new EmployeesView(EmployeesPageActivity.this);
-                container.setWidget(view);
+    protected void removeEmployee(Long id) {
+        Site.service.removeEmployee(id, new SimpleAsyncCallback<Void>(){
+            public void onSuccess(Void result) {
+                AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                view.reset();
             }
         });
     }
+    
 
     public ActionHandler getActionHandler() {
         return actionHanlder;
     }
 
     public void loadAllEmployyes() {
-        Site.service.getAllEmployees(new SimpleAsyncCallback<List<JobPosDto>>() {
+        Site.service.getAllJobPositions(new SimpleAsyncCallback<List<JobPosDto>>() {
             public void onSuccess(List<JobPosDto> result) {
                 view.setItems(result);
             }

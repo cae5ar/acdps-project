@@ -65,7 +65,7 @@ public class SSPObjectEditPopup extends CustomPopup {
         sspobejctEditInputsPanel.addStyleName("input");
         panel.add(sspobejctEditInputsPanel);
         modalBody.add(scroll);
-        scroll.addStyleName("sspobject-edit-scroll");
+        scroll.addStyleName("edit-popup-scroll");
         modalFooter.addStyleName("text-left");
         modalFooter.add(saveBtn);
         modalFooter.add(cancel);
@@ -74,7 +74,6 @@ public class SSPObjectEditPopup extends CustomPopup {
 
     private void createItem(SSPObjectDto dto) {
         final FlowPanel itemPanel = new FlowPanel();
-        itemPanel.addStyleName("sspobejct-edit-block");
         name = new CustomTextBox();
         name.addLabelStyleName("label-left");
         name.addInputStyleName("horizontal-input");

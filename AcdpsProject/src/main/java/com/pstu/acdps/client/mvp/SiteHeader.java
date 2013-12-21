@@ -1,5 +1,9 @@
 package com.pstu.acdps.client.mvp;
 
+import java.util.List;
+
+import com.pstu.acdps.shared.dto.RoleDto;
+
 /**
  * Верхняя шапка сайта
  * 
@@ -7,8 +11,11 @@ package com.pstu.acdps.client.mvp;
  */
 public interface SiteHeader {
 
-    void setVisibleHeaderAndFooter();
+    void setVisibleOperatorButtons(List<RoleDto> list);
 
-    void setVisibleAdminButtons(Boolean admin);
+    void setVisibleAdminButtons();
 
+    void setVisibleFooterAndHeader();
+
+    void setVisibleOperatorButtons();
 }

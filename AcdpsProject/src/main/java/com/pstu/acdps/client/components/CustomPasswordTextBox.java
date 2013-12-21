@@ -2,6 +2,7 @@ package com.pstu.acdps.client.components;
 
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
+import com.google.gwt.user.client.ui.FocusWidget;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 
 public class CustomPasswordTextBox extends AbstractSimpleInput {
@@ -42,5 +43,9 @@ public class CustomPasswordTextBox extends AbstractSimpleInput {
 
     public void setEnabled(boolean b) {
         textBox.setEnabled(b);
+    }
+
+    public FocusWidget getTextBox() {
+        return textBox;
     }
 }

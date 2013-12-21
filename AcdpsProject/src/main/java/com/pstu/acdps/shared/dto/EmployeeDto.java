@@ -54,4 +54,14 @@ public class EmployeeDto extends EntityDto {
         this.birthday = birthday;
     }
 
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(firstName);
+        sb.append(" ");
+        sb.append(secondName);
+        sb.append(" ");
+        sb.append(middleName);
+        return sb.toString();
+    }
+
 }
