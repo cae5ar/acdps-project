@@ -15,37 +15,37 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 
 @RemoteServiceRelativePath("service.rpc")
 public interface GwtRpcService extends RemoteService {
-    UserDto getCurrentUser() throws AnyServiceException;
-    
-    List<RoleDto> getRoleList() throws AnyServiceException;
+	UserDto getCurrentUser() throws AnyServiceException;
 
-    Long saveEmployee(JobPosDto bean) throws AnyServiceException;
+	Long saveEmployee(JobPosDto bean) throws AnyServiceException;
 
-    List<SSPObjectDto> getDepartmentChilds(Long parentId, Date currdate) throws AnyServiceException;
+	List<SSPObjectDto> getDepartmentChilds(Long parentId, Date currdate)
+			throws AnyServiceException;
 
-    Long saveDepartment(SSPObjectDto item) throws AnyServiceException;
+	Long saveDepartment(SSPObjectDto item) throws AnyServiceException;
 
-    void removeDepartment(Long id) throws AnyServiceException;
+	void removeDepartment(Long id) throws AnyServiceException;
 
-    Long saveSection(SSPObjectDto dto) throws AnyServiceException;
+	Long saveSection(SSPObjectDto dto) throws AnyServiceException;
 
-    void removeSection(Long id) throws AnyServiceException;
+	void removeSection(Long id) throws AnyServiceException;
 
-    List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
+	List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
 
-    List<JobPosDto> getAllJobPositions();
+	List<EmployeeDto> getAllEmployees();
 
-    void removeEmployee(Long id);
+	Map<Long, String> getAllJob();
 
-    Map<Long, String> getAllJob();
+	List<JobPosDto> getAllJobPositions();
 
-    List<UserDto> getAllUsers();
+	void removeEmployee(Long id) throws AnyServiceException;
 
+	List<UserDto> getAllUsers();
 
-    Long saveUser(UserDto bean, String password) throws AnyServiceException;
+	Long saveUser(UserDto bean, String password) throws AnyServiceException;
 
-    void removeUser(Long id) throws AnyServiceException;
+	void removeUser(Long id) throws AnyServiceException;
 
-    List<EmployeeDto> getAllEmployees();
-    
+	List<RoleDto> getRoleList() throws AnyServiceException;
+
 }

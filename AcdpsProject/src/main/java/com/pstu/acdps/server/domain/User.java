@@ -23,70 +23,61 @@ import com.pstu.acdps.shared.dto.UserDto;
 @Table(name = "T_USER")
 public class User extends AbstractEntity {
 
-    //TODO: убрать это поле, вместо него использовать будет Employee
-    @Column(nullable = false, length = 4096)
-    private String name;
+	/** логин пароль */
+	@JoinColumn(nullable = true)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private UserCredentials credentials = null;
 
-    /** логин пароль */
-    @JoinColumn(nullable = true)
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserCredentials credentials = null;
+	/** Флажок о том что пользователь админ */
+	@Column(name = "c_admin", nullable = false)
+	private Boolean admin = false;
 
-    /** Флажок о том что пользователь админ */
-    @Column(name = "c_admin", nullable = false)
-    private Boolean admin = false;
-    
-    //роли пользователя
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    private List<UserRole> userRoles = new ArrayList<UserRole>();
-    
-    @JoinColumn(name = "employee_id")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    private Employee employee = null;
+	// роли пользователя
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	private List<UserRole> userRoles = new ArrayList<UserRole>();
 
-    public Boolean isAdmin() {
-        return admin;
-    }
+	@JoinColumn(name = "employee_id")
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	private Employee employee = null;
 
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
+	public Boolean isAdmin() {
+		return admin;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setAdmin(Boolean admin) {
+		this.admin = admin;
+	}
 
-    public void setName(String name) {
-		this.name = name;
-    }
-
-    public UserCredentials getCredentials() {
+	public UserCredentials getCredentials() {
 		return credentials;
 	}
 
-    public void setCredentials(UserCredentials credentials) {
-        this.credentials = credentials;
-    }
+	public void setCredentials(UserCredentials credentials) {
+		this.credentials = credentials;
+	}
 
-    public UserDto toDto() {
-        UserDto dto = new UserDto(id, name, credentials.getLogin(), admin);
-        
-        List<RoleDto> roles = new ArrayList<RoleDto>();
-        for (UserRole ur : userRoles) {
-        	Role role = ur.getRole();
-        	RoleDto roleDto = new RoleDto(role.getId(), role.getName(), role.getIdent());
-        	roles.add(roleDto);
-        }
-        
-        dto.setRoles(roles);
-        
-        if (employee != null) {
-        	EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getSecondName(), employee.getMiddleName(), employee.getBirthday());
-        	dto.setEmployee(employeeDto);
-        }
-        
-        return dto;
-    }
+	public UserDto toDto() {
+		UserDto dto = new UserDto(id, credentials.getLogin(), admin);
+
+		List<RoleDto> roles = new ArrayList<RoleDto>();
+		for (UserRole ur : userRoles) {
+			Role role = ur.getRole();
+			RoleDto roleDto = new RoleDto(role.getId(), role.getName(),
+					role.getIdent());
+			roles.add(roleDto);
+		}
+
+		dto.setRoles(roles);
+
+		if (employee != null) {
+			EmployeeDto employeeDto = new EmployeeDto(employee.getId(),
+					employee.getFirstName(), employee.getSecondName(),
+					employee.getMiddleName(), employee.getBirthday());
+			dto.setEmployee(employeeDto);
+		}
+
+		return dto;
+	}
 
 	public List<UserRole> getUserRoles() {
 		return userRoles;

@@ -15,35 +15,38 @@ import com.pstu.acdps.shared.dto.UserDto;
  * The async counterpart of <code>GreetingService</code>.
  */
 public interface GwtRpcServiceAsync {
-    void getCurrentUser(AsyncCallback<UserDto> callback);
+	void getCurrentUser(AsyncCallback<UserDto> callback);
 
-    void saveEmployee(JobPosDto bean, AsyncCallback<Long> callback);
+	void saveEmployee(JobPosDto bean, AsyncCallback<Long> callback);
 
-    void getDepartmentChilds(Long parentId, Date currdate, AsyncCallback<List<SSPObjectDto>> callback);
+	void getDepartmentChilds(Long parentId, Date currdate,
+			AsyncCallback<List<SSPObjectDto>> callback);
 
-    void saveDepartment(SSPObjectDto item, AsyncCallback<Long> simpleAsyncCallback);
+	void saveDepartment(SSPObjectDto item,
+			AsyncCallback<Long> simpleAsyncCallback);
 
-    void removeDepartment(Long id, AsyncCallback<Void> simpleAsyncCallback);
+	void removeDepartment(Long id, AsyncCallback<Void> simpleAsyncCallback);
 
-    void saveSection(SSPObjectDto dto, AsyncCallback<Long> simpleAsyncCallback);
+	void saveSection(SSPObjectDto dto, AsyncCallback<Long> simpleAsyncCallback);
 
-    void removeSection(Long id, AsyncCallback<Void> simpleAsyncCallback);
+	void removeSection(Long id, AsyncCallback<Void> simpleAsyncCallback);
 
-    void getSectionChilds(Long id, Date selectedDate, AsyncCallback<List<SSPObjectDto>> simpleAsyncCallback);
+	void getSectionChilds(Long id, Date selectedDate,
+			AsyncCallback<List<SSPObjectDto>> simpleAsyncCallback);
 
-    void getAllJobPositions(AsyncCallback<List<JobPosDto>> asyncCallback);
+	void getAllEmployees(AsyncCallback<List<EmployeeDto>> asyncCallback);
 
-    void getAllJob(AsyncCallback<Map<Long, String>> asyncCallback);
+	void getAllJob(AsyncCallback<Map<Long, String>> asyncCallback);
 
-    void getAllUsers(AsyncCallback<List<UserDto>> asyncCallback);
+	void getRoleList(AsyncCallback<List<RoleDto>> callback);
 
-    void removeEmployee(Long id, AsyncCallback<Void> asyncCallback);
+	void removeUser(Long id, AsyncCallback<Void> callback);
 
-    void saveUser(UserDto bean, String password, AsyncCallback<Long> callback);
+	void saveUser(UserDto bean, String password, AsyncCallback<Long> callback);
 
-    void removeUser(Long id, AsyncCallback<Void> callback);
+	void getAllUsers(AsyncCallback<List<UserDto>> callback);
 
-    void getAllEmployees(AsyncCallback<List<EmployeeDto>> simpleAsyncCallback);
+	void removeEmployee(Long id, AsyncCallback<Void> callback);
 
-    void getRoleList(AsyncCallback<List<RoleDto>> callback);
+	void getAllJobPositions(AsyncCallback<List<JobPosDto>> callback);
 }
