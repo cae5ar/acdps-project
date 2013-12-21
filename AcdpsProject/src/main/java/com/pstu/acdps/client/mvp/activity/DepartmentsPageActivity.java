@@ -17,6 +17,7 @@ import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
 import com.pstu.acdps.client.mvp.presenter.SSPObjectPresenter;
 import com.pstu.acdps.client.mvp.view.SSPObjectView;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.type.SystemConstants;
 
 public class DepartmentsPageActivity extends MainAbstractActivity implements SSPObjectPresenter {
 
@@ -30,9 +31,14 @@ public class DepartmentsPageActivity extends MainAbstractActivity implements SSP
         this.clientFactory = clientFactory;
     }
 
-    public void start(AcceptsOneWidget panel, EventBus eventBus) {
-        view = new SSPObjectView(caption, this);
-        panel.setWidget(view);
+    public void start(AcceptsOneWidget container, EventBus eventBus) {
+        if (!Site.hasUserRole(SystemConstants.roleDirectoryIdent)) {
+            container.setWidget(clientFactory.getAccessDeniedView());
+        }
+        else {
+            view = new SSPObjectView(caption, this);
+            container.setWidget(view);
+        }
     }
 
     public void deleteSSPObject(SSPObjectDto dto) {

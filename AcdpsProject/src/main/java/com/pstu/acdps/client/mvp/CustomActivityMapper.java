@@ -2,6 +2,7 @@ package com.pstu.acdps.client.mvp;
 
 import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
+import com.pstu.acdps.client.mvp.activity.AboutPageActivity;
 import com.pstu.acdps.client.mvp.activity.DepartmentsPageActivity;
 import com.pstu.acdps.client.mvp.activity.EmployeesPageActivity;
 import com.pstu.acdps.client.mvp.activity.EstimatePageActivity;
@@ -10,6 +11,7 @@ import com.pstu.acdps.client.mvp.activity.PaymentsPageActivity;
 import com.pstu.acdps.client.mvp.activity.ReportPageActivity;
 import com.pstu.acdps.client.mvp.activity.SectionPageActivity;
 import com.pstu.acdps.client.mvp.activity.UserPageActivity;
+import com.pstu.acdps.client.mvp.place.AboutPagePlace;
 import com.pstu.acdps.client.mvp.place.CfoPagePlace;
 import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
 import com.pstu.acdps.client.mvp.place.EmployeesPagePlace;
@@ -52,6 +54,9 @@ public class CustomActivityMapper implements ActivityMapper {
         }
         if (place instanceof UserPagePlace) {
             return new UserPageActivity((UserPagePlace) place, clientFactory);
+        }
+        if (place instanceof AboutPagePlace) {
+            return new AboutPageActivity((AboutPagePlace) place, clientFactory);
         }
         return null;
     }

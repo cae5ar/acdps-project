@@ -31,17 +31,17 @@ public class SiteHeaderImpl implements SiteHeader {
     @Override
     public void setVisibleOperatorButtons(List<RoleDto> list) {
         for (RoleDto dto : list) {
-            if (dto.equals(SystemConstants.roleDirectoryIdent)) {
+            if (dto.getIdent().equals(SystemConstants.roleDirectoryIdent)) {
                 JQuery.select("#" + SystemConstants.roleDirectoryIdent).removeClass("hide");
             }
-            if (dto.equals(SystemConstants.roleReportIdent)) {
+            if (dto.getIdent().equals(SystemConstants.roleReportIdent)) {
                 JQuery.select("#" + SystemConstants.roleReportIdent).removeClass("hide");
             }
-            if (dto.equals(SystemConstants.roleEstimateIdent)) {
+            if (dto.getIdent().equals(SystemConstants.roleEstimateIdent)) {
                 JQuery.select("#DOCUMENTS").removeClass("hide");
                 JQuery.select("#" + SystemConstants.roleEstimateIdent).removeClass("hide");
             }
-            if (dto.equals(SystemConstants.rolePaymentIdent)) {
+            if (dto.getIdent().equals(SystemConstants.rolePaymentIdent)) {
                 JQuery.select("#DOCUMENTS").removeClass("hide");
                 JQuery.select("#" + SystemConstants.rolePaymentIdent).removeClass("hide");
             }

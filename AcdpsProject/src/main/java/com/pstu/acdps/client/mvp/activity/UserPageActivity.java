@@ -13,7 +13,7 @@ import com.pstu.acdps.client.components.UserEditPopup.UserSaveHandler;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.place.UserPagePlace;
 import com.pstu.acdps.client.mvp.presenter.UsersPresenter;
-import com.pstu.acdps.client.mvp.view.UsersView;
+import com.pstu.acdps.client.mvp.view.UsersPageView;
 import com.pstu.acdps.client.type.ActionType;
 import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.UserDto;
@@ -22,7 +22,7 @@ public class UserPageActivity extends MainAbstractActivity implements UsersPrese
 
     @SuppressWarnings("unused")
     private UserPagePlace place;
-    private UsersView view;
+    private UsersPageView view;
     private List<EmployeeDto> employees;
 
     public UserPageActivity(UserPagePlace place, ClientFactory clientFactory) {
@@ -32,13 +32,18 @@ public class UserPageActivity extends MainAbstractActivity implements UsersPrese
 
     @Override
     public void start(final AcceptsOneWidget container, EventBus eventBus) {
-        Site.service.getAllEmployees(new SimpleAsyncCallback<List<EmployeeDto>>() {
-            public void onSuccess(List<EmployeeDto> result) {
-                setEmployees(result);
-                view = new UsersView(UserPageActivity.this);
-                container.setWidget(view);
-            }
-        });
+        if (!Site.user.getAdmin()) {
+            container.setWidget(clientFactory.getAccessDeniedView());
+        }
+        else {
+            Site.service.getAllEmployees(new SimpleAsyncCallback<List<EmployeeDto>>() {
+                public void onSuccess(List<EmployeeDto> result) {
+                    setEmployees(result);
+                    view = new UsersPageView(UserPageActivity.this);
+                    container.setWidget(view);
+                }
+            });
+        }
     }
 
     @Override
@@ -63,7 +68,7 @@ public class UserPageActivity extends MainAbstractActivity implements UsersPrese
             dto = new UserDto();
         }
         UserEditPopup popup = new UserEditPopup(new UserSaveHandler() {
-            public void save(UserDto dto,String password, final CustomPopup sender) {
+            public void save(UserDto dto, String password, final CustomPopup sender) {
                 Site.service.saveUser(dto, password, new SimpleAsyncCallback<Long>() {
                     public void onSuccess(Long result) {
                         AlertDialogBox.showDialogBox("Изменения успешно сохранены");
