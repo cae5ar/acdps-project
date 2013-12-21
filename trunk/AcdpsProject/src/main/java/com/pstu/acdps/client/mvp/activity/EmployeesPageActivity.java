@@ -22,6 +22,7 @@ import com.pstu.acdps.client.mvp.view.EmployeesView;
 import com.pstu.acdps.client.type.ActionType;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.type.SystemConstants;
 
 public class EmployeesPageActivity extends MainAbstractActivity implements EmployeesPresenter {
 
@@ -59,13 +60,17 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
 
 
     public void start(final AcceptsOneWidget container, EventBus eventBus) {
-        Site.service.getAllJob(new SimpleAsyncCallback<Map<Long, String>>() {
-            public void onSuccess(Map<Long, String> result) {
-                jobMap = result;
-                view = new EmployeesView(EmployeesPageActivity.this);
-                container.setWidget(view);
-            }
-        });
+        if(!Site.hasUserRole(SystemConstants.roleDirectoryIdent)){
+            container.setWidget(clientFactory.getAccessDeniedView());
+        }else{
+            Site.service.getAllJob(new SimpleAsyncCallback<Map<Long, String>>() {
+                public void onSuccess(Map<Long, String> result) {
+                    jobMap = result;
+                    view = new EmployeesView(EmployeesPageActivity.this);
+                    container.setWidget(view);
+                }
+            });
+        }
     }
 
     protected void editEmployee(JobPosDto dto) {

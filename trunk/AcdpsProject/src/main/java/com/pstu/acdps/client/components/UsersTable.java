@@ -35,7 +35,7 @@ public class UsersTable extends Composite {
         Element tr = DOM.createTR();
         Element th = DOM.createTH();
         th.setInnerText("Сотрудник");
-        th.addClassName("col-xs-5");
+        th.addClassName("col-xs-4");
         tr.appendChild(th);
         th = DOM.createTH();
         th.setInnerText("Логин");
@@ -43,7 +43,7 @@ public class UsersTable extends Composite {
         tr.appendChild(th);
         th = DOM.createTH();
         th.setInnerText("Роли");
-        th.addClassName("col-xs-3");
+        th.addClassName("col-xs-4");
         tr.appendChild(th);
         th = DOM.createTH();
         th.setInnerHTML("<span class='glyphicon glyphicon-pencil' style='margin: 6px 12px'></span>");

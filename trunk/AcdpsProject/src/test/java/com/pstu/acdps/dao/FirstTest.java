@@ -209,7 +209,6 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	
     	dto.setAdmin(false);
     	dto.setLogin("notAdmin");
-    	dto.setName("Не админ");
     	
     	RoleDto roleDto = roleDao.getRoleByIdent("ROLE_DIRECTORY");
     	
@@ -234,7 +233,7 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     public void testAdmin() {
     	UserDto user = userDao.findByLogin("operator").toDto();
     	if (user != null) {
-    		System.out.println(user.getName() + user.getAdmin().toString());
+    		System.out.println(user.getLogin() + user.getAdmin().toString());
     	}
     		
     }

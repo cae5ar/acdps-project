@@ -30,7 +30,7 @@ import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.CustomActivityMapper;
 import com.pstu.acdps.client.mvp.CustomPlaceHistoryMapper;
 import com.pstu.acdps.client.mvp.SiteHeader;
-import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
+import com.pstu.acdps.client.mvp.place.AboutPagePlace;
 import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.xedge.jquery.client.JQuery;
@@ -87,14 +87,13 @@ public class Site implements EntryPoint {
                 public void onFailure(Throwable caught) {
                     handleError(caught);
                 }
-
                 public void onSuccess() {
                     Site.service.getRoleList(new SimpleAsyncCallback<List<RoleDto>>() {
                         public void onSuccess(List<RoleDto> result) {
                             roleList = result;
+                            intAuthorizedUserGUI();
                         }
                     });
-                    intAuthorizedUserGUI();
                 }
             });
         }
@@ -130,11 +129,12 @@ public class Site implements EntryPoint {
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
         SiteHeader header = clientFactory.getHeader();
-        user.setAdmin(true);
+        // user.setAdmin(true);
         if (user.getAdmin()) {
             header.setVisibleAdminButtons();
             header.setVisibleOperatorButtons();
-        }else{
+        }
+        else {
             header.setVisibleOperatorButtons(user.getRoles());
         }
         header.setVisibleFooterAndHeader();
@@ -147,8 +147,17 @@ public class Site implements EntryPoint {
         activityManager.setDisplay(contentPanel);
 
         PlaceHistoryHandler historyHandler = new PlaceHistoryHandler((PlaceHistoryMapper) GWT.create(CustomPlaceHistoryMapper.class));
-        historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new DepartmentsPagePlace());
+        historyHandlerRegistration = historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), new AboutPagePlace());
         historyHandler.handleCurrentHistory();
         setWaitingBlockVisible(false);
+    }
+
+    public static boolean hasUserRole(String roledirectoryident) {
+        for (RoleDto dto : user.getRoles()) {
+            if (dto.getIdent().equals(roledirectoryident)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

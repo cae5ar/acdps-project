@@ -1,13 +1,12 @@
 package com.pstu.acdps.shared.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
 public class CfoDto extends EntityDto {
-    
-	private String name;
-	private List<SectionCFODto> sectionCfo = null;
+
+    private String name;
+    private List<SectionCFODto> sectionCfo = null;
 
     public CfoDto() {
         super();
@@ -26,12 +25,12 @@ public class CfoDto extends EntityDto {
         this.name = name;
     }
 
-	public List<SectionCFODto> getSectionCfo() {
-		return sectionCfo;
-	}
+    public List<SectionCFODto> getSectionCfo() {
+        return sectionCfo;
+    }
 
-	public void setSectionCfo(List<SectionCFODto> sectionCfo) {
-		this.sectionCfo = sectionCfo;
-	}
+    public void setSectionCfo(List<SectionCFODto> sectionCfo) {
+        this.sectionCfo = sectionCfo;
+    }
 
 }

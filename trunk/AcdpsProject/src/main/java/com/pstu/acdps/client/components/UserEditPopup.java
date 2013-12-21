@@ -107,7 +107,10 @@ public class UserEditPopup extends CustomPopup {
         }
         itemPanel.add(employeeListBox);
         userEditInputsPanel.add(itemPanel);
-        itemPanel.add(createRoleSelectBlock(dto.getRoles()));
+        if (!dto.getAdmin()) {
+            itemPanel.add(createRoleSelectBlock(dto.getRoles()));
+        }
+
     }
 
     private Widget createRoleSelectBlock(List<RoleDto> list) {
@@ -168,9 +171,10 @@ public class UserEditPopup extends CustomPopup {
                     commit = false;
                     AlertDialogBox.showDialogBox("Введеные пароли не совпадают");
                 }
-            }else{
-                if(!StringUtils.isEmpty(passwordInput.getValue())){
-                    if(getPassword() == null){
+            }
+            else {
+                if (!StringUtils.isEmpty(passwordInput.getValue())) {
+                    if (getPassword() == null) {
                         commit = false;
                         AlertDialogBox.showDialogBox("Введеные пароли не совпадают");
                     }
@@ -183,7 +187,6 @@ public class UserEditPopup extends CustomPopup {
                     dto.setEmployee(employeesMap.get(selectedValue));
                 }
                 catch (Exception e) {}
-                dto.setName("УБРАТЬ ЭТО ПОЛЕ");
                 handler.save(dto, getPassword(), UserEditPopup.this);
             }
         }

@@ -16,7 +16,7 @@ import com.pstu.acdps.client.mvp.presenter.UsersPresenter;
 import com.pstu.acdps.client.type.ActionType;
 import com.pstu.acdps.shared.dto.UserDto;
 
-public class UsersView extends Composite {
+public class UsersPageView extends Composite {
     private FlowPanel panel = new FlowPanel();
     private FlowPanel headerPanel = new FlowPanel();
     private Element header;
@@ -32,7 +32,7 @@ public class UsersView extends Composite {
         }
     });
     
-    public UsersView(UsersPresenter presenter) {
+    public UsersPageView(UsersPresenter presenter) {
         this.presenter = presenter;
         initWidget(panel);
         table = new UsersTable(presenter);
