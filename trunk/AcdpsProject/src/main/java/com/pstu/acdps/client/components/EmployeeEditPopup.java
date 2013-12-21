@@ -26,7 +26,7 @@ public class EmployeeEditPopup extends CustomPopup {
 
     private FlowPanel panel = new FlowPanel();
     private ScrollPanel scroll = new ScrollPanel(panel);
-    private FlowPanel sspobejctEditInputsPanel = new FlowPanel();
+    private FlowPanel employeeEditInputsPanel = new FlowPanel();
     private Btn cancel = new Btn("Отменить", EButtonStyle.DEFAULT, new ClickHandler() {
         public void onClick(ClickEvent event) {
             EmployeeEditPopup.this.hide();
@@ -65,13 +65,12 @@ public class EmployeeEditPopup extends CustomPopup {
                 selectedDepartment.setInnerText(object.getNodeName());
             }
         });
-        addStyleName("sspobejct-edit-popup");
         setHandler(handler);
-        setHeader("Редатирование подразделения");
-        sspobejctEditInputsPanel.addStyleName("input");
-        panel.add(sspobejctEditInputsPanel);
+        setHeader("Редатирование сотрудника");
+        employeeEditInputsPanel.addStyleName("input");
+        panel.add(employeeEditInputsPanel);
         modalBody.add(scroll);
-        scroll.addStyleName("sspobject-edit-scroll");
+        scroll.addStyleName("edit-popup-scroll");
         modalFooter.addStyleName("text-left");
         modalFooter.add(saveBtn);
         modalFooter.add(cancel);
@@ -80,7 +79,6 @@ public class EmployeeEditPopup extends CustomPopup {
 
     private void createItem(JobPosDto dto) {
         final FlowPanel itemPanel = new FlowPanel();
-        itemPanel.addStyleName("sspobejct-edit-block");
         name = new CustomTextBox();
         name.addLabelStyleName("label-left");
         name.addInputStyleName("horizontal-input");
@@ -124,7 +122,7 @@ public class EmployeeEditPopup extends CustomPopup {
         ScrollPanel sp = new ScrollPanel(tree);
         sp.addStyleName("tree-scroll-wrap object-selector");
         itemPanel.add(sp);
-        sspobejctEditInputsPanel.add(itemPanel);
+        employeeEditInputsPanel.add(itemPanel);
     }
 
     protected void saveAllChanges() {

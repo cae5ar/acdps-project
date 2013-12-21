@@ -40,8 +40,8 @@
 					<a class="navbar-brand">ССП</a>
 				</div>
 				<div class="navbar-collapse collapse" style="height: 1px;">
-					<ul class="nav navbar-nav">
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Справочники <b class="caret"></b></a>
+					<ul class="nav navbar-nav" id="operator-buttons">
+						<li class="dropdown hide" id="ROLE_DIRECTORY"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Справочники <b class="caret"></b></a>
 							<ul id="dictionary-dropdown" class="dropdown-menu">
 								<li><a href="#cfo_page:">Справочник ЦФО</a></li>
 								<li><a href="#section_page:">Справочник статей</a></li>
@@ -49,21 +49,21 @@
 								<li><a href="#employees_page:">Справочник сотрудников</a></li>
 							</ul>
 						</li>
-						<li class="dropdown">
+						<li class="dropdown hide" id="DOCUMENTS">
 						<a href="#" class="dropdown-toggle"	data-toggle="dropdown">Документы <b class="caret"></b></a>
 							<ul  id="documents-dropdown"class="dropdown-menu">
-								<li><a href="#departments_page:">Сметы</a></li>
-								<li><a href="#payments_page:">Платежи</a></li>
+								<li id="ROLE_ESTIMATE" class="hide"><a href="#estimate_page:" >Сметы</a></li>
+								<li id="ROLE_PAYMENT" class="hide"><a href="#payments_page:">Платежи</a></li>
 							</ul>
 						</li>
-						<li class="dropdown">
+						<li class="dropdown hide" id="ROLE_REPORT">
 							<a class="link" href="#reports_page:">Отчеты</a>
 						</li>
 						
 				   </ul>
 				   <ul class="nav navbar-nav navbar-right">
-				   		<li>
-							<a id="admin-button" class ="hide" href="#users_page:">Пользователи</a>
+				   		<li id="admin-button" class ="hide">
+							<a href="#users_page:">Пользователи</a>
 						</li>
 				   		<li>
 							<a id="logout-link">Выход</a>

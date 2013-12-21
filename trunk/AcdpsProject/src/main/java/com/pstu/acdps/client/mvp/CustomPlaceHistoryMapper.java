@@ -9,11 +9,12 @@ import com.pstu.acdps.client.mvp.place.EstimatePagePlace;
 import com.pstu.acdps.client.mvp.place.PaymentsPagePlace;
 import com.pstu.acdps.client.mvp.place.ReportPagePlace;
 import com.pstu.acdps.client.mvp.place.SectionPagePlace;
+import com.pstu.acdps.client.mvp.place.UserPagePlace;
 
 //@formatter:off
 @WithTokenizers({DepartmentsPagePlace.Tokenizer.class, EmployeesPagePlace.Tokenizer.class,
                     PaymentsPagePlace.Tokenizer.class, EstimatePagePlace.Tokenizer.class, 
                     SectionPagePlace.Tokenizer.class, CfoPagePlace.Tokenizer.class, 
-                    ReportPagePlace.Tokenizer.class})
+                    ReportPagePlace.Tokenizer.class, UserPagePlace.Tokenizer.class})
 //@formatter:on
 public interface CustomPlaceHistoryMapper extends PlaceHistoryMapper {}

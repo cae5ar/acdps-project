@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.JobPosDto;
+import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
@@ -14,6 +16,8 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 @RemoteServiceRelativePath("service.rpc")
 public interface GwtRpcService extends RemoteService {
     UserDto getCurrentUser() throws AnyServiceException;
+    
+    List<RoleDto> getRoleList() throws AnyServiceException;
 
     Long saveEmployee(JobPosDto bean) throws AnyServiceException;
 
@@ -29,9 +33,19 @@ public interface GwtRpcService extends RemoteService {
 
     List<SSPObjectDto> getSectionChilds(Long id, Date selectedDate);
 
-    List<JobPosDto> getAllEmployees();
+    List<JobPosDto> getAllJobPositions();
+
+    void removeEmployee(Long id);
 
     Map<Long, String> getAllJob();
-    
 
+    List<UserDto> getAllUsers();
+
+
+    Long saveUser(UserDto bean, String password) throws AnyServiceException;
+
+    void removeUser(Long id) throws AnyServiceException;
+
+    List<EmployeeDto> getAllEmployees();
+    
 }

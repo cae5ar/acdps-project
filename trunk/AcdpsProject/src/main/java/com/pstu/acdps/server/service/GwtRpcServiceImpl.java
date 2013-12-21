@@ -13,9 +13,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.pstu.acdps.client.GwtRpcService;
 import com.pstu.acdps.server.dao.DepartmentDao;
 import com.pstu.acdps.server.dao.EmployeeDao;
+import com.pstu.acdps.server.dao.RoleDao;
 import com.pstu.acdps.server.dao.SectionDao;
+import com.pstu.acdps.server.dao.UserDao;
 import com.pstu.acdps.server.domain.JobPosDao;
+import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.JobPosDto;
+import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
@@ -26,19 +30,26 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcService {
 
     @Autowired
-    SecurityDetailsService securityDetailsService;
+    private SecurityDetailsService securityDetailsService;
 
     @Autowired
-    EmployeeDao epmployeeDao;
+    private EmployeeDao epmployeeDao;
 
     @Autowired
-    JobPosDao jobPosDao;
+    private JobPosDao jobPosDao;
 
     @Autowired
-    DepartmentDao departmentDao;
+    private DepartmentDao departmentDao;
     
     @Autowired
-    SectionDao sectionDao;
+    private SectionDao sectionDao;
+
+    @Autowired
+    private UserDao userDao;
+    
+    @Autowired
+    private RoleDao roleDao;
+    
 
     public UserDto getCurrentUser() throws AnyServiceException {
         return securityDetailsService.getCurrentUser();
@@ -83,7 +94,7 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     }
 
     @Override
-    public List<JobPosDto> getAllEmployees() {
+    public List<JobPosDto> getAllJobPositions() {
         //TODO:дописать; чтоб все поля были заполнены
         return null;
     }
@@ -98,6 +109,36 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
         hashMap.put(4L, "Ведущий задрот 1ой категории");
         hashMap.put(5L, "Pr0");
         return hashMap;
+    }
+
+    @Override
+    public void removeEmployee(Long id) {
+        // TODO: здесь мы удаляем сотрудника
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        return  userDao.getAllUsers();
+    }
+    
+    @Override
+    public Long saveUser(UserDto bean, String password) throws AnyServiceException {
+        return userDao.save(bean, password);
+    }
+
+    @Override
+    public void removeUser(Long id) throws AnyServiceException {
+        userDao.remove(id);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        return epmployeeDao.getAllEmployees();
+    }
+
+    @Override
+    public List<RoleDto> getRoleList() throws AnyServiceException {
+        return roleDao.getAllRoles();
     }
 
 }

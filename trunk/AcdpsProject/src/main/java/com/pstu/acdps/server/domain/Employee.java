@@ -10,6 +10,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 
+import com.pstu.acdps.shared.dto.EmployeeDto;
+
 @Audited
 @Entity
 @Table(name = "SSP_EMPLOYEE")
@@ -59,5 +61,9 @@ public class Employee extends AbstractEntity {
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
+
+    public EmployeeDto toDto() {
+        return new EmployeeDto(id, firstName, secondName, middleName, birthday);
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.pstu.acdps.client.mvp.activity;
+package com.pstu.acdps.client.components;
 
 import java.util.List;
 
@@ -10,10 +10,9 @@ import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.pstu.acdps.client.components.Btn;
 import com.pstu.acdps.client.components.Btn.EButtonStyle;
 import com.pstu.acdps.client.mvp.presenter.EmployeesPresenter;
-import com.pstu.acdps.client.mvp.presenter.EmployeesPresenter.ActionType;
+import com.pstu.acdps.client.type.ActionType;
 import com.pstu.acdps.shared.dto.JobPosDto;
 
 public class EmployeesTable extends Composite {

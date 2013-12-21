@@ -1,5 +1,6 @@
 package com.pstu.acdps.client;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,6 +31,7 @@ import com.pstu.acdps.client.mvp.CustomActivityMapper;
 import com.pstu.acdps.client.mvp.CustomPlaceHistoryMapper;
 import com.pstu.acdps.client.mvp.SiteHeader;
 import com.pstu.acdps.client.mvp.place.DepartmentsPagePlace;
+import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.UserDto;
 import com.xedge.jquery.client.JQuery;
 
@@ -43,6 +45,7 @@ public class Site implements EntryPoint {
     public static final int STATUS_CODE_OK = 200;
 
     public static UserDto user;
+    public static List<RoleDto> roleList;
     public static ScrollPanel contentPanel = new ScrollPanel();
     HandlerRegistration historyHandlerRegistration = null;
 
@@ -86,6 +89,11 @@ public class Site implements EntryPoint {
                 }
 
                 public void onSuccess() {
+                    Site.service.getRoleList(new SimpleAsyncCallback<List<RoleDto>>() {
+                        public void onSuccess(List<RoleDto> result) {
+                            roleList = result;
+                        }
+                    });
                     intAuthorizedUserGUI();
                 }
             });
@@ -122,8 +130,14 @@ public class Site implements EntryPoint {
     private void intAuthorizedUserGUI() {
         final ClientFactory clientFactory = GWT.create(ClientFactory.class);
         SiteHeader header = clientFactory.getHeader();
-        header.setVisibleHeaderAndFooter();
-        header.setVisibleAdminButtons(user.getAdmin());
+        user.setAdmin(true);
+        if (user.getAdmin()) {
+            header.setVisibleAdminButtons();
+            header.setVisibleOperatorButtons();
+        }else{
+            header.setVisibleOperatorButtons(user.getRoles());
+        }
+        header.setVisibleFooterAndHeader();
         RootPanel rootLayoutPanel = RootPanel.get("container");
         rootLayoutPanel.add(contentPanel);
         contentPanel.setStyleName("content-container");

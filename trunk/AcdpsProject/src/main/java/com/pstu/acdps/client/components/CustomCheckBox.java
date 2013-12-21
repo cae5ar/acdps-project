@@ -1,55 +1,32 @@
 package com.pstu.acdps.client.components;
 
-import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.CheckBox;
 
 public class CustomCheckBox extends AbstractSimpleInput {
 
-    private static final String TRUE = "ДА";
-    private static final String FALSE = "НЕТ";
-    private ListBox lbox = new ListBox();
+    private CheckBox checkBox = new CheckBox();
 
     public CustomCheckBox() {
-        wrapInput(lbox);
-        addValues();
+        wrapInput(checkBox);
     }
 
-    public String getInputValue() {
-        return lbox.getItemText(lbox.getSelectedIndex()).toLowerCase();
+    public Boolean getValue() {
+        return checkBox.getValue();
     }
 
-    private void addValues() {
-        addValue("");
-        addValue(TRUE);
-        addValue(FALSE);
+    public void setValue(boolean value) {
+        checkBox.setValue(value);
     }
 
-    private void addValue(String str) {
-        lbox.addItem(str);
+    public void setFocus() {
+        checkBox.setFocus(true);
     }
 
-    public void setInputValue(String strValue) {
-        String value = "";
-        if (strValue.equalsIgnoreCase("0") || strValue.equalsIgnoreCase("false")) {
-            value = FALSE;
-        }
-        if (strValue.equalsIgnoreCase("1") || strValue.equalsIgnoreCase("true")) {
-            value = TRUE;
-        }
-        for (int i = 0; i < lbox.getItemCount(); i++) {
-            if (lbox.getItemText(i).equalsIgnoreCase(value)) {
-                lbox.setSelectedIndex(i);
-                return;
-            }
-        }
-    }
-
-    protected void setFocus() {
-        lbox.setFocus(true);
-    }
-
-    @Override
     public void addInputStyleName(String style) {
-        lbox.setStyleName(style);
+        checkBox.setStyleName(style);
     }
-
+    
+    public CheckBox getNativeCheckBox(){
+        return checkBox;
+    }
 }

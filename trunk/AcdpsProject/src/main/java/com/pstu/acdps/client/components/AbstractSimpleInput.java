@@ -24,7 +24,7 @@ public abstract class AbstractSimpleInput extends Composite {
         addStyleName("form-horizontal");
         controlGroup.addStyleName("form-group");
 
-        label.addClassName("control-label text-left");
+        label.addClassName("control-label");
         controlGroup.getElement().appendChild(label);
 
         helpInline.addClassName("help-block");

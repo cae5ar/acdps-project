@@ -23,6 +23,7 @@ import com.pstu.acdps.shared.dto.UserDto;
 @Table(name = "T_USER")
 public class User extends AbstractEntity {
 
+    //TODO: убрать это поле, вместо него использовать будет Employee
     @Column(nullable = false, length = 4096)
     private String name;
 

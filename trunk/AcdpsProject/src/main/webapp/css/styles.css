@@ -26,10 +26,6 @@
 	padding-top: 120px;
 }
 
-.modal-footer.text-left {
-	text-align: left;
-}
-
 .left.block {
 	border-right: 1px solid #AFAFAF;
 }
@@ -58,7 +54,7 @@
 	padding-bottom: 49px;
 }
 
-.sspobject-edit-scroll {
+.edit-popup-scroll {
 	max-height: 420px;
 	margin-top: 10px;
 	padding-right: 10px;
@@ -84,6 +80,20 @@
 
 .control-label.label-left {
 	width: 113px;
+}
+
+.user-edit-block .control-label.label-left {
+	width: 170px;
+}
+
+.user-role-select .control-label.label-left {
+    width: 425px;
+    font-weight: normal;
+}
+
+.user-role-select>.caption{
+	font-weight:bold;
+	width: 170px;
 }
 
 .form-horizontal .form-group {
@@ -144,7 +154,7 @@
 	margin-top: 2px
 }
 
-.horizontal-input {
+.form-control.horizontal-input {
 	width: 270px;
 	display: inline;
 	padding: 6px;

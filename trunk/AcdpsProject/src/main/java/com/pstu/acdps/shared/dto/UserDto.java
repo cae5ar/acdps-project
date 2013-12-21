@@ -10,13 +10,12 @@ public class UserDto extends EntityDto {
     private String login = null;
     private Boolean admin = false;
     //перечень ролей пользователя
-    private List<RoleDto> roles = null;
+    private List<RoleDto> roles = new ArrayList<RoleDto>();
     //связанный сотрудник
     private EmployeeDto employee = null;
     
     public UserDto() {
         super();
-
         this.roles = new ArrayList<RoleDto>();
     }
 

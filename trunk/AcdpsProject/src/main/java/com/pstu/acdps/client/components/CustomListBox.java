@@ -10,13 +10,12 @@ public class CustomListBox extends AbstractSimpleInput {
 
     public CustomListBox(List<String> values) {
         this();
-        if (values == null) {
-            addValues(values);
-        }
+        addValues(values);
     }
 
     public CustomListBox() {
         wrapInput(lbox);
+        addValue("");
     }
 
     public String getSelectedText() {
@@ -28,7 +27,6 @@ public class CustomListBox extends AbstractSimpleInput {
     }
 
     public void addValues(List<String> values) {
-        // addValue("");
         if (values != null) {
             for (String str : values) {
                 addValue(str);
