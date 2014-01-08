@@ -58,12 +58,11 @@ public class CfoSectionsTable extends Composite {
         CustomDateBox rightDate = new CustomDateBox();
         rightDate.setValue(dto.getEndDate());
         table.setWidget(index, 4, rightDate);
-        Btn removeBtn = new Btn("<span class='glyphicon glyphicon-remove'></span>", EButtonStyle.LINK);
+        final Btn removeBtn = new Btn("<span class='glyphicon glyphicon-remove'></span>", EButtonStyle.LINK);
         removeBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 list.remove(dto);
-                table.removeRow(new Integer(index));
-                index--;
+//                removeBtn.getElement().getParentElement().getParentElement().removeFromParent();
             }
         });
         table.setWidget(index, 5, removeBtn);

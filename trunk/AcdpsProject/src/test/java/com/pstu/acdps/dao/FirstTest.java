@@ -244,7 +244,7 @@ public class FirstTest extends AbstractAuthenticatedTransactionalJUnit4SpringCon
     	CfoDto cfo = new CfoDto();
     	cfo.setName("ЦФО 1");
     	
-    	List<SSPObjectDto> sections = sectionDao.getChilds(null, new Date());
+    	List<SectionDto> sections = sectionDao.getChilds(null, new Date());
     	
     	SSPObjectDto sec1 = sections.get(0);
     	

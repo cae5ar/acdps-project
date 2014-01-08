@@ -12,6 +12,7 @@ import com.pstu.acdps.client.Site;
 import com.pstu.acdps.client.components.AlertDialogBox;
 import com.pstu.acdps.client.components.CustomPopup;
 import com.pstu.acdps.client.components.EmployeeEditPopup;
+import com.pstu.acdps.client.components.AlertDialogBox.EAlertType;
 import com.pstu.acdps.client.components.EmployeeEditPopup.EmployeeSaveHandler;
 import com.pstu.acdps.client.components.TreeWidget;
 import com.pstu.acdps.client.components.TreeWidget.ObjectsOpenHandler;
@@ -58,11 +59,11 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
         this.clientFactory = clientFactory;
     }
 
-
     public void start(final AcceptsOneWidget container, EventBus eventBus) {
-        if(!Site.hasUserRole(SystemConstants.roleDirectoryIdent)){
+        if (!Site.hasUserRole(SystemConstants.roleDirectoryIdent)) {
             container.setWidget(clientFactory.getAccessDeniedView());
-        }else{
+        }
+        else {
             Site.service.getAllJob(new SimpleAsyncCallback<Map<Long, String>>() {
                 public void onSuccess(Map<Long, String> result) {
                     jobMap = result;
@@ -81,7 +82,7 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
             public void save(JobPosDto dto, final CustomPopup sender) {
                 Site.service.saveEmployee(dto, new SimpleAsyncCallback<Long>() {
                     public void onSuccess(Long result) {
-                        AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                        AlertDialogBox.showDialogBox("Изменения успешно сохранены", "", EAlertType.SUCCESS);
                         sender.hide();
                         view.reset();
                     }
@@ -92,14 +93,13 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
     }
 
     protected void removeEmployee(Long id) {
-        Site.service.removeEmployee(id, new SimpleAsyncCallback<Void>(){
+        Site.service.removeEmployee(id, new SimpleAsyncCallback<Void>() {
             public void onSuccess(Void result) {
-                AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                AlertDialogBox.showDialogBox("Изменения успешно сохранены", "", EAlertType.SUCCESS);
                 view.reset();
             }
         });
     }
-    
 
     public ActionHandler getActionHandler() {
         return actionHanlder;

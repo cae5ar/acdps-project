@@ -219,6 +219,10 @@
 	max-height: 560px;
 }
 
+.cfo-edit-popup .tree-scroll-wrap{
+	margin-bottom:5px;
+}
+
 .cfo-sections-table .form-group{
 	margin-bottom:0px;
 }
@@ -240,7 +244,7 @@ table.disclosure-panel{
 }
 
 .disclosure-panel .header-text{
-	margin-bottom:5px;
+	margin-bottom:10px;
 }
 
 .disclosure-panel a:hover{

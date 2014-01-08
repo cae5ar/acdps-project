@@ -114,9 +114,13 @@ public class EmployeeEditPopup extends CustomPopup {
         for (Entry<Long, String> entry : jobMap.entrySet()) {
             position.addValue(entry.getValue(), entry.getKey().toString());
         }
+        if (dto.getJob() != null) {
+            position.setValue(dto.getJob().toString());
+        }
         itemPanel.add(position);
         Label parentTextLabel = new Label("Подразделение: ");
         selectedDepartment = DOM.createSpan();
+        if (dto.getDepartmentId() != null) selectedDepartment.setInnerHTML(dto.getDepartmentName());
         parentTextLabel.getElement().appendChild(selectedDepartment);
         itemPanel.add(parentTextLabel);
         ScrollPanel sp = new ScrollPanel(tree);
@@ -148,11 +152,11 @@ public class EmployeeEditPopup extends CustomPopup {
                 commit = false;
                 AlertDialogBox.showDialogBox("Поле 'Должность' не может быть пустым");
             }
-            if (tree.getSelectedNode() == null) {
+            if (dto.getDepartmentId() == null && tree.getSelectedNode() == null) {
                 commit = false;
                 AlertDialogBox.showDialogBox("Поле 'Подразделение' не может быть пустым");
             }
-            if (tree.getSelectedNode().getId() == null) {
+            if (tree.getSelectedNode() != null && tree.getSelectedNode().getId() == null) {
                 commit = false;
                 AlertDialogBox.showDialogBox("Выбранное подразделение не применимо к этому полю");
             }
@@ -162,8 +166,10 @@ public class EmployeeEditPopup extends CustomPopup {
                 dto.getEmployeeDto().setMiddleName(patronymic.getValue());
                 dto.getEmployeeDto().setBirthday(birthDay.getValue());
                 dto.setJob(Long.parseLong(position.getSelectedValue()));
-                dto.setDepartmentId(tree.getSelectedNode().getId());
-                dto.setDepartmentName(tree.getSelectedNode().getName());
+                if (tree.getSelectedNode() != null) {
+                    dto.setDepartmentId(tree.getSelectedNode().getId());
+                    dto.setDepartmentName(tree.getSelectedNode().getName());
+                }
                 handler.save(dto, EmployeeEditPopup.this);
             }
         }

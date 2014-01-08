@@ -63,4 +63,13 @@ public class CustomListBox extends AbstractSimpleInput {
         return lbox;
     }
 
+    public void setValue(String string) {
+        for (int i = 0; i < lbox.getItemCount(); i++) {
+            if (lbox.getValue(i).equalsIgnoreCase(string)) {
+                lbox.setSelectedIndex(i);
+                return;
+            }
+        }
+    }
+
 }
