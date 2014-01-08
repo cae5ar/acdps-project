@@ -39,7 +39,7 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     private SecurityDetailsService securityDetailsService;
 
     @Autowired
-    private EmployeeDao employeeDao;
+    private EmployeeDao jobPOsDao;
 
     @Autowired
     private JobPosDao jobPosDao;
@@ -67,10 +67,8 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     }
 
     @Override
-    public Long saveEmployee(JobPosDto bean) throws AnyServiceException {
-        if (bean.getEmployeeDto().getId() == null) {
-            bean.getEmployeeDto().setId(employeeDao.save(bean.getEmployeeDto()));
-        }
+    public Long saveJobPos(JobPosDto bean) throws AnyServiceException {
+        bean.getEmployeeDto().setId(jobPOsDao.save(bean.getEmployeeDto()));
         return jobPosDao.save(bean);
     }
 
@@ -117,8 +115,8 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
     }
 
     @Override
-    public void removeEmployee(Long id) throws AnyServiceException {
-        employeeDao.remove(id);
+    public void removeJobPos(Long id) throws AnyServiceException {
+        jobPosDao.remove(id);
     }
 
     @Override
@@ -138,7 +136,7 @@ public class GwtRpcServiceImpl extends RemoteServiceServlet implements GwtRpcSer
 
     @Override
     public List<EmployeeDto> getAllEmployees() {
-        return employeeDao.getAllEmployees();
+        return jobPOsDao.getAllEmployees();
     }
 
     @Override

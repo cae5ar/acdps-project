@@ -19,7 +19,7 @@ import com.pstu.acdps.shared.dto.UserDto;
 public interface GwtRpcServiceAsync {
 	void getCurrentUser(AsyncCallback<UserDto> callback);
 
-	void saveEmployee(JobPosDto bean, AsyncCallback<Long> callback);
+	void saveJobPos(JobPosDto bean, AsyncCallback<Long> callback);
 
 	void getDepartmentChilds(Long parentId, Date currdate,
 			AsyncCallback<List<SSPObjectDto>> callback);
@@ -48,7 +48,7 @@ public interface GwtRpcServiceAsync {
 
 	void getAllUsers(AsyncCallback<List<UserDto>> callback);
 
-	void removeEmployee(Long id, AsyncCallback<Void> callback);
+	void removeJobPos(Long id, AsyncCallback<Void> callback);
 
 	void getAllJobPositions(AsyncCallback<List<JobPosDto>> callback);
 
