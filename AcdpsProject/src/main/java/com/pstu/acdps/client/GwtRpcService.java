@@ -19,7 +19,7 @@ import com.pstu.acdps.shared.exception.AnyServiceException;
 public interface GwtRpcService extends RemoteService {
 	UserDto getCurrentUser() throws AnyServiceException;
 
-	Long saveEmployee(JobPosDto bean) throws AnyServiceException;
+	Long saveJobPos(JobPosDto bean) throws AnyServiceException;
 
 	List<SSPObjectDto> getDepartmentChilds(Long parentId, Date currdate)
 			throws AnyServiceException;
@@ -40,7 +40,7 @@ public interface GwtRpcService extends RemoteService {
 
 	List<JobPosDto> getAllJobPositions();
 
-	void removeEmployee(Long id) throws AnyServiceException;
+	void removeJobPos(Long id) throws AnyServiceException;
 
 	List<UserDto> getAllUsers();
 
