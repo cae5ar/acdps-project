@@ -34,7 +34,7 @@ public class Estimate extends Document {
 	private CFO cfo = null;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "currency_id", nullable = true)
+	@JoinColumn(name = "currency_id", nullable = false)
 	private Currency currency = null;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "estimate", cascade = CascadeType.ALL)

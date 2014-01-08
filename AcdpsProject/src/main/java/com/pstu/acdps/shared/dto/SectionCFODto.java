@@ -7,7 +7,7 @@ import com.pstu.acdps.shared.type.SystemConstants;
 @SuppressWarnings("serial")
 public class SectionCFODto extends EntityDto {
 
-	private CfoDto cfo;
+	//private CfoDto cfo;
 	//private SectionDto section;
 	private SSPObjectDto section;
 	private Date startDate;
@@ -20,9 +20,18 @@ public class SectionCFODto extends EntityDto {
 	}
 
 	//public SectionCFODto(CfoDto cfo, SectionDto section, Date startDate, Date endDate) {
+	@Deprecated
 	public SectionCFODto(CfoDto cfo, SSPObjectDto section, Date startDate, Date endDate) {
 		super();
-		this.cfo = cfo;
+		//this.cfo = cfo;
+		this.section = section;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+	
+	public SectionCFODto(Long id, SSPObjectDto section, Date startDate, Date endDate) {
+		super(id);
+		
 		this.section = section;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -55,11 +64,11 @@ public class SectionCFODto extends EntityDto {
 	}
 
 	public CfoDto getCfo() {
-		return cfo;
+		return null; //cfo;
 	}
 
 	public void setCfo(CfoDto cfo) {
-		this.cfo = cfo;
+		//this.cfo = cfo;
 	}
 	
 }
