@@ -1,4 +1,35 @@
-﻿/*********static-block***********/
+﻿.login-view {
+    position: absolute;
+    top: 50%;
+    margin-top: -141px;
+    margin-left: -101px;
+    left: 50%;
+}
+
+.login-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #464646;
+}
+
+.inputs-block {
+    padding: 15px;
+    border: 1px solid #dedede;
+    border-radius: 7px;
+}
+
+.login-button {
+    width: 100%;
+    font-size: 18px;
+}
+
+.report {
+    margin-bottom: 15px;
+    color: #CA4D4D;
+    font-weight: bold;
+}
+
+/*********static-block***********/
 #loadingMessage {
 	font-family: Verdana, Arial, sans-serif;
 	font-size: 18px;
@@ -181,4 +212,37 @@
 	max-height: 125px;
 	text-overflow: ellipsis;
 	overflow: hidden;
+}
+
+/*****CFO edit popup*********/
+.cfo-edit-popup .content-scroll {
+	max-height: 560px;
+}
+
+.cfo-sections-table .form-group{
+	margin-bottom:0px;
+}
+
+.cfo-sections-table > tbody > tr > td{
+    vertical-align: middle;
+}
+
+.cfo-sections-table .control-label{
+	padding-top: 0px;
+}
+
+.cfo-sections-table .section-name{
+    width: 90%;
+}
+
+table.disclosure-panel{
+	 width: 100%;
+}
+
+.disclosure-panel .header-text{
+	margin-bottom:5px;
+}
+
+.disclosure-panel a:hover{
+	text-decoration:none;
 }
