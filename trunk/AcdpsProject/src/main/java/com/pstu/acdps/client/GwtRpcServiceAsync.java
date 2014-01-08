@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.pstu.acdps.shared.dto.CfoDto;
 import com.pstu.acdps.shared.dto.EmployeeDto;
 import com.pstu.acdps.shared.dto.JobPosDto;
 import com.pstu.acdps.shared.dto.RoleDto;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.dto.UserDto;
 
 /**
@@ -31,7 +33,7 @@ public interface GwtRpcServiceAsync {
 
 	void removeSection(Long id, AsyncCallback<Void> simpleAsyncCallback);
 
-	void getSectionChilds(Long id, Date selectedDate,
+	void getSectionChildsBySSPObjects(Long id, Date selectedDate,
 			AsyncCallback<List<SSPObjectDto>> simpleAsyncCallback);
 
 	void getAllEmployees(AsyncCallback<List<EmployeeDto>> asyncCallback);
@@ -49,4 +51,12 @@ public interface GwtRpcServiceAsync {
 	void removeEmployee(Long id, AsyncCallback<Void> callback);
 
 	void getAllJobPositions(AsyncCallback<List<JobPosDto>> callback);
+
+    void getAllCfo(AsyncCallback<List<CfoDto>> simpleAsyncCallback);
+
+    void removeCfo(Long id, AsyncCallback<Void> simpleAsyncCallback);
+
+    void saveCfo(CfoDto dto, AsyncCallback<Long> simpleAsyncCallback);
+
+    void getSectionChilds(Long id, Date date, AsyncCallback<List<SectionDto>> simpleAsyncCallback);
 }

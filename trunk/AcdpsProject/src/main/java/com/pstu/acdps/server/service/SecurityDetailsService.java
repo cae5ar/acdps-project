@@ -22,8 +22,6 @@ public class SecurityDetailsService {
 	private UserDao userDao;
 
 	public UserDto getCurrentUser() throws AnyServiceException {
-		if (CurrentUser.hasRole(CurrentUser.ROLE_ADMIN))
-			return new UserDto(null, CurrentUser.getLogin());
 		User user = userDao.findById(CurrentUser.getId());
 		return user == null ? null : user.toDto();
 	}

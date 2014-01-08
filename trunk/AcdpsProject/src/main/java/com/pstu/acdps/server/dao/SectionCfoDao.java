@@ -66,6 +66,7 @@ public class SectionCfoDao extends JpaDao<SectionCFO>{
         return entity.getId();
     }
     
+    @SuppressWarnings("unused")
     public List<SectionCFODto> getByCfoId(Long cfoId) {
     	
     	List<SectionCFODto> result = new ArrayList<SectionCFODto>();

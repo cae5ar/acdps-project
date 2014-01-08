@@ -102,9 +102,7 @@ public class Site implements EntryPoint {
     protected void initLoginPage() {
         setWaitingBlockVisible(false);
         RootPanel rootLayoutPanel = RootPanel.get("container");
-        rootLayoutPanel.add(contentPanel);
-        contentPanel.setStyleName("content-container text-center");
-        contentPanel.setWidget(new LoginWidget());
+        rootLayoutPanel.add(new LoginWidget());
     }
 
     public static void logout() {
@@ -153,6 +151,9 @@ public class Site implements EntryPoint {
     }
 
     public static boolean hasUserRole(String roledirectoryident) {
+        if(user.getAdmin()){
+            return true;
+        }
         for (RoleDto dto : user.getRoles()) {
             if (dto.getIdent().equals(roledirectoryident)) {
                 return true;

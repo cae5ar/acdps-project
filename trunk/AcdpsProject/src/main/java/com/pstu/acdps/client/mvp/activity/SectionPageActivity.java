@@ -63,7 +63,7 @@ public class SectionPageActivity extends MainAbstractActivity implements SSPObje
         final TreeWidget<SSPObjectDto> tree = new TreeWidget<SSPObjectDto>(new SSPObjectDto(null, "Все " + caption, null, new Date()));
         tree.setOpenHandler(new ObjectsOpenHandler<SSPObjectDto>() {
             public void selected(SSPObjectDto object, final TreeItem source) {
-                Site.service.getSectionChilds(object.getId(), view.getSelectedDate(), new SimpleAsyncCallback<List<SSPObjectDto>>() {
+                Site.service.getSectionChildsBySSPObjects(object.getId(), view.getSelectedDate(), new SimpleAsyncCallback<List<SSPObjectDto>>() {
                     @Override
                     public void onSuccess(List<SSPObjectDto> result) {
                         tree.addItemList(result, source);
@@ -75,7 +75,7 @@ public class SectionPageActivity extends MainAbstractActivity implements SSPObje
     }
 
     public void getSSPObjectChilds(final TreeWidget<SSPObjectDto> tree, Date date) {
-        Site.service.getSectionChilds(null, date, new SimpleAsyncCallback<List<SSPObjectDto>>() {
+        Site.service.getSectionChildsBySSPObjects(null, date, new SimpleAsyncCallback<List<SSPObjectDto>>() {
             @Override
             public void onSuccess(List<SSPObjectDto> result) {
                 tree.addItemList(result, null);
