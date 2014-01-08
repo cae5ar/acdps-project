@@ -11,7 +11,7 @@ public class SSPObjectDto extends EntityDto implements HasChild {
 	private Long parentId;
 	private Date startDate;
 	private Date endDate;
-	private boolean hasChild = false;
+	private Boolean hasChild = false;
 
 	public SSPObjectDto() {
 		super();
@@ -97,7 +97,7 @@ public class SSPObjectDto extends EntityDto implements HasChild {
 		return hasChild;
 	}
 
-	public void setHasChild(boolean hasChild) {
+	public void setHasChild(Boolean hasChild) {
 		this.hasChild = hasChild;
 	}
 

@@ -33,4 +33,14 @@ public class CurrencyDao extends JpaDao<Currency> {
 		
 		return entity.getId();
 	}
+	
+	public static CurrencyDto toDto(Currency currency) {
+		
+		if (currency == null)
+			return null;
+		
+		CurrencyDto dto = new CurrencyDto(currency.getId(), currency.getName(), currency.getCode());
+		
+		return dto;
+	}
 }

@@ -109,5 +109,22 @@ public class CfoDao extends JpaDao<CFO>{
     	
     	return result;
     }
+    
+    public static CfoDto toDto(CFO cfo, boolean full) {
+    	
+    	if (cfo == null)
+    		return null;
+    	
+    	CfoDto dto = new CfoDto();
+    	
+    	dto.setId(cfo.getId());
+    	dto.setName(cfo.getName());
+    	
+    	if (full) {
+    		
+    	}
+    	
+    	return dto;
+    }
 }
 
