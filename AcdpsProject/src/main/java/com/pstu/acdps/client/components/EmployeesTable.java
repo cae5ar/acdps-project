@@ -84,7 +84,7 @@ public class EmployeesTable extends Composite {
         table.setText(index, 2, dto.getEmployeeDto().getSecondName());
         table.setText(index, 3, df.format(dto.getEmployeeDto().getBirthday()));
         table.setText(index, 4, dto.getDepartmentName());
-//        table.setText(index, 5, dto.getName());
+        table.setText(index, 5, presenter.getAllJobs().get(dto.getJob()));
         Btn editBtn = new Btn("<span class='glyphicon glyphicon-pencil'></span>", EButtonStyle.LINK);
         Btn removeBtn = new Btn("<span class='glyphicon glyphicon-remove'></span>", EButtonStyle.LINK);
         editBtn.addClickHandler(new ClickHandler() {

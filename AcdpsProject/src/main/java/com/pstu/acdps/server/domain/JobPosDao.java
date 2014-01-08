@@ -16,57 +16,56 @@ import com.pstu.acdps.shared.type.SystemConstants;
 @Repository
 public class JobPosDao extends JpaDao<JobPos> {
 
-	@Override
-	public Class<JobPos> getEntityClass() {
-		return JobPos.class;
-	}
+    @Override
+    public Class<JobPos> getEntityClass() {
+        return JobPos.class;
+    }
 
-	public Long save(JobPosDto bean) throws AnyServiceException {
-		JobPos entity = null;
-		if (bean.getId() != null) {
-			entity = findById(bean.getId());
-		} else {
-			entity = new JobPos();
-		}
-		Job job = find(Job.class, bean.getJob());
-		Department department = find(Department.class, bean.getDepartmentId());
-		Employee employee = find(Employee.class, bean.getEmployeeDto().getId());
-		entity.setDepartment(department);
-		entity.setJob(job);
-		entity.setEmployee(employee);
-		entity.setStartDate(SystemConstants.startDate);
-		entity.setEndDate(SystemConstants.endDate);
-		persist(entity);
-		return entity.getId();
-	}
+    public Long save(JobPosDto bean) throws AnyServiceException {
+        JobPos entity = null;
+        if (bean.getId() != null) {
+            entity = findById(bean.getId());
+        }
+        else {
+            entity = new JobPos();
+        }
+        Job job = find(Job.class, bean.getJob());
+        Department department = find(Department.class, bean.getDepartmentId());
+        Employee employee = find(Employee.class, bean.getEmployeeDto().getId());
+        entity.setDepartment(department);
+        entity.setJob(job);
+        entity.setEmployee(employee);
+        entity.setStartDate(SystemConstants.startDate);
+        entity.setEndDate(SystemConstants.endDate);
+        persist(entity);
+        return entity.getId();
+    }
 
-	@SuppressWarnings("unchecked")
-	public List<JobPosDto> getAllJobPos() {
-		List<JobPosDto> result = new ArrayList<JobPosDto>();
+    @SuppressWarnings("unchecked")
+    public List<JobPosDto> getAllJobPos() {
+        List<JobPosDto> result = new ArrayList<JobPosDto>();
 
-		Query jobPosQuery = em.createQuery("select jobPos from JobPos jobPos");
-		List<JobPos> resultList = jobPosQuery.getResultList();
+        Query jobPosQuery = em.createQuery("select jobPos from JobPos jobPos");
+        List<JobPos> resultList = jobPosQuery.getResultList();
 
-		for (JobPos jobPos : resultList) {
-			JobPosDto dto = new JobPosDto();
+        for (JobPos jobPos : resultList) {
+            JobPosDto dto = new JobPosDto();
 
-			dto.setId(jobPos.getId());
-			dto.setStartDate(jobPos.getStartDate());
-			dto.setEndDate(jobPos.getEndDate());
+            dto.setId(jobPos.getId());
+            dto.setStartDate(jobPos.getStartDate());
+            dto.setEndDate(jobPos.getEndDate());
 
-			Employee emp = jobPos.getEmployee();
-			EmployeeDto employeeDto = new EmployeeDto(emp.getId(),
-					emp.getFirstName(), emp.getSecondName(),
-					emp.getFirstName(), emp.getBirthday());
+            Employee emp = jobPos.getEmployee();
+            EmployeeDto employeeDto = new EmployeeDto(emp.getId(), emp.getFirstName(), emp.getMiddleName(), emp.getSecondName(), emp.getBirthday());
 
-			dto.setEmployeeDto(employeeDto);
-			dto.setDepartmentId(jobPos.getDepartment().getId());
-			dto.setDepartmentName(jobPos.getDepartment().getName());
-			dto.setJob(jobPos.getJob().getId());
+            dto.setEmployeeDto(employeeDto);
+            dto.setDepartmentId(jobPos.getDepartment().getId());
+            dto.setDepartmentName(jobPos.getDepartment().getName());
+            dto.setJob(jobPos.getJob().getId());
 
-			result.add(dto);
-		}
+            result.add(dto);
+        }
 
-		return result;
-	}
+        return result;
+    }
 }
