@@ -73,6 +73,7 @@ public class CfoDao extends JpaDao<CFO>{
         return entity.getId();
     }
     
+    @SuppressWarnings("unchecked")
     public List<CfoDto> getAllCfo() {
     	
     	List<CfoDto> result = new ArrayList<CfoDto>();

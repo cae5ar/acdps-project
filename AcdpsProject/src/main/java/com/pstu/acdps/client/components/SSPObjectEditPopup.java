@@ -51,11 +51,7 @@ public class SSPObjectEditPopup extends CustomPopup {
         tree.setSelectHandler(new ObjectsSelectHandler<SSPObjectDto>() {
             @Override
             public void selected(SSPObjectDto object) {
-                if(object.getId()!=null){
-                    selectedDepartment.setInnerText(object.getNodeName());
-                }else{
-                    selectedDepartment.setInnerText("");
-                }
+                selectedDepartment.setInnerText(object.getNodeName());
             }
         });
         this.dto = dto;

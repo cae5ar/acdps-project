@@ -9,6 +9,7 @@ import com.pstu.acdps.client.Site;
 import com.pstu.acdps.client.components.AlertDialogBox;
 import com.pstu.acdps.client.components.CustomPopup;
 import com.pstu.acdps.client.components.UserEditPopup;
+import com.pstu.acdps.client.components.AlertDialogBox.EAlertType;
 import com.pstu.acdps.client.components.UserEditPopup.UserSaveHandler;
 import com.pstu.acdps.client.mvp.ClientFactory;
 import com.pstu.acdps.client.mvp.place.UserPagePlace;
@@ -71,7 +72,7 @@ public class UserPageActivity extends MainAbstractActivity implements UsersPrese
             public void save(UserDto dto, String password, final CustomPopup sender) {
                 Site.service.saveUser(dto, password, new SimpleAsyncCallback<Long>() {
                     public void onSuccess(Long result) {
-                        AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                        AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                         sender.hide();
                         view.reset();
                     }
@@ -84,7 +85,7 @@ public class UserPageActivity extends MainAbstractActivity implements UsersPrese
     protected void removeUser(Long id) {
         Site.service.removeUser(id, new SimpleAsyncCallback<Void>() {
             public void onSuccess(Void result) {
-                AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                 view.reset();
             }
         });

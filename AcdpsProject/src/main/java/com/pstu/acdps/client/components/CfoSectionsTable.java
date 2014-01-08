@@ -2,8 +2,11 @@ package com.pstu.acdps.client.components;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
@@ -20,8 +23,9 @@ public class CfoSectionsTable extends Composite {
 
     private FlowPanel panel = new FlowPanel();
     private FlexTable table = new FlexTable();
-    private List<SectionCFODto> list = new ArrayList<SectionCFODto>();
-    private int index = 0;
+    private Map<CustomDateBox, SectionCFODto> map = new HashMap<CustomDateBox, SectionCFODto>();
+
+    // private int index = 0;
     private HTML emptyText;
 
     public CfoSectionsTable() {
@@ -43,33 +47,62 @@ public class CfoSectionsTable extends Composite {
         addCfoSectionDto(new SectionCFODto(cfoDto, sspObjectDto, new Date(), SystemConstants.endDate));
     }
 
-    public void addCfoSectionDto(final SectionCFODto dto) {
-        if (list.isEmpty()) {
-            emptyText.removeFromParent();
+    public void addCfoSectionDto(SectionCFODto dto) {
+        if (map.isEmpty()) {
+            setVisibleEmptyWidget(false);
         }
-        list.add(dto);
-        table.setHTML(index, 0, dto.getSection().getName());
-        table.getCellFormatter().setStyleName(index, 0, "section-name");
-        table.setHTML(index, 1, "c");
-        CustomDateBox leftDate = new CustomDateBox();
+        table.setHTML(table.getRowCount(), 0, dto.getSection().getName());
+        int rowIndex = table.getRowCount() - 1;
+        table.getCellFormatter().setStyleName(rowIndex, 0, "section-name");
+        table.setHTML(rowIndex, 1, "c");
+        final CustomDateBox leftDate = new CustomDateBox();
+        map.put(leftDate, dto);
         leftDate.setValue(dto.getStartDate());
-        table.setWidget(index, 2, leftDate);
-        table.setHTML(index, 3, "по");
+        table.setWidget(rowIndex, 2, leftDate);
+        table.setHTML(rowIndex, 3, "по");
         CustomDateBox rightDate = new CustomDateBox();
         rightDate.setValue(dto.getEndDate());
-        table.setWidget(index, 4, rightDate);
+        table.setWidget(rowIndex, 4, rightDate);
         final Btn removeBtn = new Btn("<span class='glyphicon glyphicon-remove'></span>", EButtonStyle.LINK);
         removeBtn.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                list.remove(dto);
-//                removeBtn.getElement().getParentElement().getParentElement().removeFromParent();
+                map.remove(leftDate);
+                removeBtn.getElement().getParentElement().getParentElement().removeFromParent();
+                if (map.isEmpty()) {
+                    setVisibleEmptyWidget(true);
+                }
             }
         });
-        table.setWidget(index, 5, removeBtn);
-        index++;
+        table.setWidget(rowIndex, 5, removeBtn);
     }
 
-    public List<SectionCFODto> getList() {
-        return list;
+    private void setVisibleEmptyWidget(boolean visible) {
+        if (visible) {
+            emptyText.getElement().getStyle().setDisplay(Display.BLOCK);
+        }
+        else {
+            emptyText.getElement().getStyle().setDisplay(Display.NONE);
+        }
     }
+
+    public List<SectionCFODto> getSectionCfoList() {
+        List<SectionCFODto> outList = new ArrayList<SectionCFODto>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            CustomDateBox leftDateInput = (CustomDateBox) table.getWidget(i, 2);
+            CustomDateBox rightDateInput = (CustomDateBox) table.getWidget(i, 4);
+            Date leftDate = leftDateInput.getValue();
+            Date rightDate = rightDateInput.getValue();
+            if (leftDate != null && rightDate != null && leftDate.before(rightDate)) {
+                SectionCFODto sectionCFODto = map.get(leftDateInput);
+                sectionCFODto.setStartDate(leftDate);
+                sectionCFODto.setEndDate(rightDate);
+                outList.add(sectionCFODto);
+            }
+            else {
+                return null;
+            }
+        }
+        return outList;
+    }
+
 }
