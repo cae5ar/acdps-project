@@ -14,15 +14,15 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
 import com.pstu.acdps.client.Site;
+import com.pstu.acdps.client.components.Btn.EButtonStyle;
 
 public class LoginWidget extends FlowPanel {
-    TextBox loginInput = new TextBox();
-    PasswordTextBox passwordInput = new PasswordTextBox();
-    private Btn submitButton = new Btn(Site.messages.msgEnter());
-    private StyledLabel loginMessage = new StyledLabel("", "login-message");
+    CustomTextBox loginInput = new CustomTextBox();
+    CustomPasswordTextBox passwordInput = new CustomPasswordTextBox();
+    private Btn submitButton = new Btn(Site.messages.msgEnter(), EButtonStyle.SUCCESS);
+    private StyledLabel caption = new StyledLabel("Авторизация пользователя", "login-message");
+    private StyledLabel loginMessage = new StyledLabel("", "report");
 
     private KeyDownHandler keyHandler = new KeyDownHandler() {
         public void onKeyDown(KeyDownEvent event) {
@@ -43,22 +43,24 @@ public class LoginWidget extends FlowPanel {
         inputsPanel.addStyleName("inputs-block");
         add(inputsPanel);
 
-        inputsPanel.add(loginMessage);
+        inputsPanel.add(caption);
 
         loginInput.addStyleName("user-data-input");
-        // loginInput.setPlaceHolderText("Логин");
+        loginInput.setPlaceHolderText("Логин");
         inputsPanel.add(loginInput);
 
         passwordInput.addStyleName("user-data-input");
-        // passwordInput.setPlaceHolderText("Пароль");
+        passwordInput.setPlaceHolderText("Пароль");
         inputsPanel.add(passwordInput);
 
         submitButton.addClickHandler(clickHandler);
         passwordInput.addKeyDownHandler(keyHandler);
         loginInput.addKeyDownHandler(keyHandler);
 
+        inputsPanel.add(loginMessage);
+
         FlowPanel buttonPanel = new FlowPanel();
-        buttonPanel.addStyleName("modal-footer login-button-panel");
+        buttonPanel.addStyleName("login-button-panel");
         submitButton.addStyleName("login-button");
         buttonPanel.add(submitButton);
 
@@ -68,7 +70,7 @@ public class LoginWidget extends FlowPanel {
     protected void onLoad() {
         super.onLoad();
         clearInputs();
-        loginInput.setFocus(true);
+        loginInput.getTextBox().setFocus(true);
         Element el = this.getElement();
         while (el != null) {
             el.setScrollTop(0);

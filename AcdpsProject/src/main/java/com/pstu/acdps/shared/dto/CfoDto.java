@@ -1,5 +1,6 @@
 package com.pstu.acdps.shared.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -10,6 +11,8 @@ public class CfoDto extends EntityDto {
 
     public CfoDto() {
         super();
+        name = "";
+        sectionCfo = new ArrayList<SectionCFODto>();
     }
 
     public CfoDto(Long id, String name) {

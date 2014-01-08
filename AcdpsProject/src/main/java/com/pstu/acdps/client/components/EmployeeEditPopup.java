@@ -27,12 +27,12 @@ public class EmployeeEditPopup extends CustomPopup {
     private FlowPanel panel = new FlowPanel();
     private ScrollPanel scroll = new ScrollPanel(panel);
     private FlowPanel employeeEditInputsPanel = new FlowPanel();
+    private EmployeeSaveHandler handler = null;
     private Btn cancel = new Btn("Отменить", EButtonStyle.DEFAULT, new ClickHandler() {
         public void onClick(ClickEvent event) {
             EmployeeEditPopup.this.hide();
         }
     });
-    private EmployeeSaveHandler handler = null;
     private Btn saveBtn = new Btn("Сохранить изменения", EButtonStyle.SUCCESS, new ClickHandler() {
         public void onClick(ClickEvent event) {
             saveAllChanges();
@@ -74,10 +74,10 @@ public class EmployeeEditPopup extends CustomPopup {
         modalFooter.addStyleName("text-left");
         modalFooter.add(saveBtn);
         modalFooter.add(cancel);
-        createItem(dto);
+        createInputs();
     }
 
-    private void createItem(JobPosDto dto) {
+    private void createInputs() {
         final FlowPanel itemPanel = new FlowPanel();
         name = new CustomTextBox();
         name.addLabelStyleName("label-left");

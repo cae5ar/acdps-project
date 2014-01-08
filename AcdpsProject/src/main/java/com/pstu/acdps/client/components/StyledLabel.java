@@ -14,8 +14,8 @@ public class StyledLabel extends Label {
     }
 
     public StyledLabel(String text, String styleName) {
-        setText(text);
         setStyleName(styleName);
+        setText(text);
     }
 
 }

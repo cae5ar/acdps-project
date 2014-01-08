@@ -17,7 +17,7 @@ import com.pstu.acdps.shared.dto.UserDto;
 
 public class UsersTable extends Composite {
 
-    FlowPanel panel = new FlowPanel();
+    private FlowPanel panel = new FlowPanel();
     private FlexTable table = new FlexTable();
     private int index = 0;
     private UsersPresenter presenter;
@@ -25,7 +25,7 @@ public class UsersTable extends Composite {
     public UsersTable(UsersPresenter presenter) {
         this.presenter = presenter;
         initWidget(panel);
-        table.addStyleName("table table-stripped");
+        table.addStyleName("table table-striped");
         panel.add(table);
         createThead();
     }
@@ -50,7 +50,7 @@ public class UsersTable extends Composite {
         th.addClassName("col-xs-1");
         tr.appendChild(th);
         th = DOM.createTH();
-        th.setInnerHTML("<span class='glyphicon glyphicon-minus' style='margin: 6px 12px'></span>");
+        th.setInnerHTML("<span class='glyphicon glyphicon-remove' style='margin: 6px 12px'></span>");
         th.addClassName("col-xs-1");
         tr.appendChild(th);
         thead.appendChild(tr);
@@ -69,49 +69,46 @@ public class UsersTable extends Composite {
     }
 
     public void addUser(final UserDto dto) {
-
-        table.setHTML(index, 0, dto.getEmployee() == null ? "<em>нет привязки к сотруднику</em>" : dto.getEmployee().getFullName());
-        table.setText(index, 1, dto.getLogin());
-        table.setHTML(index, 2, formatRoles(dto.getRoles(), dto.getAdmin()));
-        Btn editBtn = new Btn("<span class='glyphicon glyphicon-pencil'></span>", EButtonStyle.LINK);
-        Btn removeBtn = new Btn("<span class='glyphicon glyphicon-minus'></span>", EButtonStyle.LINK);
-        editBtn.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                if (presenter.getActionHandler() != null) {
-                    presenter.getActionHandler().doAction(ActionType.EDIT, dto);
+        if (!dto.getAdmin()) {
+            table.setHTML(index, 0, dto.getEmployee() == null ? "<em>нет привязки к сотруднику</em>" : dto.getEmployee().getFullName());
+            table.setText(index, 1, dto.getLogin());
+            table.setHTML(index, 2, formatRoles(dto.getRoles(), dto.getAdmin()));
+            Btn editBtn = new Btn("<span class='glyphicon glyphicon-pencil'></span>", EButtonStyle.LINK);
+            Btn removeBtn = new Btn("<span class='glyphicon glyphicon-remove'></span>", EButtonStyle.LINK);
+            editBtn.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    if (presenter.getActionHandler() != null) {
+                        presenter.getActionHandler().doAction(ActionType.EDIT, dto);
+                    }
                 }
-            }
-        });
-        removeBtn.addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                if (presenter.getActionHandler() != null) {
-                    presenter.getActionHandler().doAction(ActionType.REMOVE, dto);
+            });
+            removeBtn.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent event) {
+                    if (presenter.getActionHandler() != null) {
+                        presenter.getActionHandler().doAction(ActionType.REMOVE, dto);
+                    }
                 }
-            }
-        });
-        table.setWidget(index, 3, editBtn);
-        table.setWidget(index, 4, removeBtn);
-        index++;
+            });
+            table.setWidget(index, 3, editBtn);
+            table.setWidget(index, 4, removeBtn);
+            index++;
+        }
     }
 
     private String formatRoles(List<RoleDto> roles, boolean isAdmin) {
         StringBuilder sb = new StringBuilder();
-        if (isAdmin) {
-            sb.append("Администратор");
-        }
-        else{
-            for (int i = 0; i < roles.size(); i++) {
-                if(i != 0){
-                    sb.append(",<br>");
-                }
-                sb.append(roles.get(i).getName());
+        for (int i = 0; i < roles.size(); i++) {
+            if (i != 0) {
+                sb.append(",<br>");
             }
+            sb.append(roles.get(i).getName());
         }
         return sb.toString();
     }
 
     public void reset() {
         table.removeAllRows();
+        index = 0;
     }
 
 }

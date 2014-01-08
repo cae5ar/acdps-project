@@ -1,7 +1,6 @@
 package com.pstu.acdps.shared.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import com.pstu.acdps.shared.type.SystemConstants;
 

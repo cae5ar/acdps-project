@@ -9,8 +9,8 @@ public class CurrentUser {
 
     public final static String ROLE_USER = "ROLE_USER";
     public final static String ROLE_ADMIN = "ROLE_ADMIN";
-
     static public Boolean isAuthenticated() {
+        
         Authentication token = SecurityContextHolder.getContext().getAuthentication();
         return token != null;
     }

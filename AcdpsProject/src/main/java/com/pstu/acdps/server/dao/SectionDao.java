@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.pstu.acdps.server.domain.SSPObjectHierachy;
 import com.pstu.acdps.server.domain.Section;
 import com.pstu.acdps.shared.dto.SSPObjectDto;
+import com.pstu.acdps.shared.dto.SectionDto;
 import com.pstu.acdps.shared.exception.AnyServiceException;
 
 @Repository
@@ -47,11 +48,44 @@ public class SectionDao extends JpaDao<Section> {
         return entity.getId();
     }
 
-    @SuppressWarnings("unchecked")
-    public List<SSPObjectDto> getChilds(Long parentId, Date date) {
-    	
+    public List<SSPObjectDto> getChildsBySSPObjectDto(Long parentId, Date date) {
+        
         List<SSPObjectDto> list = new ArrayList<SSPObjectDto>();
         
+        
+        List<Object[]> resultList = getEntities(parentId, date);
+        
+        for (Object[] fields : resultList) {
+            Section section = (Section) fields[0];
+            SSPObjectHierachy hier = (SSPObjectHierachy) fields[1];
+            Long count = (Long) fields[2];
+            Long sectionParentId = hier.getParent() == null ? null : hier.getParent().getId();
+            
+            SSPObjectDto objectDto = new SSPObjectDto(section.getId(), section.getName(), sectionParentId, hier.getStartDate(), hier.getEndDate(), count != 0);
+            list.add(objectDto);
+        }
+        
+        return list;
+    }
+    
+    public List<SectionDto> getChilds(Long parentId, Date date) {
+        List<SectionDto> list = new ArrayList<SectionDto>();
+        List<Object[]> resultList = getEntities(parentId, date);
+        for (Object[] fields : resultList) {
+        	Section section = (Section) fields[0];
+        	SSPObjectHierachy hier = (SSPObjectHierachy) fields[1];
+        	Long count = (Long) fields[2];
+        	Long sectionParentId = hier.getParent() == null ? null : hier.getParent().getId();
+        	
+        	SectionDto objectDto = new SectionDto(section.getId(), section.getName(), section.getCode(), sectionParentId, hier.getStartDate(), hier.getEndDate(), count != 0);
+        	list.add(objectDto);
+        }
+        
+        return list;
+    }
+
+    @SuppressWarnings("unchecked")
+    private List<Object[]> getEntities(Long parentId, Date date) {
         /*
         Criteria c = getHibernateSession().createCriteria(SSPObjectHierachy.class, "h");
         c.createAlias("h.sspObject", "sspObj");
@@ -81,9 +115,7 @@ public class SectionDao extends JpaDao<Section> {
             list.add(new SSPObjectDto(sspObjectId, s.getName(), parentId, (Date) o[1], (Date) o[2], singleResult));
         }
         */
-        
         Query sectionQuery = null;
-        
         if (parentId == null) {
         	sectionQuery = em.createQuery(
             		"select section, hier,  " +
@@ -108,17 +140,6 @@ public class SectionDao extends JpaDao<Section> {
         }
         
         List<Object[]> resultList = sectionQuery.getResultList();
-        
-        for (Object[] fields : resultList) {
-        	Section section = (Section) fields[0];
-        	SSPObjectHierachy hier = (SSPObjectHierachy) fields[1];
-        	Long count = (Long) fields[2];
-        	Long sectionParentId = hier.getParent() == null ? null : hier.getParent().getId();
-        	
-        	SSPObjectDto objectDto = new SSPObjectDto(section.getId(), section.getName(), sectionParentId, hier.getStartDate(), hier.getEndDate(), count != 0);
-        	list.add(objectDto);
-        }
-        
-        return list;
+        return resultList;
     }
 }
