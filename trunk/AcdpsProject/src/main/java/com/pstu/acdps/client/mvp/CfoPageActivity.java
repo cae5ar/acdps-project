@@ -10,6 +10,7 @@ import com.pstu.acdps.client.SimpleAsyncCallback;
 import com.pstu.acdps.client.Site;
 import com.pstu.acdps.client.components.AlertDialogBox;
 import com.pstu.acdps.client.components.CfoEditPopup;
+import com.pstu.acdps.client.components.AlertDialogBox.EAlertType;
 import com.pstu.acdps.client.components.CfoEditPopup.CfoSaveHandler;
 import com.pstu.acdps.client.components.CustomPopup;
 import com.pstu.acdps.client.components.TreeWidget;
@@ -89,7 +90,7 @@ public class CfoPageActivity extends MainAbstractActivity implements CfoPagePres
         Site.service.removeCfo(id, new SimpleAsyncCallback<Void>() {
             @Override
             public void onSuccess(Void result) {
-                AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                 view.reset();
             }
         });
@@ -104,7 +105,7 @@ public class CfoPageActivity extends MainAbstractActivity implements CfoPagePres
                 Site.service.saveCfo(dto, new SimpleAsyncCallback<Long>() {
                     @Override
                     public void onSuccess(Long result) {
-                        AlertDialogBox.showDialogBox("Изменения успешно сохранены");
+                        AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                         sender.hide();
                         view.reset();
                     }

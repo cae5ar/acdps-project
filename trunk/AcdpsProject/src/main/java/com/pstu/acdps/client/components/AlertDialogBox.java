@@ -126,6 +126,10 @@ public class AlertDialogBox extends Composite {
     public static void showDialogBox(String strong, String text) {
         showDialogBox(new AlertDialogBox(strong, text, EAlertType.WARNING));
     }
+    
+    public static void showDialogBox(String strong, EAlertType type) {
+        showDialogBox(new AlertDialogBox(strong, "", EAlertType.WARNING));
+    }
 
     public static void showDialogBox(String strong, String text, EAlertType type) {
         showDialogBox(new AlertDialogBox(strong, text, type));

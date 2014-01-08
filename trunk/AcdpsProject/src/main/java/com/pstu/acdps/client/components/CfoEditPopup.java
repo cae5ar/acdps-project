@@ -105,7 +105,22 @@ public class CfoEditPopup extends CustomPopup {
     }
 
     private void saveAllChanges() {
-        handler.save(dto, CfoEditPopup.this);
+        if (handler != null) {
+            boolean commit = true;
+            if (name.getValue() == null || name.getValue().isEmpty()) {
+                commit = false;
+                AlertDialogBox.showDialogBox("Поле 'Наименование' не может быть пустым");
+            }
+            if (sectionsTable.getSectionCfoList() == null) {
+                commit = false;
+                AlertDialogBox.showDialogBox("В добавленных статьях указаны неверные временные диапазоны");
+            }
+            if (commit) {
+                dto.setName(name.getValue());
+                dto.setSectionCfo(sectionsTable.getSectionCfoList());
+                handler.save(dto, CfoEditPopup.this);
+            }
+        }
     }
 
     private void setEnableAddSectionButton(SectionDto object) {

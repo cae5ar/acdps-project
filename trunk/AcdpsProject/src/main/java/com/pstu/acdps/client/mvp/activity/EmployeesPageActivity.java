@@ -82,7 +82,7 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
             public void save(JobPosDto dto, final CustomPopup sender) {
                 Site.service.saveJobPos(dto, new SimpleAsyncCallback<Long>() {
                     public void onSuccess(Long result) {
-                        AlertDialogBox.showDialogBox("Изменения успешно сохранены", "", EAlertType.SUCCESS);
+                        AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                         sender.hide();
                         view.reset();
                     }
@@ -95,7 +95,7 @@ public class EmployeesPageActivity extends MainAbstractActivity implements Emplo
     protected void removeEmployee(Long id) {
         Site.service.removeJobPos(id, new SimpleAsyncCallback<Void>() {
             public void onSuccess(Void result) {
-                AlertDialogBox.showDialogBox("Изменения успешно сохранены", "", EAlertType.SUCCESS);
+                AlertDialogBox.showDialogBox("Изменения успешно сохранены", EAlertType.SUCCESS);
                 view.reset();
             }
         });
